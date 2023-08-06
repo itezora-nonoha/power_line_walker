@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
-// import 'package:tower/tower.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,13 +26,16 @@ class MapSample extends StatefulWidget {
 class MapSampleState extends State<MapSample> {
   String _appBarTitle = "Power Line Walker";
   String displayType = 'Marker';
-  late Set<Marker> markerSet;
+  Set<Marker> markerSet = {};
+  late Map<String, dynamic> map;
   late BitmapDescriptor pinLocationIcon = BitmapDescriptor.defaultMarker;
-
+  dynamic jsonDict;
+  List<Polyline> powerLineList = [];
   @override
   void initState() {
     super.initState();
     setMarkerImage();
+    loadJsonAsset();
   }
 
   Future<void> setMarkerImage() async {
@@ -42,93 +44,75 @@ class MapSampleState extends State<MapSample> {
     setState(() {});
   }
 
-  Set<Marker> markersVisible = {};
-  Set<Marker> markersNotVisible = {};
-  Set<Marker> markers = {};
-  
-  String _data = "Load JSON Data";
-  final List<LatLng> _markerLocations = [
-    const LatLng(35.9583563, 139.6258101), // 東埼玉線-77
-    const LatLng(35.9567532, 139.6271039), // 東埼玉線-78
-    const LatLng(35.9552299, 139.6283240), // 東埼玉線-79
-    const LatLng(35.9544524, 139.6306582), // 東埼玉線-80
-    const LatLng(35.9537335, 139.6327918), // 東埼玉線-81
-    const LatLng(35.9530090, 139.6349779), // 東埼玉線-82
-    const LatLng(35.9522505, 139.6372461), // 東埼玉線-83
-    const LatLng(35.9514831, 139.6395112), // 東埼玉線-84
-  ];
+  // json文字列→jsonオブジェクト
+  dynamic stringToObject(String jsonText) {
+    dynamic data;
 
-  Future<void> loadJsonAsset() async {
-    _data = "";
-    String loadData = await rootBundle.loadString("asset/higashisaitama.json");
-    final jsonResponse = json.decode(loadData);
-    jsonResponse.forEach((key,value) => _data = _data + '$key: $value \x0A');
+    try {
+      data = json.decode(jsonText);
+    } catch (e) {
+      data = null;
+    }
+    return data;
   }
 
+  String _gotString = "Load JSON Data";
+  String get gotString => this._gotString;
+  List<LatLng> powerLinePoints = [];
 
-  // void loadTowerInformation() async {
-  //   const jsonPath = "asset/higashisaitama.json"; // 好きなパスに変えてください
+  Future<void> getJsonText(String filePath) async {
+    _gotString = await rootBundle.loadString(filePath);
+  }
 
-  //   // シングルトンを取得
-  //   final t = Tower();
-  //   print('hoge: ${t.hoge}, fuga: ${t.fuga}');
+  // String get gotString => this._data;
+  void loadJsonAsset() {
+    getJsonText("assets/higashisaitama.json").then((value) {
+      map = json.decode(gotString);
+      _createMarker(map);
+      for (var i = 0; i < map['points'].length; i++) {
+        double latitude, longitude;
+        latitude = map['points'][i]['latitude'];
+        longitude = map['points'][i]['longitude'];
 
-  //   // JSON読み込み
-  //   await t.load(jsonPath);
-  //   print('hoge: ${t.hoge}, fuga: ${t.fuga}');
-
-  //   // 適当な値を設定
-  //   t.hoge = 'hogehoge';
-  //   t.fuga = 42;
-  //   print('hoge: ${t.hoge}, fuga: ${t.fuga}');
-
-  //   // JSON書き込み
-  //   await t.save(jsonPath);
-  // }
+        powerLinePoints.add(LatLng(latitude, longitude));
+        // markerSet.add(Marker(
+        //   markerId: MarkerId(map['points'][i]['name']),
+        //   position: LatLng(latitude, longitude),
+        //   icon: pinLocationIcon,
+        //   visible: true,
+        // ));
+        Polyline p = Polyline(
+          polylineId: PolylineId('higashiSaitama'),
+          points: powerLinePoints,
+          color: Colors.green,
+          width: 5,
+        );
+        powerLineList.add(p);
+      }
+    });
+  }
 
   // Set<Marker> _createMarker() {
-  void _createMarker() {
-    _markerLocations.asMap().forEach((i, markerLocation) {
-      markersVisible.add(
-        Marker(
-            markerId: MarkerId('myMarker{$i}'),
-            position: markerLocation,
-            icon: pinLocationIcon,
-            visible: true,
-            // anchor: const Offset(0.5, 0.5)),
-      ));
-    });
+  void _createMarker(Map<String, dynamic> map) {
 
-    // _markerLocations.asMap().forEach((i, markerLocation) {
-    //   markersNotVisible.add(
-    //     Marker(
-    //         markerId: MarkerId('myMarker{$i}'),
-    //         position: markerLocation,
-    //         icon: pinLocationIcon,
-    //         visible: false),
-    //   );
-    // });
+    for (var i = 0; i < map['points'].length; i++) {
+      double latitude, longitude;
+      latitude = map['points'][i]['latitude'];
+      longitude = map['points'][i]['longitude'];
+
+      markerSet.add(Marker(
+        markerId: MarkerId(map['points'][i]['name']),
+        position: LatLng(latitude, longitude),
+        icon: pinLocationIcon,
+        visible: true,
+      ));
+    }
 
     // マーカークリック時のイベントを設定
-    markersVisible = markersVisible
+    markerSet = markerSet
         .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
         .toSet();
-    // markersNotVisible = markersNotVisible
-    //     .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
-    //     .toSet();
-    markerSet = markersVisible;
   }
-
-  // void _switchMarker() {
-  //   setState(() {
-  //     if (displayType == 'Marker'){
-  //       markerSet = markersVisible;
-  //     } else {
-  //       markerSet = markersNotVisible;
-  //       print("test");
-  //     }
-  //   });
-  // }
 
   void _onTapMarker(Marker marker) {
     setState(() {
@@ -169,29 +153,23 @@ class MapSampleState extends State<MapSample> {
 
   GoogleMap generateGoogleMapWithPolyLine() {
     return GoogleMap(
-        zoomGesturesEnabled: true,
-        mapType: MapType.hybrid,
-        initialCameraPosition: const CameraPosition(
-          zoom: 15,
-          target: LatLng(35.9522505, 139.6372461),
-        ),
-        onTap: (LatLng latLng) {
-          _changeAppBarTitle(latLng.toString());
-        },
-        onCameraMove: (position) => {_changedCamera(position)},
-        polylines: {
-          Polyline(
-            polylineId: PolylineId('line1'),
-            points: _markerLocations,
-            color: Colors.green,
-            width: 5,
-          )
-        });
+      zoomGesturesEnabled: true,
+      mapType: MapType.hybrid,
+      initialCameraPosition: const CameraPosition(
+        zoom: 15,
+        target: LatLng(35.9522505, 139.6372461),
+      ),
+      onTap: (LatLng latLng) {
+        _changeAppBarTitle(latLng.toString());
+      },
+      onCameraMove: (position) => {_changedCamera(position)},
+      polylines: Set.from(powerLineList),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    _createMarker();
+    // _createMarker();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple,
