@@ -29,7 +29,6 @@ class MapSampleState extends State<MapSample> {
   Set<Marker> markerSet = {};
   late Map<String, dynamic> map;
   late BitmapDescriptor pinLocationIcon = BitmapDescriptor.defaultMarker;
-  dynamic jsonDict;
   List<Polyline> powerLineList = [];
   @override
   void initState() {
@@ -58,65 +57,88 @@ class MapSampleState extends State<MapSample> {
 
   String _gotString = "Load JSON Data";
   String get gotString => this._gotString;
-  List<LatLng> powerLinePoints = [];
 
   Future<void> getJsonText(String filePath) async {
     _gotString = await rootBundle.loadString(filePath);
   }
 
-  // String get gotString => this._data;
   void loadJsonAsset() {
     getJsonText("assets/higashisaitama.json").then((value) {
       map = json.decode(gotString);
-      _createMarker(map);
-      for (var i = 0; i < map['points'].length; i++) {
-        double latitude, longitude;
-        latitude = map['points'][i]['latitude'];
-        longitude = map['points'][i]['longitude'];
-
-        powerLinePoints.add(LatLng(latitude, longitude));
-        // markerSet.add(Marker(
-        //   markerId: MarkerId(map['points'][i]['name']),
-        //   position: LatLng(latitude, longitude),
-        //   icon: pinLocationIcon,
-        //   visible: true,
-        // ));
-        Polyline p = Polyline(
-          polylineId: PolylineId('higashiSaitama'),
-          points: powerLinePoints,
-          color: Colors.green,
-          width: 5,
-        );
-        powerLineList.add(p);
-      }
+      _createMarkerAndPowerLine(map);
     });
   }
 
-  // Set<Marker> _createMarker() {
-  void _createMarker(Map<String, dynamic> map) {
+  void _createMarkerAndPowerLine(Map<String, dynamic> map) {
+    Map<String, List<LatLng>> powerLinePoints = {};
+    String powerLineName;
+    String name;
+    String towerlabel;
 
+    LatLng latlng;
+    double latitude, longitude;
     for (var i = 0; i < map['points'].length; i++) {
-      double latitude, longitude;
+      towerlabel = map['points'][i]['names'][0];
       latitude = map['points'][i]['latitude'];
       longitude = map['points'][i]['longitude'];
+      latlng = LatLng(latitude, longitude);
 
-      markerSet.add(Marker(
-        markerId: MarkerId(map['points'][i]['name']),
-        position: LatLng(latitude, longitude),
-        icon: pinLocationIcon,
-        visible: true,
-      ));
+      for (var ni = 0; ni < map['points'][i]['names'].length; ni++) {
+        name = map['points'][i]['names'][ni];
+        powerLineName = name.split('-')[0];
+
+        if (powerLinePoints[powerLineName] == null) {
+          powerLinePoints[powerLineName] = [];
+        }
+
+        powerLinePoints[powerLineName]?.add(latlng);
+
+        // Markerの作成
+        markerSet.add(Marker(
+          markerId: MarkerId(towerlabel),
+          position: latlng,
+          icon: pinLocationIcon,
+          visible: true,
+          anchor: const Offset(1, 2), // ここで調節
+        ));
+      }
     }
-
     // マーカークリック時のイベントを設定
     markerSet = markerSet
         .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
         .toSet();
+
+    Color powerLineColor = Colors.blue;
+    var transmissionVoltage = 154;
+    // 送電系統ごとにPolylineを作成
+    for (var name in powerLinePoints.keys) {
+      // 送電電圧の取得
+      var entry = map['powerLines'].where((e) => e['name'] == name);  
+      transmissionVoltage = entry.first['transmissionVoltage'];
+
+      // 電圧ごとの色分け
+      if (transmissionVoltage == 154){
+        powerLineColor = Colors.green;
+      } else if (transmissionVoltage == 275){
+        powerLineColor = Colors.orange;
+      };
+  
+      Polyline p = Polyline(
+        polylineId: PolylineId(name),
+        points: powerLinePoints[name]!,
+        color: powerLineColor,
+        width: 5,
+      );
+      powerLineList.add(p);
+    }
+
+    setState(() {});
   }
 
   void _onTapMarker(Marker marker) {
     setState(() {
-      _appBarTitle = marker.position.toString();
+      // _appBarTitle = marker.position.toString();
+      _appBarTitle = marker.markerId.toString();
     });
   }
 
