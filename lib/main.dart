@@ -28,7 +28,8 @@ class MapSampleState extends State<MapSample> {
   String displayType = 'Marker';
   Set<Marker> markerSet = {};
   late Map<String, dynamic> map;
-  late BitmapDescriptor pinLocationIcon = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor towerGreen = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor towerOrange = BitmapDescriptor.defaultMarker;
   List<Polyline> powerLineList = [];
   @override
   void initState() {
@@ -38,8 +39,10 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<void> setMarkerImage() async {
-    pinLocationIcon = await BitmapDescriptor.fromAssetImage(
+    towerGreen = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_green.png');
+    towerOrange = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(32, 32)), 'assets/tower_orange.png');
     setState(() {});
   }
 
@@ -71,6 +74,18 @@ class MapSampleState extends State<MapSample> {
 
   void _createMarkerAndPowerLine(Map<String, dynamic> map) {
     Map<String, List<LatLng>> powerLinePoints = {};
+    Map<String, BitmapDescriptor> powerLineIcon = {};
+
+    for (var li = 0; li < map['powerLines'].length; li++) {
+      var entry = map['powerLines'][li];
+      String name = entry['name'];
+      if (entry['transmissionVoltage'] == 154) {
+        powerLineIcon[name] = towerGreen;
+      } else if (entry['transmissionVoltage'] == 275) {
+        powerLineIcon[name] = towerOrange;
+      }
+    }
+
     String powerLineName;
     String name;
     String towerlabel;
@@ -97,9 +112,9 @@ class MapSampleState extends State<MapSample> {
         markerSet.add(Marker(
           markerId: MarkerId(towerlabel),
           position: latlng,
-          icon: pinLocationIcon,
+          icon: powerLineIcon[powerLineName]?? BitmapDescriptor.defaultMarker,
           visible: true,
-          anchor: const Offset(1, 2), // ここで調節
+          // anchor: const Offset(0.5, 0.5), // 位置調整。バグで機能していないらしい
         ));
       }
     }
