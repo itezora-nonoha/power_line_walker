@@ -114,7 +114,7 @@ class MapSampleState extends State<MapSample> {
           position: latlng,
           icon: powerLineIcon[powerLineName]?? BitmapDescriptor.defaultMarker,
           visible: true,
-          // anchor: const Offset(0.5, 0.5), // 位置調整。バグで機能していないらしい
+          // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
         ));
       }
     }
@@ -175,6 +175,7 @@ class MapSampleState extends State<MapSample> {
 
   GoogleMap generateGoogleMapWithMarker() {
     return GoogleMap(
+      webGestureHandling: WebGestureHandling.greedy,
         zoomGesturesEnabled: true,
         mapType: MapType.hybrid,
         initialCameraPosition: const CameraPosition(
@@ -190,6 +191,7 @@ class MapSampleState extends State<MapSample> {
 
   GoogleMap generateGoogleMapWithPolyLine() {
     return GoogleMap(
+      webGestureHandling: WebGestureHandling.greedy, 
       zoomGesturesEnabled: true,
       mapType: MapType.hybrid,
       initialCameraPosition: const CameraPosition(
