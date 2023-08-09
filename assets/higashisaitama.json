@@ -8,634 +8,279 @@
     },{
         "name": "上尾線",
         "transmissionVoltage": 275
+    },{
+        "name": "新鶴ヶ島線",
+        "transmissionVoltage": 500
+        },{
+            "name": "芝川線",
+            "transmissionVoltage": 66
     }],
     "points": [
-        {
-            "longitude": 139.4958983,
-            "latitude": 36.0814159,
-            "names": ["東埼玉線-1"]
-        },
-        {
-            "longitude": 139.4979561,
-            "latitude": 36.0833935,
-            "names": ["東埼玉線-2"]
-        },
-        {
-            "longitude": 139.5000639,
-            "latitude": 36.0817367,
-            "names": ["東埼玉線-3"]
-        },
-        {
-            "longitude": 139.5017863,
-            "latitude": 36.0803688,
-            "names": ["東埼玉線-4"]
-        },
-        {
-            "longitude": 139.5035295,
-            "latitude": 36.0789799,
-            "names": ["東埼玉線-5"]
-        },
-        {
-            "longitude": 139.5052199,
-            "latitude": 36.0776255,
-            "names": ["東埼玉線-6"]
-        },
-        {
-            "longitude": 139.5068993,
-            "latitude": 36.0762948,
-            "names": ["東埼玉線-7"]
-        },
-        {
-            "longitude": 139.5086192,
-            "latitude": 36.0749326,
-            "names": ["東埼玉線-8"]
-        },
-        {
-            "longitude": 139.5102916,
-            "latitude": 36.0735959,
-            "names": ["東埼玉線-9"]
-        },
-        {
-            "longitude": 139.5120089,
-            "latitude": 36.0722258,
-            "names": ["東埼玉線-10"]
-        },
-        {
-            "longitude": 139.5135029,
-            "latitude": 36.0710286,
-            "names": ["東埼玉線-11"]
-        },
-        {
-            "longitude": 139.5152451,
-            "latitude": 36.0696354,
-            "names": ["東埼玉線-12"]
-        },
-        {
-            "longitude": 139.5168448,
-            "latitude": 36.0683592,
-            "names": ["東埼玉線-13"]
-        },
-        {
-            "longitude": 139.5185707,
-            "latitude": 36.0669787,
-            "names": ["東埼玉線-14"]
-        },
-        {
-            "longitude": 139.5203096,
-            "latitude": 36.0655983,
-            "names": ["東埼玉線-15"]
-        },
-        {
-            "longitude": 139.5220559,
-            "latitude": 36.0642067,
-            "names": ["東埼玉線-16"]
-        },
-        {
-            "longitude": 139.5237329,
-            "latitude": 36.0628701,
-            "names": ["東埼玉線-17"]
-        },
-        {
-            "longitude": 139.525392,
-            "latitude": 36.0615456,
-            "names": ["東埼玉線-18"]
-        },
-        {
-            "longitude": 139.5268946,
-            "latitude": 36.0600561,
-            "names": ["東埼玉線-19"]
-        },
-        {
-            "longitude": 139.5284309,
-            "latitude": 36.0585557,
-            "names": ["東埼玉線-20"]
-        },
-        {
-            "longitude": 139.5299246,
-            "latitude": 36.0570803,
-            "names": ["東埼玉線-21"]
-        },
-        {
-            "longitude": 139.5316067,
-            "latitude": 36.055417,
-            "names": ["東埼玉線-22"]
-        },
-        {
-            "longitude": 139.5329619,
-            "latitude": 36.0540579,
-            "names": ["東埼玉線-23"]
-        },
-        {
-            "longitude": 139.5344679,
-            "latitude": 36.0525929,
-            "names": ["東埼玉線-24"]
-        },
-        {
-            "longitude": 139.5359627,
-            "latitude": 36.0510901,
-            "names": ["東埼玉線-25"]
-        },
-        {
-            "longitude": 139.5376755,
-            "latitude": 36.0497209,
-            "names": ["東埼玉線-26"]
-        },
-        {
-            "longitude": 139.5393682,
-            "latitude": 36.0483545,
-            "names": ["東埼玉線-27"]
-        },
-        {
-            "longitude": 139.5410574,
-            "latitude": 36.046991,
-            "names": ["東埼玉線-28"]
-        },
-        {
-            "longitude": 139.5423085,
-            "latitude": 36.0453243,
-            "names": ["東埼玉線-29"]
-        },
-        {
-            "longitude": 139.5441005,
-            "latitude": 36.0429134,
-            "names": ["東埼玉線-30"]
-        },
-        {
-            "longitude": 139.5459338,
-            "latitude": 36.0404441,
-            "names": ["東埼玉線-32"],
-            "memo": "東埼玉線-31は欠番"
-        },
-        {
-            "longitude": 139.5469672,
-            "latitude": 36.0369495,
-            "names": ["東埼玉線-34"],
-            "memo": "東埼玉線-33は欠番"
-        },
-        {
-            "longitude": 139.5487942,
-            "latitude": 36.0348441,
-            "names": ["東埼玉線-35"]
-        },
-        {
-            "longitude": 139.5510892,
-            "latitude": 36.0322501,
-            "names": ["東埼玉線-37"],
-            "memo": "東埼玉線-39は欠番"
-        },
-        {
-            "longitude": 139.552277,
-            "latitude": 36.0303081,
-            "names": ["東埼玉線-38"]
-        },
-        {
-            "longitude": 139.5541668,
-            "latitude": 36.0272421,
-            "names": ["東埼玉線-40"],
-            "memo": "東埼玉線-39は欠番"
-        },
-        {
-            "longitude": 139.555865,
-            "latitude": 36.0244298,
-            "names": ["東埼玉線-41"]
-        },
-        {
-            "longitude": 139.5575946,
-            "latitude": 36.0216109,
-            "names": ["東埼玉線-43"],
-            "memo": "東埼玉線-42は欠番"
-        },
-        {
-            "longitude": 139.5592911,
-            "latitude": 36.0188045,
-            "names": ["東京中線-2064", "東埼玉線-45", "上尾線-0"],
-            "memo": "東埼玉線-44は欠番"
-        },
-        {
-            "longitude": 139.559774,
-            "latitude": 36.0179996,
-            "names": ["上尾線-1", "東埼玉線-46"]
-        },
-        {
-            "longitude": 139.5622132,
-            "latitude": 36.0159234,
-            "names": ["上尾線-2", "東埼玉線-47"]
-        },
-        {
-            "longitude": 139.564832,
-            "latitude": 36.013725,
-            "names": ["上尾線-3", "東埼玉線-48"]
-        },
-        {
-            "longitude": 139.5667494,
-            "latitude": 36.0121353,
-            "names": ["上尾線-4", "東埼玉線-49"]
-        },
-        {
-            "longitude": 139.5687954,
-            "latitude": 36.010935,
-            "names": ["上尾線-5", "東埼玉線-50"]
-        },
-        {
-            "longitude": 139.5706376,
-            "latitude": 36.0098584,
-            "names": ["上尾線-6", "東埼玉線-51"]
-        },
-        {
-            "longitude": 139.5717505,
-            "latitude": 36.0097104,
-            "names": ["上尾線-7", "東埼玉線-52"]
-        },
-        {
-            "longitude": 139.5724165,
-            "latitude": 36.0087726,
-            "names": ["上尾線-8", "東埼玉線-53"]
-        },
-        {
-            "longitude": 139.5742953,
-            "latitude": 36.0071314,
-            "names": ["上尾線-9", "東埼玉線-54"]
-        },
-        {
-            "longitude": 139.577192,
-            "latitude": 36.0045276,
-            "names": ["上尾線-10", "東埼玉線-55"]
-        },
-        {
-            "longitude": 139.5802386,
-            "latitude": 36.0018331,
-            "names": ["上尾線-11", "東埼玉線-56"]
-        },
-        {
-            "longitude": 139.5831759,
-            "latitude": 35.99966,
-            "names": ["上尾線-12", "東埼玉線-57"]
-        },
-        {
-            "longitude": 139.5857094,
-            "latitude": 35.9977903,
-            "names": ["上尾線-13", "東埼玉線-58"]
-        },
-        {
-            "longitude": 139.5886928,
-            "latitude": 35.9959605,
-            "names": ["上尾線-14", "東埼玉線-59"]
-        },
-        {
-            "longitude": 139.5917849,
-            "latitude": 35.9940344,
-            "names": ["上尾線-15", "東埼玉線-60"]
-        },
-        {
-            "longitude": 139.5949692,
-            "latitude": 35.9920639,
-            "names": ["上尾線-16", "東埼玉線-61"]
-        },
-        {
-            "longitude": 139.59793,
-            "latitude": 35.9901867,
-            "names": ["上尾線-17", "東埼玉線-62"]
-        },
-        {
-            "longitude": 139.6001721,
-            "latitude": 35.988808,
-            "names": ["上尾線-18", "東埼玉線-63"]
-        },
-        {
-            "longitude": 139.6025903,
-            "latitude": 35.9873305,
-            "names": ["上尾線-19", "東埼玉線-64"]
-        },
-        {
-            "longitude": 139.604577,
-            "latitude": 35.9847857,
-            "names": ["上尾線-20", "東埼玉線-65"]
-        },
-        {
-            "longitude": 139.6063852,
-            "latitude": 35.9825569,
-            "names": ["上尾線-21", "東埼玉線-66"]
-        },
-        {
-            "longitude": 139.6087814,
-            "latitude": 35.9795866,
-            "names": ["上尾線-22", "東埼玉線-67"]
-        },
-        {
-            "longitude": 139.611138,
-            "latitude": 35.9766385,
-            "names": ["上尾線-23", "東埼玉線-68"]
-        },
-        {
-            "longitude": 139.6134234,
-            "latitude": 35.9737848,
-            "names": ["上尾線-24", "東埼玉線-69"]
-        },
-        {
-            "longitude": 139.6152271,
-            "latitude": 35.9715314,
-            "names": ["上尾線-25", "東埼玉線-70"]
-        },
-        {
-            "latitude": 35.9706801, "longitude":139.615065, "names": ["上尾線-26"]
-        },
-        {
-            "latitude": 35.9691131, "longitude":139.612677, "names": ["上尾線-27"]
-        },
-        {
-            "longitude": 139.6168301,
-            "latitude": 35.9695359,
-            "names": ["東埼玉線-71"]
-        },
-        {
-            "longitude": 139.6181189,
-            "latitude": 35.9679342,
-            "names": ["東埼玉線-72"]
-        },
-        {
-            "longitude": 139.6194112,
-            "latitude": 35.9663221,
-            "names": ["東埼玉線-73"]
-        },
-        {
-            "longitude": 139.6206778,
-            "latitude": 35.9647471,
-            "names": ["東埼玉線-74"]
-        },
-        {
-            "longitude": 139.6226611,
-            "latitude": 35.9622818,
-            "names": ["東埼玉線-75"]
-        },
-        {
-            "longitude": 139.6245334,
-            "latitude": 35.9599524,
-            "names": ["東埼玉線-76"]
-        },
-        {
-            "longitude": 139.6258101,
-            "latitude": 35.9583563,
-            "names": ["東埼玉線-77"]
-        },
-        {
-            "longitude": 139.6271039,
-            "latitude": 35.9567532,
-            "names": ["東埼玉線-78"]
-        },
-        {
-            "longitude": 139.628324,
-            "latitude": 35.9552299,
-            "names": ["東埼玉線-79"]
-        },
-        {
-            "longitude": 139.6306582,
-            "latitude": 35.9544524,
-            "names": ["東埼玉線-80"]
-        },
-        {
-            "longitude": 139.6327918,
-            "latitude": 35.9537335,
-            "names": ["東埼玉線-81"]
-        },
-        {
-            "longitude": 139.6349779,
-            "latitude": 35.953009,
-            "names": ["東埼玉線-82"]
-        },
-        {
-            "longitude": 139.6372461,
-            "latitude": 35.9522505,
-            "names": ["東埼玉線-83"]
-        },
-        {
-            "longitude": 139.6395112,
-            "latitude": 35.9514831,
-            "names": ["東埼玉線-84"]
-        },
-        {
-            "longitude": 139.6411857,
-            "latitude": 35.9508974,
-            "names": ["東埼玉線-85"]
-        },
-        {
-            "longitude": 139.6432219,
-            "latitude": 35.9502095,
-            "names": ["東埼玉線-86"]
-        },
-        {
-            "longitude": 139.6452733,
-            "latitude": 35.9495365,
-            "names": ["東埼玉線-87"]
-        },
-        {
-            "longitude": 139.6472557,
-            "latitude": 35.9488532,
-            "names": ["東埼玉線-88"]
-        },
-        {
-            "longitude": 139.649233,
-            "latitude": 35.948206,
-            "names": ["東埼玉線-89"]
-        },
-        {
-            "longitude": 139.6512482,
-            "latitude": 35.9475196,
-            "names": ["東埼玉線-90"]
-        },
-        {
-            "longitude": 139.6533095,
-            "latitude": 35.9468206,
-            "names": ["東埼玉線-91"]
-        },
-        {
-            "longitude": 139.6555316,
-            "latitude": 35.9460805,
-            "names": ["東埼玉線-92"]
-        },
-        {
-            "longitude": 139.6579461,
-            "latitude": 35.9456022,
-            "names": ["東埼玉線-93"]
-        },
-        {
-            "longitude": 139.6603163,
-            "latitude": 35.9451141,
-            "names": ["東埼玉線-94"]
-        },
-        {
-            "longitude": 139.6625707,
-            "latitude": 35.944677,
-            "names": ["東埼玉線-95"]
-        },
-        {
-            "longitude": 139.665179,
-            "latitude": 35.9438606,
-            "names": ["東埼玉線-96"]
-        },
-        {
-            "longitude": 139.6685599,
-            "latitude": 35.9426472,
-            "names": ["東埼玉線-98"]
-        },
-        {
-            "longitude": 139.6706492,
-            "latitude": 35.9418377,
-            "names": ["東埼玉線-99"]
-        },
-        {
-            "longitude": 139.6727755,
-            "latitude": 35.940997,
-            "names": ["東埼玉線-100"]
-        },
-        {
-            "longitude": 139.6740109,
-            "latitude": 35.9406264,
-            "names": ["東埼玉線-101"]
-        },
-        {
-            "longitude": 139.6748835,
-            "latitude": 35.9403589,
-            "names": ["東埼玉線-102"]
-        },
-        {
-            "longitude": 139.6769954,
-            "latitude": 35.9397195,
-            "names": ["東埼玉線-103"]
-        },
-        {
-            "longitude": 139.6786736,
-            "latitude": 35.9392115,
-            "names": ["東埼玉線-104"]
-        },
-        {
-            "longitude": 139.680992,
-            "latitude": 35.9385244,
-            "names": ["東埼玉線-105"]
-        },
-        {
-            "longitude": 139.6832845,
-            "latitude": 35.9377997,
-            "names": ["東埼玉線-106"]
-        },
-        {
-            "longitude": 139.685353,
-            "latitude": 35.9371593,
-            "names": ["東埼玉線-107"]
-        },
-        {
-            "longitude": 139.6884515,
-            "latitude": 35.9354673,
-            "names": ["東埼玉線-108"],
-            "memo": "番号誤りの可能性あり"
-        },
-        {
-            "longitude": 139.6911946,
-            "latitude": 35.9339302,
-            "names": ["東埼玉線-110"]
-        },
-        {
-            "longitude": 139.6939665,
-            "latitude": 35.9324576,
-            "names": ["東埼玉線-111"]
-        },
-        {
-            "longitude": 139.6965329,
-            "latitude": 35.9310079,
-            "names": ["東埼玉線-113"]
-        },
-        {
-            "longitude": 139.7001311,
-            "latitude": 35.9290468,
-            "names": ["東埼玉線-114"]
-        },
-        {
-            "longitude": 139.7020716,
-            "latitude": 35.9279801,
-            "names": ["東埼玉線-115"]
-        },
-        {
-            "longitude": 139.7046462,
-            "latitude": 35.9265713,
-            "names": ["東埼玉線-116"]
-        },
-        {
-            "longitude": 139.7062043,
-            "latitude": 35.9257279,
-            "names": ["東埼玉線-117"]
-        },
-        {
-            "longitude": 139.7081422,
-            "latitude": 35.9246387,
-            "names": ["東埼玉線-118"]
-        },
-        {
-            "longitude": 139.7102501,
-            "latitude": 35.9237908,
-            "names": ["東埼玉線-119"]
-        },
-        {
-            "longitude": 139.7126481,
-            "latitude": 35.9232677,
-            "names": ["東埼玉線-120"]
-        },
-        {
-            "longitude": 139.7149256,
-            "latitude": 35.9227745,
-            "names": ["東埼玉線-121"]
-        },
-        {
-            "longitude": 139.7171452,
-            "latitude": 35.9222758,
-            "names": ["東埼玉線-122"]
-        },
-        {
-            "longitude": 139.7180979,
-            "latitude": 35.9228053,
-            "names": ["東埼玉線-123"]
-        },
-        {
-            "longitude": 139.7178859,
-            "latitude": 35.9236773,
-            "names": ["東埼玉線-124"]
-        },
-        {"latitude":36.0193314, "longitude":139.563988,"names":["東京中線-2065"]}
-,{"latitude":36.0197066, "longitude":139.5673639,"names":["東京中線-2066"]}
-,{"latitude":36.0206875, "longitude":139.5707586,"names":["東京中線-2067"]}
-,{"latitude":36.0216644, "longitude":139.5742377,"names":["東京中線-2068"]}
-,{"latitude":36.0227245, "longitude":139.5780157,"names":["東京中線-2069"]}
-,{"latitude":36.02374, "longitude":139.5815934,"names":["東京中線-2070"]}
-,{"latitude":36.0240498, "longitude":139.5852484,"names":["東京中線-2071"]}
-,{"latitude":36.0244361, "longitude":139.5893445,"names":["東京中線-2072"]}
-,{"latitude":36.0248098, "longitude":139.5937336,"names":["東京中線-2073"]}
-,{"latitude":36.0259902, "longitude":139.5948806,"names":["東京中線-2073-1"]}
-,{"latitude":36.0251429, "longitude":139.5975377,"names":["東京中線-2074"]}
-,{"latitude":36.0254873, "longitude":139.6015847,"names":["東京中線-2075"]}
-,{"latitude":36.02574, "longitude":139.6050166,"names":["東京中線-2076"]}
-,{"latitude":36.0269133, "longitude":139.6084649,"names":["東京中線-2077"]}
-,{"latitude":36.0279226, "longitude":139.6114688,"names":["東京中線-2078"]}
-,{"latitude":36.0288694, "longitude":139.6142612,"names":["東京中線-2079"]}
-,{"latitude":36.0300163, "longitude":139.6176218,"names":["東京中線-2080"]}
-,{"latitude":36.0312688, "longitude":139.6213047,"names":["東京中線-2081"]}
-,{"latitude":36.0324905, "longitude":139.6249767,"names":["東京中線-2082"]}
-,{"latitude":36.0340114, "longitude":139.6294877,"names":["東京中線-2083"]}
-,{"latitude":36.0352907, "longitude":139.6332887,"names":["東京中線-2084"]}
-,{"latitude":36.036154, "longitude":139.6364383,"names":["東京中線-2085"]}
-,{"latitude":36.0372164, "longitude":139.6403843,"names":["東京中線-2086"]}
-,{"latitude":36.0379084, "longitude":139.6428901,"names":["東京中線-2087"]}
-,{"latitude":36.0387923, "longitude":139.646169,"names":["東京中線-2088"]}
-,{"latitude":36.0381252, "longitude":139.6485462,"names":["東京中線-2089"]}
-,{"latitude":36.0371701, "longitude":139.6519443,"names":["東京中線-2090"]}
-,{"latitude":36.0363187, "longitude":139.6549597,"names":["東京中線-2091"]}
-,{"latitude":36.0353212, "longitude":139.6585275,"names":["東京中線-2092"]}
-,{"latitude":36.0342585, "longitude":139.6622899,"names":["東京中線-2093"]}
-,{"latitude":36.0333741, "longitude":139.6654645,"names":["東京中線-2094"]}
-,{"latitude":36.0321447, "longitude":139.6690244,"names":["東京中線-2095"]}
-,{"latitude":36.0307496, "longitude":139.6729799,"names":["東京中線-2096"]}
-,{"latitude":36.0304158, "longitude":139.6768976,"names":["東京中線-2097"]}
-,{"latitude":36.0301334, "longitude":139.6803356,"names":["東京中線-2098"]}
-,{"latitude":36.0298536, "longitude":139.6836613,"names":["東京中線-2099"]}
-,{"latitude":36.0295439, "longitude":139.6875133,"names":["東京中線-2100"]}
-,{"latitude":36.0279472, "longitude":139.6906519,"names":["東京中線-2101"]}
-
+        {"latitude":35.9309514, "longitude": 139.3728643 , "names":["新鶴ヶ島線-1"]}
+        ,{"latitude":35.9295912, "longitude": 139.3734891 , "names":["新鶴ヶ島線-2"]}
+        ,{"latitude":35.9279667, "longitude": 139.3742289 , "names":["新鶴ヶ島線-3"]}
+        ,{"latitude":35.9286294, "longitude": 139.3770656 , "names":["新鶴ヶ島線-4"]}
+        ,{"latitude":35.9297592, "longitude": 139.3808805 , "names":["新鶴ヶ島線-5"]}
+        ,{"latitude":35.9308179, "longitude": 139.3846221 , "names":["新鶴ヶ島線-6"]}
+        ,{"latitude":35.9318189, "longitude": 139.3886936 , "names":["新鶴ヶ島線-7"]}
+        ,{"latitude":35.9326439, "longitude": 139.3919811 , "names":["新鶴ヶ島線-8"]}
+        ,{"latitude":35.9335572, "longitude": 139.3957252 , "names":["新鶴ヶ島線-9"]}
+        ,{"latitude":35.9344208, "longitude": 139.3991598 , "names":["新鶴ヶ島線-10"]}
+        ,{"latitude":35.9361828, "longitude": 139.4022179 , "names":["新鶴ヶ島線-11"]}
+        ,{"latitude":35.9381846, "longitude": 139.4055253 , "names":["新鶴ヶ島線-12"]}
+        ,{"latitude":35.9399363, "longitude": 139.4086146 , "names":["新鶴ヶ島線-13"]}
+        ,{"latitude":35.9420532, "longitude": 139.4115192 , "names":["新鶴ヶ島線-14"]}
+        ,{"latitude":35.94404, "longitude": 139.4142749 , "names":["新鶴ヶ島線-15"]}
+        ,{"latitude":35.946352, "longitude": 139.4174962 , "names":["新鶴ヶ島線-16"]}
+        ,{"latitude":35.948649, "longitude": 139.4206993 , "names":["新鶴ヶ島線-17"]}
+        ,{"latitude":35.9507002, "longitude": 139.4234858 , "names":["新鶴ヶ島線-18"]}
+        ,{"latitude":35.9531786, "longitude": 139.4258932 , "names":["新鶴ヶ島線-19"]}
+        ,{"latitude":35.955693, "longitude": 139.4283439 , "names":["新鶴ヶ島線-20"]}
+        ,{"latitude":35.9578345, "longitude": 139.4304496 , "names":["新鶴ヶ島線-21"]}
+        ,{"latitude":35.9599206, "longitude": 139.4332979 , "names":["新鶴ヶ島線-22"]}
+        ,{"latitude":35.9611151, "longitude": 139.4349751 , "names":["新鶴ヶ島線-23"]}
+        ,{"latitude":35.9631136, "longitude": 139.4376336 , "names":["東京中線-2027"]}
+        ,{"latitude":35.9644922, "longitude": 139.4395227 , "names":["東京中線-2028"]}
+        ,{"latitude":35.9672623, "longitude": 139.4420669 , "names":["東京中線-2029"]}
+        ,{"latitude":35.9704149, "longitude": 139.4450541 , "names":["東京中線-2030"]}
+        ,{"latitude":35.9722953, "longitude": 139.4484359 , "names":["東京中線-2031"]}
+        ,{"latitude":35.974763, "longitude": 139.4528491 , "names":["東京中線-2032"]}
+        ,{"latitude":35.9772179, "longitude": 139.4572998 , "names":["東京中線-2033"]}
+        ,{"latitude":35.9792253, "longitude": 139.460914 , "names":["東京中線-2034"]}
+        ,{"latitude":35.9808808, "longitude": 139.4641289 , "names":["東京中線-2035"]}
+        ,{"latitude":35.9824214, "longitude": 139.4671434 , "names":["東京中線-2036"]}
+        ,{"latitude":35.9841498, "longitude": 139.4704777 , "names":["東京中線-2037"]}
+        ,{"latitude":35.9855504, "longitude": 139.4725929 , "names":["東京中線-2038"]}
+        ,{"latitude":35.9868089, "longitude": 139.4763339 , "names":["東京中線-2039"]}
+        ,{"latitude":35.9881855, "longitude": 139.4803887 , "names":["東京中線-2040"]}
+        ,{"latitude":35.9892238, "longitude": 139.4834666 , "names":["東京中線-2041"]}
+        ,{"latitude":35.9908404, "longitude": 139.4882609 , "names":["東京中線-2042"]}
+        ,{"latitude":35.992258, "longitude": 139.4925863 , "names":["東京中線-2043"]}
+        ,{"latitude":35.9927535, "longitude": 139.4966129 , "names":["東京中線-2044"]}
+        ,{"latitude":35.9929891, "longitude": 139.4992115 , "names":["東京中線-2045"]}
+        ,{"latitude":35.995097, "longitude": 139.5021938 , "names":["東京中線-2046"]}
+        ,{"latitude":35.9977277, "longitude": 139.5058406 , "names":["東京中線-2047"]}
+        ,{"latitude":35.9999096, "longitude": 139.5088755 , "names":["東京中線-2048"]}
+        ,{"latitude":36.0014131, "longitude": 139.5113916 , "names":["東京中線-2049"]}
+        ,{"latitude":36.0030626, "longitude": 139.5140499 , "names":["東京中線-2050"]}
+        ,{"latitude":36.0035441, "longitude": 139.5171287 , "names":["東京中線-2051"]}
+        ,{"latitude":36.0040757, "longitude": 139.5206709 , "names":["東京中線-2052"]}
+        ,{"latitude":36.0045589, "longitude": 139.5238941 , "names":["東京中線-2053"]}
+        ,{"latitude":36.0060644, "longitude": 139.5270926 , "names":["東京中線-2054"]}
+        ,{"latitude":36.0079818, "longitude": 139.5311657 , "names":["東京中線-2055"]}
+        ,{"latitude":36.0095318, "longitude": 139.5344419 , "names":["東京中線-2056"]}
+        ,{"latitude":36.0113922, "longitude": 139.5384588 , "names":["東京中線-2057"]}
+        ,{"latitude":36.0128867, "longitude": 139.5405576 , "names":["東京中線-2058"]}
+        ,{"latitude":36.0145154, "longitude": 139.5427365 , "names":["東京中線-2059"]}
+        ,{"latitude":36.0150817, "longitude": 139.5460453 , "names":["東京中線-2060"]}
+        ,{"latitude":36.01649, "longitude": 139.5490201 , "names":["東京中線-2061"]}
+        ,{"latitude":36.0174423, "longitude": 139.5523772 , "names":["東京中線-2062"]}
+        ,{"latitude":36.0183191, "longitude": 139.5553109 , "names":["東京中線-2063"]}
+        ,{"latitude": 36.0814159, "longitude": 139.4958983, "names": ["東埼玉線-1"]}
+        ,{"latitude": 36.0833935, "longitude": 139.4979561, "names": ["東埼玉線-2"]}
+        ,{"latitude": 36.0817367, "longitude": 139.5000639, "names": ["東埼玉線-3"]}
+        ,{"latitude": 36.0803688, "longitude": 139.5017863, "names": ["東埼玉線-4"]}
+        ,{"latitude": 36.0789799, "longitude": 139.5035295, "names": ["東埼玉線-5"]}
+        ,{"latitude": 36.0776255, "longitude": 139.5052199, "names": ["東埼玉線-6"]}
+        ,{"latitude": 36.0762948, "longitude": 139.5068993, "names": ["東埼玉線-7"]}
+        ,{"latitude": 36.0749326, "longitude": 139.5086192, "names": ["東埼玉線-8"]}
+        ,{"latitude": 36.0735959, "longitude": 139.5102916, "names": ["東埼玉線-9"]}
+        ,{"latitude": 36.0722258, "longitude": 139.5120089, "names": ["東埼玉線-10"]}
+        ,{"latitude": 36.0710286, "longitude": 139.5135029, "names": ["東埼玉線-11"]}
+        ,{"latitude": 36.0696354, "longitude": 139.5152451, "names": ["東埼玉線-12"]}
+        ,{"latitude": 36.0683592, "longitude": 139.5168448, "names": ["東埼玉線-13"]}
+        ,{"latitude": 36.0669787, "longitude": 139.5185707, "names": ["東埼玉線-14"]}
+        ,{"latitude": 36.0655983, "longitude": 139.5203096, "names": ["東埼玉線-15"]}
+        ,{"latitude": 36.0642067, "longitude": 139.5220559, "names": ["東埼玉線-16"]}
+        ,{"latitude": 36.0628701, "longitude": 139.5237329, "names": ["東埼玉線-17"]}
+        ,{"latitude": 36.0615456, "longitude": 139.525392, "names": ["東埼玉線-18"]}
+        ,{"latitude": 36.0600561, "longitude": 139.5268946, "names": ["東埼玉線-19"]}
+        ,{"latitude": 36.0585557, "longitude": 139.5284309, "names": ["東埼玉線-20"]}
+        ,{"latitude": 36.0570803, "longitude": 139.5299246, "names": ["東埼玉線-21"]}
+        ,{"latitude": 36.055417, "longitude": 139.5316067, "names": ["東埼玉線-22"]}
+        ,{"latitude": 36.0540579, "longitude": 139.5329619, "names": ["東埼玉線-23"]}
+        ,{"latitude": 36.0525929, "longitude": 139.5344679, "names": ["東埼玉線-24"]}
+        ,{"latitude": 36.0510901, "longitude": 139.5359627, "names": ["東埼玉線-25"]}
+        ,{"latitude": 36.0497209, "longitude": 139.5376755, "names": ["東埼玉線-26"]}
+        ,{"latitude": 36.0483545, "longitude": 139.5393682, "names": ["東埼玉線-27"]}
+        ,{"latitude": 36.046991, "longitude": 139.5410574, "names": ["東埼玉線-28"]}
+        ,{"latitude": 36.0453243, "longitude": 139.5423085, "names": ["東埼玉線-29"]}
+        ,{"latitude": 36.0429134, "longitude": 139.5441005, "names": ["東埼玉線-30"]}
+        ,{"latitude": 36.0404441, "longitude": 139.5459338, "names": ["東埼玉線-32"], "memo": "東埼玉線-31は欠番"}
+        ,{"latitude": 36.0369495, "longitude": 139.5469672, "names": ["東埼玉線-34"], "memo": "東埼玉線-33は欠番"}
+        ,{"latitude": 36.0348441, "longitude": 139.5487942, "names": ["東埼玉線-35"]}
+        ,{"latitude": 36.0322501, "longitude": 139.5510892, "names": ["東埼玉線-37"], "memo": "東埼玉線-39は欠番"}
+        ,{"latitude": 36.0303081, "longitude": 139.552277, "names": ["東埼玉線-38"]}
+        ,{"latitude": 36.0272421, "longitude": 139.5541668, "names": ["東埼玉線-40"], "memo": "東埼玉線-39は欠番"}
+        ,{"latitude": 36.0244298, "longitude": 139.555865, "names": ["東埼玉線-41"]}
+        ,{"latitude": 36.0216109, "longitude": 139.5575946, "names": ["東埼玉線-43"], "memo": "東埼玉線-42は欠番"}
+        ,{"latitude": 36.0188045, "longitude": 139.5592911, "names": ["東京中線-2064", "東埼玉線-45", "上尾線-0"], "memo": "東埼玉線-44は欠番"}
+        ,{"latitude": 36.0179996, "longitude": 139.559774, "names": ["上尾線-1", "東埼玉線-46"]}
+        ,{"latitude": 36.0159234, "longitude": 139.5622132, "names": ["上尾線-2", "東埼玉線-47"]}
+        ,{"latitude": 36.013725, "longitude": 139.564832, "names": ["上尾線-3", "東埼玉線-48"]}
+        ,{"latitude": 36.0121353, "longitude": 139.5667494, "names": ["上尾線-4", "東埼玉線-49"]}
+        ,{"latitude": 36.010935, "longitude": 139.5687954, "names": ["上尾線-5", "東埼玉線-50"]}
+        ,{"latitude": 36.0098584, "longitude": 139.5706376, "names": ["上尾線-6", "東埼玉線-51"]}
+        ,{"latitude": 36.0097104, "longitude": 139.5717505, "names": ["上尾線-7", "東埼玉線-52"]}
+        ,{"latitude": 36.0087726, "longitude": 139.5724165, "names": ["上尾線-8", "東埼玉線-53"]}
+        ,{"latitude": 36.0071314, "longitude": 139.5742953, "names": ["上尾線-9", "東埼玉線-54"]}
+        ,{"latitude": 36.0045276, "longitude": 139.577192, "names": ["上尾線-10", "東埼玉線-55"]}
+        ,{"latitude": 36.0018331, "longitude": 139.5802386, "names": ["上尾線-11", "東埼玉線-56"]}
+        ,{"latitude": 35.99966, "longitude": 139.5831759, "names": ["上尾線-12", "東埼玉線-57"]}
+        ,{"latitude": 35.9977903, "longitude": 139.5857094, "names": ["上尾線-13", "東埼玉線-58"]}
+        ,{"latitude": 35.9959605, "longitude": 139.5886928, "names": ["上尾線-14", "東埼玉線-59"]}
+        ,{"latitude": 35.9940344, "longitude": 139.5917849, "names": ["上尾線-15", "東埼玉線-60"]}
+        ,{"latitude": 35.9920639, "longitude": 139.5949692, "names": ["上尾線-16", "東埼玉線-61"]}
+        ,{"latitude": 35.9901867, "longitude": 139.59793, "names": ["上尾線-17", "東埼玉線-62"]}
+        ,{"latitude": 35.988808, "longitude": 139.6001721, "names": ["上尾線-18", "東埼玉線-63"]}
+        ,{"latitude": 35.9873305, "longitude": 139.6025903, "names": ["上尾線-19", "東埼玉線-64"]}
+        ,{"latitude": 35.9847857, "longitude": 139.604577, "names": ["上尾線-20", "東埼玉線-65"]}
+        ,{"latitude": 35.9825569, "longitude": 139.6063852, "names": ["上尾線-21", "東埼玉線-66"]}
+        ,{"latitude": 35.9795866, "longitude": 139.6087814, "names": ["上尾線-22", "東埼玉線-67"]}
+        ,{"latitude": 35.9766385, "longitude": 139.611138, "names": ["上尾線-23", "東埼玉線-68"]}
+        ,{"latitude": 35.9737848, "longitude": 139.6134234, "names": ["上尾線-24", "東埼玉線-69"]}
+        ,{"latitude": 35.9715314, "longitude": 139.6152271, "names": ["上尾線-25", "東埼玉線-70"]}
+        ,{"latitude": 35.9706801, "longitude":139.615065, "names": ["上尾線-26"]}
+        ,{"latitude": 35.9691131, "longitude":139.612677, "names": ["上尾線-27"]}
+        ,{"latitude": 35.9695359, "longitude": 139.6168301, "names": ["東埼玉線-71"]}
+        ,{"latitude": 35.9679342, "longitude": 139.6181189, "names": ["東埼玉線-72"]}
+        ,{"latitude": 35.9663221, "longitude": 139.6194112, "names": ["東埼玉線-73"]}
+        ,{"latitude": 35.9647471, "longitude": 139.6206778, "names": ["東埼玉線-74"]}
+        ,{"latitude": 35.9622818, "longitude": 139.6226611, "names": ["東埼玉線-75"]}
+        ,{"latitude": 35.9599524, "longitude": 139.6245334, "names": ["東埼玉線-76"]}
+        ,{"latitude": 35.9583563, "longitude": 139.6258101, "names": ["東埼玉線-77"]}
+        ,{"latitude": 35.9567532, "longitude": 139.6271039, "names": ["東埼玉線-78"]}
+        ,{"latitude": 35.9552299, "longitude": 139.628324, "names": ["東埼玉線-79"]}
+        ,{"latitude": 35.9544524, "longitude": 139.6306582, "names": ["東埼玉線-80"]}
+        ,{"latitude": 35.9537335, "longitude": 139.6327918, "names": ["東埼玉線-81"]}
+        ,{"latitude": 35.953009, "longitude": 139.6349779, "names": ["東埼玉線-82"]}
+        ,{"latitude": 35.9522505, "longitude": 139.6372461, "names": ["東埼玉線-83"]}
+        ,{"latitude": 35.9514831, "longitude": 139.6395112, "names": ["東埼玉線-84"]}
+        ,{"latitude": 35.9508974, "longitude": 139.6411857, "names": ["東埼玉線-85"]}
+        ,{"latitude": 35.9502095, "longitude": 139.6432219, "names": ["東埼玉線-86"]}
+        ,{"latitude": 35.9495365, "longitude": 139.6452733, "names": ["東埼玉線-87"]}
+        ,{"latitude": 35.9488532, "longitude": 139.6472557, "names": ["東埼玉線-88"]}
+        ,{"latitude": 35.948206, "longitude": 139.649233, "names": ["東埼玉線-89"]}
+        ,{"latitude": 35.9475196, "longitude": 139.6512482, "names": ["東埼玉線-90"]}
+        ,{"latitude": 35.9468206, "longitude": 139.6533095, "names": ["東埼玉線-91"]}
+        ,{"latitude": 35.9460805, "longitude": 139.6555316, "names": ["東埼玉線-92"]}
+        ,{"latitude": 35.9456022, "longitude": 139.6579461, "names": ["東埼玉線-93"]}
+        ,{"latitude": 35.9451141, "longitude": 139.6603163, "names": ["東埼玉線-94"]}
+        ,{"latitude": 35.944677, "longitude": 139.6625707, "names": ["東埼玉線-95"]}
+        ,{"latitude": 35.9438606, "longitude": 139.665179, "names": ["東埼玉線-96"]}
+        ,{"latitude": 35.9426472, "longitude": 139.6685599, "names": ["東埼玉線-98"]}
+        ,{"latitude": 35.9418377, "longitude": 139.6706492, "names": ["東埼玉線-99"]}
+        ,{"latitude": 35.940997, "longitude": 139.6727755, "names": ["東埼玉線-100"]}
+        ,{"latitude": 35.9406264, "longitude": 139.6740109, "names": ["東埼玉線-101"]}
+        ,{"latitude": 35.9403589, "longitude": 139.6748835, "names": ["東埼玉線-102"]}
+        ,{"latitude": 35.9397195, "longitude": 139.6769954, "names": ["東埼玉線-103"]}
+        ,{"latitude": 35.9392115, "longitude": 139.6786736, "names": ["東埼玉線-104"]}
+        ,{"latitude": 35.9385244, "longitude": 139.680992, "names": ["東埼玉線-105"]}
+        ,{"latitude": 35.9377997, "longitude": 139.6832845, "names": ["東埼玉線-106"]}
+        ,{"latitude": 35.9371593, "longitude": 139.685353, "names": ["東埼玉線-107"]}
+        ,{"latitude": 35.9354673, "longitude": 139.6884515, "names": ["東埼玉線-108"], "memo": "番号誤りの可能性あり"}
+        ,{"latitude": 35.9339302, "longitude": 139.6911946, "names": ["東埼玉線-110"]}
+        ,{"latitude": 35.9324576, "longitude": 139.6939665, "names": ["東埼玉線-111"]}
+        ,{"latitude": 35.9310079, "longitude": 139.6965329, "names": ["東埼玉線-113"]}
+        ,{"latitude": 35.9290468, "longitude": 139.7001311, "names": ["東埼玉線-114"]}
+        ,{"latitude": 35.9279801, "longitude": 139.7020716, "names": ["東埼玉線-115"]}
+        ,{"latitude": 35.9265713, "longitude": 139.7046462, "names": ["東埼玉線-116"]}
+        ,{"latitude": 35.9257279, "longitude": 139.7062043, "names": ["東埼玉線-117"]}
+        ,{"latitude": 35.9246387, "longitude": 139.7081422, "names": ["東埼玉線-118"]}
+        ,{"latitude": 35.9237908, "longitude": 139.7102501, "names": ["東埼玉線-119"]}
+        ,{"latitude": 35.9232677, "longitude": 139.7126481, "names": ["東埼玉線-120"]}
+        ,{"latitude": 35.9227745, "longitude": 139.7149256, "names": ["東埼玉線-121"]}
+        ,{"latitude": 35.9222758, "longitude": 139.7171452, "names": ["東埼玉線-122"]}
+        ,{"latitude": 35.9228053, "longitude": 139.7180979, "names": ["東埼玉線-123"]}
+        ,{"latitude": 35.9236773, "longitude": 139.7178859, "names": ["東埼玉線-124"]}
+        ,{"latitude":36.0193314, "longitude": 139.563988 , "names":["東京中線-2065"]}
+        ,{"latitude":36.0197066, "longitude": 139.5673639, "names":["東京中線-2066"]}
+        ,{"latitude":36.0206875, "longitude": 139.5707586, "names":["東京中線-2067"]}
+        ,{"latitude":36.0216644, "longitude": 139.5742377, "names":["東京中線-2068"]}
+        ,{"latitude":36.0227245, "longitude": 139.5780157, "names":["東京中線-2069"]}
+        ,{"latitude":36.02374  , "longitude": 139.5815934, "names":["東京中線-2070"]}
+        ,{"latitude":36.0240498, "longitude": 139.5852484, "names":["東京中線-2071"]}
+        ,{"latitude":36.0244361, "longitude": 139.5893445, "names":["東京中線-2072"]}
+        ,{"latitude":36.0248098, "longitude": 139.5937336, "names":["東京中線-2073"]}
+        ,{"latitude":36.0259902, "longitude": 139.5948806, "names":["東京中線-2073-1"]}
+        ,{"latitude":36.0251429, "longitude": 139.5975377, "names":["東京中線-2074"]}
+        ,{"latitude":36.0254873, "longitude": 139.6015847, "names":["東京中線-2075"]}
+        ,{"latitude":36.02574  , "longitude": 139.6050166, "names":["東京中線-2076"]}
+        ,{"latitude":36.0269133, "longitude": 139.6084649, "names":["東京中線-2077"]}
+        ,{"latitude":36.0279226, "longitude": 139.6114688, "names":["東京中線-2078"]}
+        ,{"latitude":36.0288694, "longitude": 139.6142612, "names":["東京中線-2079"]}
+        ,{"latitude":36.0300163, "longitude": 139.6176218, "names":["東京中線-2080"]}
+        ,{"latitude":36.0312688, "longitude": 139.6213047, "names":["東京中線-2081"]}
+        ,{"latitude":36.0324905, "longitude": 139.6249767, "names":["東京中線-2082"]}
+        ,{"latitude":36.0340114, "longitude": 139.6294877, "names":["東京中線-2083"]}
+        ,{"latitude":36.0352907, "longitude": 139.6332887, "names":["東京中線-2084"]}
+        ,{"latitude":36.036154 , "longitude": 139.6364383, "names":["東京中線-2085"]}
+        ,{"latitude":36.0372164, "longitude": 139.6403843, "names":["東京中線-2086"]}
+        ,{"latitude":36.0379084, "longitude": 139.6428901, "names":["東京中線-2087"]}
+        ,{"latitude":36.0387923, "longitude": 139.646169 , "names":["東京中線-2088"]}
+        ,{"latitude":36.0381252, "longitude": 139.6485462, "names":["東京中線-2089"]}
+        ,{"latitude":36.0371701, "longitude": 139.6519443, "names":["東京中線-2090"]}
+        ,{"latitude":36.0363187, "longitude": 139.6549597, "names":["東京中線-2091"]}
+        ,{"latitude":36.0353212, "longitude": 139.6585275, "names":["東京中線-2092"]}
+        ,{"latitude":36.0342585, "longitude": 139.6622899, "names":["東京中線-2093"]}
+        ,{"latitude":36.0333741, "longitude": 139.6654645, "names":["東京中線-2094"]}
+        ,{"latitude":36.0321447, "longitude": 139.6690244, "names":["東京中線-2095"]}
+        ,{"latitude":36.0307496, "longitude": 139.6729799, "names":["東京中線-2096"]}
+        ,{"latitude":36.0304158, "longitude": 139.6768976, "names":["東京中線-2097"]}
+        ,{"latitude":36.0301334, "longitude": 139.6803356, "names":["東京中線-2098"]}
+        ,{"latitude":36.0298536, "longitude": 139.6836613, "names":["東京中線-2099"]}
+        ,{"latitude":36.0295439, "longitude": 139.6875133, "names":["東京中線-2100"]}
+        ,{"latitude":36.0279472, "longitude": 139.6906519, "names":["東京中線-2101"]}
+        ,{"latitude":35.86011, "longitude": 139.6648202 , "names":["芝川線-1"]}
+        ,{"latitude":35.8605128, "longitude": 139.666955 , "names":["芝川線-2"]}
+        ,{"latitude":35.8609624, "longitude": 139.6692404 , "names":["芝川線-3"]}
+        ,{"latitude":35.8614929, "longitude": 139.6709525 , "names":["芝川線-4"]}
+        ,{"latitude":35.8615537, "longitude": 139.6728647 , "names":["芝川線-5"]}
+        ,{"latitude":35.8616563, "longitude": 139.6757755 , "names":["芝川線-6"]}
+        ,{"latitude":35.8617086, "longitude": 139.6777905 , "names":["芝川線-7"]}
+        ,{"latitude":35.8624934, "longitude": 139.6798806 , "names":["芝川線-8"]}
+        ,{"latitude":35.8628775, "longitude": 139.6811201 , "names":["芝川線-9"]}
+        ,{"latitude":35.8631566, "longitude": 139.6816454 , "names":["芝川線-10"]}
+        ,{"latitude":35.8640728, "longitude": 139.6841371 , "names":["芝川線-11"]}
+        ,{"latitude":35.8645361, "longitude": 139.6862264 , "names":["芝川線-12"]}
+        ,{"latitude":35.8650395, "longitude": 139.6883449 , "names":["芝川線-13"]}
+        ,{"latitude":35.8654919, "longitude": 139.6902273 , "names":["芝川線-14"]}
+        ,{"latitude":35.8661359, "longitude": 139.6929465 , "names":["芝川線-15"]}
+        ,{"latitude":35.8666457, "longitude": 139.6950629 , "names":["芝川線-16"]}
+        ,{"latitude":35.8673018, "longitude": 139.6977308 , "names":["芝川線-17"]}
+        ,{"latitude":35.8678566, "longitude": 139.7001431 , "names":["芝川線-18"]}
+        ,{"latitude":35.8683315, "longitude": 139.7023567 , "names":["芝川線-19"]}
+        ,{"latitude":35.8689934, "longitude": 139.7056062 , "names":["芝川線-20"]}
+        ,{"latitude":35.869487, "longitude": 139.7079811 , "names":["芝川線-21"]}
+        ,{"latitude":35.8694845, "longitude": 139.7098784 , "names":["芝川線-22"]}
+        ,{"latitude":35.8694684, "longitude": 139.7139336 , "names":["芝川線-23"]}
+        ,{"latitude":35.8713918, "longitude": 139.7129933 , "names":["芝川線-24"]}
+        ,{"latitude":35.8734392, "longitude": 139.712306 , "names":["芝川線-25"]}
+        ,{"latitude":35.8758315, "longitude": 139.7116508 , "names":["芝川線-26"]}
+        ,{"latitude":35.8781766, "longitude": 139.7097478 , "names":["芝川線-27"]}
+        ,{"latitude":35.8796732, "longitude": 139.7076012 , "names":["芝川線-28"]}
+        ,{"latitude":35.8819865, "longitude": 139.7058711 , "names":["芝川線-29"]}
+        ,{"latitude":35.8836269, "longitude": 139.7046276 , "names":["芝川線-30"]}
+        ,{"latitude":35.8858991, "longitude": 139.70289 , "names":["芝川線-31"]}
+        ,{"latitude":35.8883821, "longitude": 139.7022661 , "names":["芝川線-32"]}
+        ,{"latitude":35.8911833, "longitude": 139.7015834 , "names":["芝川線-33"]}
+        ,{"latitude":35.8936959, "longitude": 139.7011568 , "names":["芝川線-34"]}
+        ,{"latitude":35.8968188, "longitude": 139.7015251 , "names":["芝川線-35"]}
+        ,{"latitude":35.8997343, "longitude": 139.7008835 , "names":["芝川線-36"]}
+        ,{"latitude":35.9018526, "longitude": 139.6991675 , "names":["芝川線-37"]}
+        ,{"latitude":35.9037239, "longitude": 139.6973944 , "names":["芝川線-38"]}
+        ,{"latitude":35.9054772, "longitude": 139.6957874 , "names":["芝川線-39"]}
+        ,{"latitude":35.9064568, "longitude": 139.6978811 , "names":["芝川線-40"]}
+        ,{"latitude":35.9080117, "longitude": 139.700484 , "names":["芝川線-41"]}
+        ,{"latitude":35.9099063, "longitude": 139.7032987 , "names":["芝川線-42"]}
+        ,{"latitude":35.911813, "longitude": 139.7046841 , "names":["芝川線-43"]}
+        ,{"latitude":35.912606, "longitude": 139.7068203 , "names":["芝川線-44"]}
+        ,{"latitude":35.9133615, "longitude": 139.7089709 , "names":["芝川線-45"]}
+        ,{"latitude":35.9160444, "longitude": 139.711865 , "names":["芝川線-46"]}
+        ,{"latitude":35.9183539, "longitude": 139.7143421 , "names":["芝川線-47"]}
+        ,{"latitude":35.9202521, "longitude": 139.7163627 , "names":["芝川線-48"]}
+        ,{"latitude":35.9211209, "longitude": 139.7186995 , "names":["芝川線-49"]}
+        ,{"latitude":35.9221424, "longitude": 139.7187269 , "names":["芝川線-50"]}
+        ,{"latitude":35.9230274, "longitude": 139.7186549 , "names":["芝川線-51"]}
     ]
 }
