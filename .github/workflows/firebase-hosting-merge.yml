@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
-      - run: sed -e 's/${googleMapApiKey}/${{ secrets.GOOGLE_MAP_PLATFORM_APIKEY }}/g' ./web/index.html
+      - run: sed -e 's/${googleMapApiKey}/${{ secrets.GOOGLE_MAP_PLATFORM_APIKEY }}/' web/index.html
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
