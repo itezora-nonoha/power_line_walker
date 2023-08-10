@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
-      - run: cat web/index.html
-      - run: sed -e 's/${googleMapApiKey}/${{ secrets.GOOGLE_MAP_PLATFORM_APIKEY }}/' web/index.html
+      - run: cat /home/runner/work/power_line_walker/power_line_walker/web/index.html
+      - run: sed -e 's/${googleMapApiKey}/${{ secrets.GOOGLE_MAP_PLATFORM_APIKEY }}/' /home/runner/work/power_line_walker/power_line_walker/web/index.html
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
