@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.3.0
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.7'
+          channel: 'stable'
       - run: flutter pub get
       - run: flutter build web --release
       - uses: FirebaseExtended/action-hosting-deploy@v0
