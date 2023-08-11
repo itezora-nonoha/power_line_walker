@@ -10,10 +10,10 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - run: ls ./web
       - name: Loading Secret API Key
-        run: sed -e 's/${googleMapApiKey}/${{ secrets.GOOGLE_MAP_PLATFORM_APIKEY }}/' index.html
-      - uses: actions/checkout@v3
+        run: sed -e 's/${googleMapApiKey}/${{ secrets.GOOGLE_MAP_PLATFORM_APIKEY }}/' ./web/index.html
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
