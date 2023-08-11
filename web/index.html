@@ -40,6 +40,27 @@
   <script src="flutter.js" defer></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=${googleMapApiKey}"></script>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "{$firebaseAppConfigKey}",
+    authDomain: "powerlinewalker.firebaseapp.com",
+    projectId: "powerlinewalker",
+    storageBucket: "powerlinewalker.appspot.com",
+    messagingSenderId: "126907591682",
+    appId: "1:126907591682:web:b2c63dc3a6e344d1ad4b1b"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
+
 </head>
 <body>
   <script>
