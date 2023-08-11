@@ -99,7 +99,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   void _createMarkerAndPowerLine(Map<String, dynamic> map) {
-  Map<String, List<LatLng>> = powerLinePoints = {};
+  Map<String, List<LatLng>> powerLinePoints = {};
     // Map<String, BitmapDescriptor> powerLineIcon = {};
 
     // for (var li = 0; li < map['powerLines'].length; li++) {
