@@ -190,7 +190,7 @@ class MapSampleState extends State<MapSample> {
         polylineId: PolylineId(name),
         points: powerLinePoints[name]!,
         color: powerLineColor,
-        width: 10,
+        width: 13,
       );
       powerLineList.add(p);
     }
