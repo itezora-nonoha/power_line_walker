@@ -99,7 +99,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   void _createMarkerAndPowerLine(Map<String, dynamic> map) {
-  Map<String, Map<String, LatLng>> = powerLinePoints = {};
+  Map<String, List<LatLng>> = powerLinePoints = {};
     // Map<String, BitmapDescriptor> powerLineIcon = {};
 
     // for (var li = 0; li < map['powerLines'].length; li++) {
@@ -157,7 +157,7 @@ class MapSampleState extends State<MapSample> {
         position: latlng,
         icon: towerIcon,
         visible: true,
-        // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
+        // anchor: const Offset(0.5, 15), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
       ));
     }
 
