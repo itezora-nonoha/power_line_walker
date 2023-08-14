@@ -7,6 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'PowerLineData.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -25,21 +27,24 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
+  late PowerLineData powerLineData = PowerLineData();
   String _appBarTitle = "Power Line Walker";
   String displayType = 'Marker';
   Set<Marker> markerSet = {};
-  late Map<String, dynamic> map;
+  late Map<String, dynamic> map = json.decode('{"points":[{"latitude":35,"longitude:135,"names":["模擬線-1"]}]}');
   late BitmapDescriptor tower500kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower154kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower66kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV154kV = BitmapDescriptor.defaultMarker;
   List<Polyline> powerLineList = [];
+
   @override
   void initState() {
     super.initState();
     setMarkerImage();
-    loadJsonAsset();
+    powerLineData.loadFromJsonFile();
+    // loadJsonAsset();
   }
 
   Future<void> setMarkerImage() async {
@@ -72,33 +77,51 @@ class MapSampleState extends State<MapSample> {
     }
   }
 
-  // json文字列→jsonオブジェクト
-  dynamic stringToObject(String jsonText) {
-    dynamic data;
 
-    try {
-      data = json.decode(jsonText);
-    } catch (e) {
-      data = null;
-    }
-    return data;
-  }
+  // // json文字列→jsonオブジェクト
+  // dynamic stringToObject(String jsonText) {
+  //   dynamic data;
 
-  String _gotString = "Load JSON Data";
-  String get gotString => this._gotString;
+  //   try {
+  //     data = json.decode(jsonText);
+  //   } catch (e) {
+  //     data = null;
+  //   }
+  //   return data;
+  // }
 
-  Future<void> getJsonText(String filePath) async {
-    _gotString = await rootBundle.loadString(filePath);
-  }
+  // String _gotString = "Load JSON Data";
+  // String get gotString => _gotString;
 
-  void loadJsonAsset() {
-    getJsonText("assets/higashisaitama.json").then((value) {
-      map = json.decode(gotString);
-      _createMarkerAndPowerLine(map);
-    });
+  // Future<void> getJsonText(String filePath) async {
+  //   _gotString = await rootBundle.loadString(filePath);
+  //   map = await json.decode(gotString);
+  // }
+
+  // Future<void> loadJsonAsset() async{
+  //   // await getJsonText("assets/higashisaitama.json").then((value) {
+  //   await getJsonText("assets/higashisaitama.json");
+  //   map = json.decode(gotString);
+  //   _createMarkerAndPowerLine(map);
+  // }
+
+  Future<String> loadJsonFile() async {
+  // Future<Map<String, dynamic>?> loadJsonFile() async {
+    // String str;
+    // str = await rootBundle.loadString("assets/higashisaitama.json");
+    // map = json.decode(str);
+    map =  powerLineData.getPoints();
+    _createMarkerAndPowerLine(map);
+    return "complete";
   }
 
   void _createMarkerAndPowerLine(Map<String, dynamic> map) {
+  // void _createMarkerAndPowerLine() {
+    
+    // print(powerLineData.name);
+    // map = powerLineData.getPoints();
+    // PowerLineData powerLineData = PowerLineData();
+    
     Map<String, List<LatLng>> powerLinePoints = {};
     // Map<String, BitmapDescriptor> powerLineIcon = {};
 
@@ -257,18 +280,43 @@ class MapSampleState extends State<MapSample> {
 
   @override
   Widget build(BuildContext context) {
-    // _createMarker();
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.purple,
-          title: Text(_appBarTitle),
-        ),
-        drawer: const Drawer(
-            child: Center(
-          child: Text("Drawer"),
-        )),
-        body: (displayType == 'Marker')
+    return FutureBuilder(
+      
+      future: loadJsonFile(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          // var data = snapshot.data;
+          return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.purple,
+                title: Text(_appBarTitle),
+              ),
+              drawer: const Drawer(
+                child: Center(
+                  child: Text("Drawer")
+                )
+              ),
+            body: (displayType == 'Marker')
             ? generateGoogleMapWithMarker()
-            : generateGoogleMapWithPolyLine());
+            : generateGoogleMapWithPolyLine()
+          );
+        } else {
+          return Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.purple,
+                title: Text(_appBarTitle),
+              ),
+              drawer: const Drawer(
+                child: Center(
+                  child: Text("Drawer")
+                )
+              ),
+              body: const Center(
+                  child: Text('処理中...')
+              )
+          );
+        }
+      }
+    );
   }
 }
