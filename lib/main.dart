@@ -44,7 +44,6 @@ class MapSampleState extends State<MapSample> {
     super.initState();
     setMarkerImage();
     powerLineData.loadFromJsonFile();
-    // loadJsonAsset();
   }
 
   Future<void> setMarkerImage() async {
@@ -77,63 +76,15 @@ class MapSampleState extends State<MapSample> {
     }
   }
 
-
-  // // json文字列→jsonオブジェクト
-  // dynamic stringToObject(String jsonText) {
-  //   dynamic data;
-
-  //   try {
-  //     data = json.decode(jsonText);
-  //   } catch (e) {
-  //     data = null;
-  //   }
-  //   return data;
-  // }
-
-  // String _gotString = "Load JSON Data";
-  // String get gotString => _gotString;
-
-  // Future<void> getJsonText(String filePath) async {
-  //   _gotString = await rootBundle.loadString(filePath);
-  //   map = await json.decode(gotString);
-  // }
-
-  // Future<void> loadJsonAsset() async{
-  //   // await getJsonText("assets/higashisaitama.json").then((value) {
-  //   await getJsonText("assets/higashisaitama.json");
-  //   map = json.decode(gotString);
-  //   _createMarkerAndPowerLine(map);
-  // }
-
   Future<String> loadJsonFile() async {
-  // Future<Map<String, dynamic>?> loadJsonFile() async {
-    // String str;
-    // str = await rootBundle.loadString("assets/higashisaitama.json");
-    // map = json.decode(str);
     map =  powerLineData.getPoints();
     _createMarkerAndPowerLine(map);
     return "complete";
   }
 
   void _createMarkerAndPowerLine(Map<String, dynamic> map) {
-  // void _createMarkerAndPowerLine() {
-    
-    // print(powerLineData.name);
-    // map = powerLineData.getPoints();
-    // PowerLineData powerLineData = PowerLineData();
     
     Map<String, List<LatLng>> powerLinePoints = {};
-    // Map<String, BitmapDescriptor> powerLineIcon = {};
-
-    // for (var li = 0; li < map['powerLines'].length; li++) {
-    //   var entry = map['powerLines'][li];
-    //   String name = entry['name'];
-    //   if (entry['transmissionVoltage'] == 154) {
-    //     powerLineIcon[name] = tower154kV;
-    //   } else if (entry['transmissionVoltage'] == 275) {
-    //     powerLineIcon[name] = tower275kV;
-    //   }
-    // }
 
     String powerLineName;
     String name;
@@ -158,7 +109,6 @@ class MapSampleState extends State<MapSample> {
         powerLinePoints[powerLineName]?.add(latlng);
       }
       // Markerの作成
-      // var towerIcon = powerLineIcon[towerlabel.split('-')[0]];
       var towerIcon = BitmapDescriptor.defaultMarker;
 
       // その鉄塔における送電電圧リストの作成
