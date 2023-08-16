@@ -9,7 +9,13 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:power_line_walker/PowerLineData.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -77,7 +83,7 @@ class MapSampleState extends State<MapSample> {
   }
 
   Future<String> loadJsonFile() async {
-    map =  powerLineData.getPoints();
+    map = powerLineData.getPoints();
     _createMarkerAndPowerLine(map);
     return "complete";
   }
@@ -168,7 +174,6 @@ class MapSampleState extends State<MapSample> {
       powerLineList.add(p);
     }
 
-    setState(() {});
   }
 
   void _onTapMarker(Marker marker) {
@@ -196,24 +201,26 @@ class MapSampleState extends State<MapSample> {
 
   GoogleMap generateGoogleMapWithMarker() {
     return GoogleMap(
-        webGestureHandling: WebGestureHandling.greedy,
-        zoomGesturesEnabled: true,
-        mapType: MapType.hybrid,
-        initialCameraPosition: const CameraPosition(
-          zoom: 15,
-          target: LatLng(35.9522505, 139.6372461),
-        ),
-        onTap: (LatLng latLng) {
-          _changeAppBarTitle(latLng.toString());
-        },
-        fortyFiveDegreeImageryEnabled: true,
-        onCameraMove: (position) => {_changedCamera(position)},
-        markers: Set.from(markerSet));
+      webGestureHandling: WebGestureHandling.greedy,
+      // zoomControlsEnabled: false,
+      zoomGesturesEnabled: true,
+      mapType: MapType.hybrid,
+      initialCameraPosition: const CameraPosition(
+        zoom: 15,
+        target: LatLng(35.9522505, 139.6372461),
+      ),
+      onTap: (LatLng latLng) {
+        _changeAppBarTitle(latLng.toString());
+      },
+      fortyFiveDegreeImageryEnabled: true,
+      onCameraMove: (position) => {_changedCamera(position)},
+      markers: Set.from(markerSet));
   }
 
   GoogleMap generateGoogleMapWithPolyLine() {
     return GoogleMap(
       webGestureHandling: WebGestureHandling.greedy,
+      // zoomControlsEnabled: false,
       zoomGesturesEnabled: true,
       mapType: MapType.hybrid,
       initialCameraPosition: const CameraPosition(
@@ -228,6 +235,10 @@ class MapSampleState extends State<MapSample> {
     );
   }
 
+  void _addPowerLinePoint(){
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -235,6 +246,10 @@ class MapSampleState extends State<MapSample> {
       future: loadJsonFile(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
+
+          print(map['points'].length);
+          // print(_powerLinePointList.length);
+          
           // var data = snapshot.data;
           return Scaffold(
               appBar: AppBar(
@@ -248,7 +263,12 @@ class MapSampleState extends State<MapSample> {
               ),
             body: (displayType == 'Marker')
             ? generateGoogleMapWithMarker()
-            : generateGoogleMapWithPolyLine()
+            : generateGoogleMapWithPolyLine(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: _addPowerLinePoint,
+              tooltip: 'Increment',
+              child: Icon(Icons.add),
+            )
           );
         } else {
           return Scaffold(

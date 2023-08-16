@@ -71,8 +71,6 @@ class PowerLineData {
   Map<String, dynamic> getPoints(){
     return map;
   }
-
-
 }
 
 void main(){
