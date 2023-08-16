@@ -57,7 +57,7 @@ class PowerLineMapState extends State<PowerLineMap> {
     super.initState();
     setMarkerImage();
     powerLineData.loadFromJsonFile();
-    _getPowerLinePointList();
+    getPowerLinePointList();
   }
 
   List<PowerLinePoint> _powerLinePointListFromDocToList(
@@ -70,13 +70,12 @@ class PowerLineMapState extends State<PowerLineMap> {
         .toList();
   }
 
-  Future<String> _getPowerLinePointList() async {
+  Future<String> getPowerLinePointList() async {
     List<DocumentSnapshot> powerLinePointSnapshot =
         await PowerLinePointHelper.instance.selectAllPowerLinePoints();
     _powerLinePointList = _powerLinePointListFromDocToList(powerLinePointSnapshot);
     // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
 
-    setState(() {});
     return "complete";
   }
 
@@ -111,7 +110,6 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   Future<String> loadJsonFile() async {
     map = powerLineData.getPoints();
-    _getPowerLinePointList();
     _createMarkerAndPowerLine(map);
     // _createMarkerAndPowerLine();
     

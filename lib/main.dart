@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:power_line_walker/firebase_options.dart';
+import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/data_list.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
 
@@ -33,7 +34,11 @@ class MapSampleState extends State<MapSample> {
   final String _appBarTitle = "Power Line Walker";
 
   void _addPowerLinePoint(){
-
+    Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const AddPowerLinePoint(title: 'test',),
+                  ),
+                );
   }
 
   @override
