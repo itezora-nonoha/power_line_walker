@@ -7,7 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'PowerLineData.dart';
+import 'package:power_line_walker/PowerLineData.dart';
 
 void main() => runApp(MyApp());
 
