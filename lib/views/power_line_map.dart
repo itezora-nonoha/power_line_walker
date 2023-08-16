@@ -13,6 +13,7 @@ import 'package:power_line_walker/firebase_options.dart';
 import 'package:power_line_walker/PowerLineData.dart';
 import 'package:power_line_walker/db/PowerLinePointHelper.dart';
 import 'package:power_line_walker/models/PowerLinePoint.dart';
+import 'package:power_line_walker/views/add_power_line_point.dart';
 
 // void main() => runApp(MyApp());
 void main() async {
@@ -233,7 +234,8 @@ class PowerLineMapState extends State<PowerLineMap> {
         target: LatLng(35.9522505, 139.6372461),
       ),
       onTap: (LatLng latLng) {
-        _changeAppBarTitle(latLng.toString());
+        // _changeAppBarTitle(latLng.toString());
+        _addPowerLinePoint(latLng);
       },
       fortyFiveDegreeImageryEnabled: true,
       onCameraMove: (position) => {_changedCamera(position)},
@@ -251,17 +253,20 @@ class PowerLineMapState extends State<PowerLineMap> {
         target: LatLng(35.9522505, 139.6372461),
       ),
       onTap: (LatLng latLng) {
-        _changeAppBarTitle(latLng.toString());
+        _addPowerLinePoint(latLng);
       },
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
     );
   }
 
-  void _addPowerLinePoint(){
-
+  void _addPowerLinePoint(LatLng position){
+    Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => AddPowerLinePoint(title: 'test', latlng:position),
+                  ),
+                );
   }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

@@ -36,7 +36,7 @@ class MapSampleState extends State<MapSample> {
   void _addPowerLinePoint(){
     Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context) => const AddPowerLinePoint(title: 'test',),
+                    builder: (BuildContext context) => AddPowerLinePoint(title: 'test'),
                   ),
                 );
   }

@@ -5,35 +5,40 @@ import 'package:power_line_walker/db/PowerLinePointHelper.dart';
 import 'package:power_line_walker/models/PowerLinePoint.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
 
-class AddPowerLinePoint extends StatefulWidget {
-  const AddPowerLinePoint({super.key, required this.title});
-
+class AddPowerLinePoint extends StatelessWidget {
+  // AddPowerLinePoint({super.key, required this.title, this.latlng});
+  AddPowerLinePoint({required this.title, this.latlng});
   final String title;
+  LatLng? latlng;
 
-  @override
-  State<AddPowerLinePoint> createState() => _AddPowerLinePointState();
-}
+//   @override
+//   State<AddPowerLinePoint> createState() => _AddPowerLinePointState();
+// }
 
-class _AddPowerLinePointState extends State<AddPowerLinePoint> {
+// class _AddPowerLinePointState extends State<AddPowerLinePoint> {
   final String _userId = 'test';
   final String _pointName = 'test';
   final TextEditingController _controllerLatitude = TextEditingController();
   final TextEditingController _controllerLongitude = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
   List<PowerLinePoint> _powerLinePointList = [];
+  
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //     _controllerLatitude.text = latlng!.latitude as String;
+  //     _controllerLongitude.text = latlng!.longitude as String;
+  // print(super.getLatitude());
+  // }
 
-  @override
-  void dispose() {
-    _controllerLatitude.dispose();
-    _controllerLongitude.dispose();
-    _controllerName.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controllerLatitude.dispose();
+  //   _controllerLongitude.dispose();
+  //   _controllerName.dispose();
+  //   super.dispose();
+  // }
 
   void _addPowerLinePoint(LatLng latlng, String names) async {
     final PowerLinePoint powerLinePoint =
@@ -41,7 +46,7 @@ class _AddPowerLinePointState extends State<AddPowerLinePoint> {
     await PowerLinePointHelper.instance.insert(powerLinePoint);
     _powerLinePointList.add(powerLinePoint);
     print(powerLinePoint);
-    setState(() {});
+    // setState(() {});
   }
 
   void _saveButtonPushed(){
@@ -49,18 +54,20 @@ class _AddPowerLinePointState extends State<AddPowerLinePoint> {
     var longitude = double.parse(_controllerLongitude.text);
     var latLng = LatLng(latitude, longitude);
     var name = _controllerName.text;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('OnTapped: ${name}, ${latLng.toString()}'),
-      duration: const Duration(seconds: 1),
-    ));
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: Text('OnTapped: ${name}, ${latLng.toString()}'),
+    //   duration: const Duration(seconds: 1),
+    // ));
     _addPowerLinePoint(latLng, name);
   }
 
   @override
   Widget build(BuildContext context) {
+    _controllerLatitude.text = latlng!.latitude.toStringAsFixed(7);
+    _controllerLongitude.text = latlng!.longitude.toStringAsFixed(7);
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(title),
         ),
         body: SafeArea(
             child: Column(
