@@ -4,7 +4,7 @@ import 'package:power_line_walker/models/PowerLinePoint.dart';
 class PowerLinePointHelper {
   PowerLinePointHelper._getInstance();
   static final PowerLinePointHelper instance = PowerLinePointHelper._getInstance();
-
+  // static List<PowerLinePoint> points = [];
   final _db = FirebaseFirestore.instance;
 
   static const _collectionPoints = 'points';
