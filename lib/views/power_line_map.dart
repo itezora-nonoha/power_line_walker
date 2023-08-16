@@ -72,15 +72,15 @@ class PowerLineMapState extends State<PowerLineMap> {
     powerLineData.loadFromJsonFile();
     getPowerLinePointList();
     // 現在位置の取得
-    // _getLocation();
+    _getLocation();
 
     // 現在位置の変化を監視
-    // _locationChangedListen =
-    //     _locationService.onLocationChanged.listen((LocationData result) async {
-    //       setState(() {
-    //         _yourLocation = result;
-    //       });
-    //     });
+    _locationChangedListen =
+        _locationService.onLocationChanged.listen((LocationData result) async {
+          setState(() {
+            _yourLocation = result;
+          });
+        });
 
   }
 
@@ -89,7 +89,7 @@ class PowerLineMapState extends State<PowerLineMap> {
     super.dispose();
 
     // 監視を終了
-    // _locationChangedListen?.cancel();
+    _locationChangedListen?.cancel();
   }
 
 
