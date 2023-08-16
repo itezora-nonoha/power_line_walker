@@ -4,7 +4,7 @@ import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 import 'package:flutter/material.dart';
@@ -91,7 +91,6 @@ class PowerLineMapState extends State<PowerLineMap> {
     // 監視を終了
     _locationChangedListen?.cancel();
   }
-
 
   List<PowerLinePoint> _powerLinePointListFromDocToList(
       List<DocumentSnapshot> powerLinePointSnapshot) {
@@ -277,7 +276,11 @@ class PowerLineMapState extends State<PowerLineMap> {
       fortyFiveDegreeImageryEnabled: true,
       onCameraMove: (position) => {_changedCamera(position)},
       myLocationEnabled: true,
-      markers: Set.from(markerSet)
+      markers: Set.from(markerSet),
+      onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      myLocationButtonEnabled: true,
     );
   }
 
@@ -297,6 +300,10 @@ class PowerLineMapState extends State<PowerLineMap> {
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
       myLocationEnabled: true,
+      onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      myLocationButtonEnabled: true,
     );
   }
 
@@ -338,6 +345,7 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   @override
   Widget build(BuildContext context) {
+    print(_yourLocation);
     return FutureBuilder(
       
       future: loadJsonFile(),
@@ -368,7 +376,8 @@ class PowerLineMapState extends State<PowerLineMap> {
               //   )
               // ),
               body: Center(
-                  child: Text('処理中...')
+                  // child: Text('処理中...')
+                  child: CircularProgressIndicator()
               )
           );
         }
