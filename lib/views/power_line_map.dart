@@ -57,7 +57,9 @@ class PowerLineMapState extends State<PowerLineMap> {
     super.initState();
     setMarkerImage();
     powerLineData.loadFromJsonFile();
+    _getPowerLinePointList();
   }
+
   List<PowerLinePoint> _powerLinePointListFromDocToList(
       List<DocumentSnapshot> powerLinePointSnapshot) {
     return powerLinePointSnapshot
@@ -68,11 +70,14 @@ class PowerLineMapState extends State<PowerLineMap> {
         .toList();
   }
 
-  void _getPowerLinePointList() async {
+  Future<String> _getPowerLinePointList() async {
     List<DocumentSnapshot> powerLinePointSnapshot =
         await PowerLinePointHelper.instance.selectAllPowerLinePoints();
     _powerLinePointList = _powerLinePointListFromDocToList(powerLinePointSnapshot);
+    // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
+
     // setState(() {});
+    return "complete";
   }
 
   Future<void> setMarkerImage() async {
@@ -107,110 +112,195 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   Future<String> loadJsonFile() async {
     map = powerLineData.getPoints();
+    _getPowerLinePointList();
     _createMarkerAndPowerLine(map);
     return "complete";
   }
 
   void _createMarkerAndPowerLine(Map<String, dynamic> map) {
-    
-    Map<String, List<LatLng>> powerLinePoints = {};
 
-    String powerLineName;
-    String name;
-    String towerlabel;
-
+    String pointName;
     LatLng latlng;
     double latitude, longitude;
-    for (var i = 0; i < map['points'].length; i++) {
-      towerlabel = map['points'][i]['names'][0];
-      latitude = map['points'][i]['latitude'];
-      longitude = map['points'][i]['longitude'];
-      latlng = LatLng(latitude, longitude);
+    String powerLineName;
+    Map<String, List<LatLng>> powerLinePoints = {};
+    print("memo");
+    print(_powerLinePointList);
+    _powerLinePointList.forEach((powerLinePoint) {
+      print('${powerLinePoint.names}, ${powerLinePoint.latlng}');
+      print("memoawt");
+      
+      pointName = powerLinePoint.names;
+      latlng = powerLinePoint.latlng;
+      latitude = latlng.latitude;
+      longitude = latlng.longitude;
 
-      for (var ni = 0; ni < map['points'][i]['names'].length; ni++) {
-        name = map['points'][i]['names'][ni];
-        powerLineName = name.split('-')[0];
+      powerLineName = pointName.split('-')[0];
 
-        if (powerLinePoints[powerLineName] == null) {
-          powerLinePoints[powerLineName] = [];
-        }
-
-        powerLinePoints[powerLineName]?.add(latlng);
+      if (powerLinePoints[powerLineName] == null) {
+        powerLinePoints[powerLineName] = [];
       }
-      // Markerの作成
-      var towerIcon = BitmapDescriptor.defaultMarker;
 
-      // その鉄塔における送電電圧リストの作成
-      List volList = [];
-      for (var ni = 0; ni < map['points'][i]['names'].length; ni++) {
-        name = map['points'][i]['names'][ni];
-        powerLineName = name.split('-')[0];
-        var entry = map['powerLines'].where((e) => e['name'] == powerLineName);
-        volList.add(entry.first['transmissionVoltage']);
-      }
-      map['points'][i]['transmissionVoltageList'] = volList;
+      powerLinePoints[powerLineName]?.add(latlng);
 
       // 送電電圧に応じたMarkerアイコンを取得
-      towerIcon = getTowerIconFromVoltageSet(Set.from(volList));
+      var towerIcon = BitmapDescriptor.defaultMarker;
+      towerIcon = getTowerIconFromVoltageSet(Set.from([154]));
 
       // Markerを作成し、MarkerSetに追加
       markerSet.add(Marker(
-        markerId: MarkerId(towerlabel),
+        markerId: MarkerId(pointName),
         position: latlng,
         icon: towerIcon,
         visible: true,
         // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
       ));
-    }
 
-    // マーカークリック時のイベントを設定
-    markerSet = markerSet
-        .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
-        .toSet();
+      // マーカークリック時のイベントを設定
+      markerSet = markerSet
+          .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
+          .toSet();
 
-    Color powerLineColor = Colors.blue;
-    int transmissionVoltage;
+      print(markerSet);
+      Color powerLineColor = Colors.blue;
+      int transmissionVoltage;
 
-    // 送電系統ごとにPolylineを作成
-    for (var name in powerLinePoints.keys) {
-      // 送電電圧の取得
-      var entry = map['powerLines'].where((e) => e['name'] == name);
-      transmissionVoltage = entry.first['transmissionVoltage'];
+      // 送電系統ごとにPolylineを作成
+      for (var name in powerLinePoints.keys) {
+        // 送電電圧の取得
+        var entry = map['powerLines'].where((e) => e['name'] == name);
+        transmissionVoltage = entry.first['transmissionVoltage'];
 
-      // 電圧ごとの色分け
-      if (transmissionVoltage == 500) {
-        powerLineColor = Colors.red;
-      } else if (transmissionVoltage == 275) {
-        powerLineColor = Colors.orange;
-      } else if (transmissionVoltage == 154) {
-        powerLineColor = Colors.green;
-      } else if (transmissionVoltage == 66) {
-        powerLineColor = Colors.blue;
+        // 電圧ごとの色分け
+        if (transmissionVoltage == 500) {
+          powerLineColor = Colors.red;
+        } else if (transmissionVoltage == 275) {
+          powerLineColor = Colors.orange;
+        } else if (transmissionVoltage == 154) {
+          powerLineColor = Colors.green;
+        } else if (transmissionVoltage == 66) {
+          powerLineColor = Colors.blue;
+        }
+        
+        Polyline p = Polyline(
+          polylineId: PolylineId(name),
+          points: powerLinePoints[name]!,
+          color: powerLineColor,
+          width: 5,
+        );
+        powerLineList.add(p);
       }
-      
-      Polyline p = Polyline(
-        polylineId: PolylineId(name),
-        points: powerLinePoints[name]!,
-        color: powerLineColor,
-        width: 5,
-      );
-      powerLineList.add(p);
-    }
-
-    // setState(() {});
+    });
   }
+
+  // void _createMarkerAndPowerLine(Map<String, dynamic> map) {
+    
+  //   Map<String, List<LatLng>> powerLinePoints = {};
+
+  //   String powerLineName;
+  //   String name;
+  //   String towerlabel;
+
+  //   LatLng latlng;
+  //   double latitude, longitude;
+  //   for (var i = 0; i < map['points'].length; i++) {
+  //     towerlabel = map['points'][i]['names'][0];
+  //     latitude = map['points'][i]['latitude'];
+  //     longitude = map['points'][i]['longitude'];
+  //     latlng = LatLng(latitude, longitude);
+
+  //     for (var ni = 0; ni < map['points'][i]['names'].length; ni++) {
+  //       name = map['points'][i]['names'][ni];
+  //       powerLineName = name.split('-')[0];
+
+  //       if (powerLinePoints[powerLineName] == null) {
+  //         powerLinePoints[powerLineName] = [];
+  //       }
+
+  //       powerLinePoints[powerLineName]?.add(latlng);
+  //     }
+  //     // Markerの作成
+  //     var towerIcon = BitmapDescriptor.defaultMarker;
+
+  //     // その鉄塔における送電電圧リストの作成
+  //     List volList = [];
+  //     for (var ni = 0; ni < map['points'][i]['names'].length; ni++) {
+  //       name = map['points'][i]['names'][ni];
+  //       powerLineName = name.split('-')[0];
+  //       var entry = map['powerLines'].where((e) => e['name'] == powerLineName);
+  //       volList.add(entry.first['transmissionVoltage']);
+  //     }
+  //     map['points'][i]['transmissionVoltageList'] = volList;
+
+  //     // 送電電圧に応じたMarkerアイコンを取得
+  //     towerIcon = getTowerIconFromVoltageSet(Set.from(volList));
+
+  //     // Markerを作成し、MarkerSetに追加
+  //     markerSet.add(Marker(
+  //       markerId: MarkerId(towerlabel),
+  //       position: latlng,
+  //       icon: towerIcon,
+  //       visible: true,
+  //       // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
+  //     ));
+  //   }
+
+  //   // マーカークリック時のイベントを設定
+  //   markerSet = markerSet
+  //       .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
+  //       .toSet();
+
+  //   Color powerLineColor = Colors.blue;
+  //   int transmissionVoltage;
+
+  //   // 送電系統ごとにPolylineを作成
+  //   for (var name in powerLinePoints.keys) {
+  //     // 送電電圧の取得
+  //     var entry = map['powerLines'].where((e) => e['name'] == name);
+  //     transmissionVoltage = entry.first['transmissionVoltage'];
+
+  //     // 電圧ごとの色分け
+  //     if (transmissionVoltage == 500) {
+  //       powerLineColor = Colors.red;
+  //     } else if (transmissionVoltage == 275) {
+  //       powerLineColor = Colors.orange;
+  //     } else if (transmissionVoltage == 154) {
+  //       powerLineColor = Colors.green;
+  //     } else if (transmissionVoltage == 66) {
+  //       powerLineColor = Colors.blue;
+  //     }
+      
+  //     Polyline p = Polyline(
+  //       polylineId: PolylineId(name),
+  //       points: powerLinePoints[name]!,
+  //       color: powerLineColor,
+  //       width: 5,
+  //     );
+  //     powerLineList.add(p);
+  //   }
+
+  //   // setState(() {});
+  // }
 
   void _onTapMarker(Marker marker) {
     setState(() {
       // _appBarTitle = marker.position.toString();
       _appBarTitle = marker.markerId.toString();
     });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('OnTapped: ${marker.markerId.value} ${marker.position}'),
+      duration: const Duration(seconds: 1),
+    ));
   }
 
   void _changeAppBarTitle(String title) {
     setState(() {
       _appBarTitle = title;
-    });
+    });      // ignore: use_build_context_synchronously
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('OnTapped: ${title}'),
+      duration: const Duration(seconds: 1),
+    ));
   }
 
   void _changedCamera(CameraPosition position) {
@@ -268,10 +358,12 @@ class PowerLineMapState extends State<PowerLineMap> {
     return FutureBuilder(
       
       future: loadJsonFile(),
+      // future: _getPowerLinePointList(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-
-          print(map['points'].length);
+          print(Set.from(markerSet));
+          // print(_powerLinePointList);
+          // print(map['points'].length);
           // print(_powerLinePointList.length);
           
           // var data = snapshot.data;

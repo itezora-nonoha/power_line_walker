@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:power_line_walker/firebase_options.dart';
+import 'package:power_line_walker/views/data_list.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
 
 // void main() => runApp(MyApp());
@@ -42,16 +43,40 @@ class MapSampleState extends State<MapSample> {
         backgroundColor: Colors.purple,
         title: Text(_appBarTitle),
       ),
-      drawer: const Drawer(
-        child: Center(
-          child: Text("Drawer")
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            // const DrawerHeader(
+            //   child: Text('Drawer Header'),
+            //      decoration: BoxDecoration(
+            //      color: Colors.blue,
+            //   ),
+            // ),
+            ListTile(
+              title: Text('データ一覧'),
+              onTap: () => {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const MyDataListPage(title: 'test',),
+                  ),
+                ),
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Do something
+                Navigator.pop(context);
+              },
+            ),
+          ],
         )
       ),
       body: PowerLineMap(),
       floatingActionButton: FloatingActionButton(
         onPressed: _addPowerLinePoint,
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       )
     );
   }
