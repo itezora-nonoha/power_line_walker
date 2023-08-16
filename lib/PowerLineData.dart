@@ -7,6 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PowerLineData {
+  PowerLineData(){
+    loadFromJsonFile();
+    print("test");
+  }
 
   Map<String, dynamic> map = {};
   Map<String, List<LatLng>> points = {};
@@ -71,9 +75,12 @@ class PowerLineData {
   Map<String, dynamic> getPoints(){
     return map;
   }
+
 }
+
 
 void main(){
   PowerLineData powerLineData = PowerLineData();
-  // powerLineData.get();
+  powerLineData.getPoints();
+  powerLineData.loadFromJsonFile().then((t) => {print(powerLineData.getPoints())});
 }
