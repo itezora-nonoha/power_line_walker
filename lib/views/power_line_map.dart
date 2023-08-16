@@ -308,29 +308,29 @@ class PowerLineMapState extends State<PowerLineMap> {
                 );
   }
 
-  Future<void> _setCurrentLocation(ValueNotifier<Position> position,
-      ValueNotifier<Map<String, Marker>> markers) async {
-    final currentPosition = await Geolocator.getCurrentPosition(
-      // desiredAccuracy: LocationAccuracy.High,
-    );
+  // Future<void> _setCurrentLocation(ValueNotifier<Position> position,
+  //     ValueNotifier<Map<String, Marker>> markers) async {
+  //   final currentPosition = await Geolocator.getCurrentPosition(
+  //     // desiredAccuracy: LocationAccuracy.High,
+  //   );
 
-    const decimalPoint = 3;
-    // 過去の座標と最新の座標の小数点第三位で切り捨てた値を判定
-    if ((position.value.latitude).toStringAsFixed(decimalPoint) !=
-            (currentPosition.latitude).toStringAsFixed(decimalPoint) &&
-        (position.value.longitude).toStringAsFixed(decimalPoint) !=
-            (currentPosition.longitude).toStringAsFixed(decimalPoint)) {
-      // 現在地座標にMarkerを立てる
-      final marker = Marker(
-        markerId: MarkerId(currentPosition.timestamp.toString()),
-        position: LatLng(currentPosition.latitude, currentPosition.longitude),
-      );
-      markers.value.clear();
-      markers.value[currentPosition.timestamp.toString()] = marker;
-      // 現在地座標のstateを更新する
-      position.value = currentPosition;
-    }
-  }
+  //   const decimalPoint = 3;
+  //   // 過去の座標と最新の座標の小数点第三位で切り捨てた値を判定
+  //   if ((position.value.latitude).toStringAsFixed(decimalPoint) !=
+  //           (currentPosition.latitude).toStringAsFixed(decimalPoint) &&
+  //       (position.value.longitude).toStringAsFixed(decimalPoint) !=
+  //           (currentPosition.longitude).toStringAsFixed(decimalPoint)) {
+  //     // 現在地座標にMarkerを立てる
+  //     final marker = Marker(
+  //       markerId: MarkerId(currentPosition.timestamp.toString()),
+  //       position: LatLng(currentPosition.latitude, currentPosition.longitude),
+  //     );
+  //     markers.value.clear();
+  //     markers.value[currentPosition.timestamp.toString()] = marker;
+  //     // 現在地座標のstateを更新する
+  //     position.value = currentPosition;
+  //   }
+  // }
 
   void _getLocation() async {
     _yourLocation = await _locationService.getLocation();
