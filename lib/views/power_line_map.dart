@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:location/location.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -40,6 +43,15 @@ class PowerLineMap extends StatefulWidget {
 }
 
 class PowerLineMapState extends State<PowerLineMap> {
+  Completer<GoogleMapController> _controller = Completer();
+  Location _locationService = Location();
+  // 現在位置
+  LocationData? _yourLocation;
+
+  // 現在位置の監視状況
+  StreamSubscription? _locationChangedListen;
+
+
   late PowerLineData powerLineData = PowerLineData();
   String _appBarTitle = "Power Line Walker";
   String displayType = 'Marker';
@@ -59,7 +71,27 @@ class PowerLineMapState extends State<PowerLineMap> {
     setMarkerImage();
     powerLineData.loadFromJsonFile();
     getPowerLinePointList();
+        // 現在位置の取得
+    _getLocation();
+
+    // 現在位置の変化を監視
+    _locationChangedListen =
+        _locationService.onLocationChanged.listen((LocationData result) async {
+          setState(() {
+            _yourLocation = result;
+          });
+        });
+
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    // 監視を終了
+    _locationChangedListen?.cancel();
+  }
+
 
   List<PowerLinePoint> _powerLinePointListFromDocToList(
       List<DocumentSnapshot> powerLinePointSnapshot) {
@@ -115,6 +147,11 @@ class PowerLineMapState extends State<PowerLineMap> {
     // _createMarkerAndPowerLine();
     
     return "complete";
+  }
+
+  void reloadMap(){
+    getPowerLinePointList();
+    _createMarkerAndPowerLine(map);
   }
 
   // void _createMarkerAndPowerLine() {
@@ -239,7 +276,9 @@ class PowerLineMapState extends State<PowerLineMap> {
       },
       fortyFiveDegreeImageryEnabled: true,
       onCameraMove: (position) => {_changedCamera(position)},
-      markers: Set.from(markerSet));
+      myLocationEnabled: true,
+      markers: Set.from(markerSet)
+    );
   }
 
   GoogleMap generateGoogleMapWithPolyLine() {
@@ -257,6 +296,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       },
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
+      myLocationEnabled: true,
     );
   }
 
@@ -267,6 +307,35 @@ class PowerLineMapState extends State<PowerLineMap> {
                   ),
                 );
   }
+
+  Future<void> _setCurrentLocation(ValueNotifier<Position> position,
+      ValueNotifier<Map<String, Marker>> markers) async {
+    final currentPosition = await Geolocator.getCurrentPosition(
+      // desiredAccuracy: LocationAccuracy.High,
+    );
+
+    const decimalPoint = 3;
+    // 過去の座標と最新の座標の小数点第三位で切り捨てた値を判定
+    if ((position.value.latitude).toStringAsFixed(decimalPoint) !=
+            (currentPosition.latitude).toStringAsFixed(decimalPoint) &&
+        (position.value.longitude).toStringAsFixed(decimalPoint) !=
+            (currentPosition.longitude).toStringAsFixed(decimalPoint)) {
+      // 現在地座標にMarkerを立てる
+      final marker = Marker(
+        markerId: MarkerId(currentPosition.timestamp.toString()),
+        position: LatLng(currentPosition.latitude, currentPosition.longitude),
+      );
+      markers.value.clear();
+      markers.value[currentPosition.timestamp.toString()] = marker;
+      // 現在地座標のstateを更新する
+      position.value = currentPosition;
+    }
+  }
+
+  void _getLocation() async {
+    _yourLocation = await _locationService.getLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

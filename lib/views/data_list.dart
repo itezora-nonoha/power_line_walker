@@ -109,18 +109,18 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                         style: const TextStyle(fontSize: 16),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        powerLinePoint.latlng.latitude.toString(),
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        powerLinePoint.latlng.longitude.toString(),
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    ),
+                                    // Expanded(
+                                    //   child: Text(
+                                    //     powerLinePoint.latlng.latitude.toString(),
+                                    //     style: const TextStyle(fontSize: 16),
+                                    //   ),
+                                    // ),
+                                    // Expanded(
+                                    //   child: Text(
+                                    //     powerLinePoint.latlng.longitude.toString(),
+                                    //     style: const TextStyle(fontSize: 16),
+                                    //   ),
+                                    // ),
                                     SizedBox(
                                       width: 50,
                                       height: 25,
