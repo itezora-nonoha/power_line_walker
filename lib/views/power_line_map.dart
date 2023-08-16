@@ -276,7 +276,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       },
       fortyFiveDegreeImageryEnabled: true,
       onCameraMove: (position) => {_changedCamera(position)},
-      // myLocationEnabled: true,
+      myLocationEnabled: true,
       markers: Set.from(markerSet)
     );
   }
@@ -296,7 +296,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       },
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
-      // myLocationEnabled: true,
+      myLocationEnabled: true,
     );
   }
 
