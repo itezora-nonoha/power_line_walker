@@ -31,8 +31,6 @@ class MapSample extends StatefulWidget {
 }
 
 class MapSampleState extends State<MapSample> {
-  MyDataListPage dataListPage = const MyDataListPage(title:'test');
-
   final String _appBarTitle = "Power Line Walker";
 
   void _addPowerLinePoint(){
@@ -64,7 +62,7 @@ class MapSampleState extends State<MapSample> {
               onTap: () => {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context) => dataListPage,
+                    builder: (BuildContext context) => const MyDataListPage(title: 'test',),
                   ),
                 ),
               },
