@@ -4,8 +4,7 @@ import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-// import 'package:geolocator/geolocator.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -43,13 +42,19 @@ class PowerLineMap extends StatefulWidget {
 }
 
 class PowerLineMapState extends State<PowerLineMap> {
-  Completer<GoogleMapController> _controller = Completer();
-  Location _locationService = Location();
-  // 現在位置
-  LocationData? _yourLocation;
+  Position? currentPosition;
+  late GoogleMapController _controller;
+  late StreamSubscription<Position> positionStream;
+  //初期位置
+  final CameraPosition _kGooglePlex = const CameraPosition(
+    target: LatLng(43.0686606, 141.3485613),
+    zoom: 14,
+  );
 
-  // 現在位置の監視状況
-  StreamSubscription? _locationChangedListen;
+  final LocationSettings locationSettings = const LocationSettings(
+    accuracy: LocationAccuracy.high, //正確性:highはAndroid(0-100m),iOS(10m)
+    distanceFilter: 100,
+  );
 
 
   late PowerLineData powerLineData = PowerLineData();
@@ -71,25 +76,29 @@ class PowerLineMapState extends State<PowerLineMap> {
     setMarkerImage();
     powerLineData.loadFromJsonFile();
     getPowerLinePointList();
-    // 現在位置の取得
-    _getLocation();
+  //位置情報が許可されていない時に許可をリクエストする
+      Future(() async {
+        LocationPermission permission = await Geolocator.checkPermission();
+        if(permission == LocationPermission.denied){
+          await Geolocator.requestPermission();
+        }
+      });
 
-    // 現在位置の変化を監視
-    _locationChangedListen =
-        _locationService.onLocationChanged.listen((LocationData result) async {
-          setState(() {
-            _yourLocation = result;
-          });
-        });
+      //現在位置を更新し続ける
+      positionStream =
+          Geolocator.getPositionStream(locationSettings: locationSettings)
+              .listen((Position? position) {
+        currentPosition = position;
+        print(position == null
+            ? 'Unknown'
+            : '${position.latitude.toString()}, ${position.longitude.toString()}');
+      });
 
   }
 
   @override
   void dispose() {
     super.dispose();
-
-    // 監視を終了
-    _locationChangedListen?.cancel();
   }
 
   List<PowerLinePoint> _powerLinePointListFromDocToList(
@@ -276,14 +285,14 @@ class PowerLineMapState extends State<PowerLineMap> {
       fortyFiveDegreeImageryEnabled: true,
       onCameraMove: (position) => {_changedCamera(position)},
       myLocationEnabled: true,
+      myLocationButtonEnabled: true,
       markers: Set.from(markerSet),
       onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      myLocationButtonEnabled: true,
+        _controller = controller;
+      },
     );
   }
-
+  
   GoogleMap generateGoogleMapWithPolyLine() {
     return GoogleMap(
       webGestureHandling: WebGestureHandling.greedy,
@@ -300,10 +309,10 @@ class PowerLineMapState extends State<PowerLineMap> {
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
       myLocationEnabled: true,
-      onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
       myLocationButtonEnabled: true,
+      onMapCreated: (GoogleMapController controller) {
+        _controller = controller;
+      },
     );
   }
 
@@ -314,7 +323,7 @@ class PowerLineMapState extends State<PowerLineMap> {
                   ),
                 );
   }
-
+  
   // Future<void> _setCurrentLocation(ValueNotifier<Position> position,
   //     ValueNotifier<Map<String, Marker>> markers) async {
   //   final currentPosition = await Geolocator.getCurrentPosition(
@@ -339,13 +348,8 @@ class PowerLineMapState extends State<PowerLineMap> {
   //   }
   // }
 
-  void _getLocation() async {
-    _yourLocation = await _locationService.getLocation();
-  }
-
   @override
   Widget build(BuildContext context) {
-    print(_yourLocation);
     return FutureBuilder(
       
       future: loadJsonFile(),
