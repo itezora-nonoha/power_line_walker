@@ -69,7 +69,8 @@ class AddPowerLinePoint extends StatelessWidget {
         body: Container(
             margin: const EdgeInsets.all(8),
             child: Column(children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Row(mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Expanded(
                     child: TextField(
                   controller: _controllerLatitude,
