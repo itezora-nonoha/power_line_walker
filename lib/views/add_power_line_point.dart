@@ -69,22 +69,24 @@ class AddPowerLinePoint extends StatelessWidget {
         body: Container(
             margin: const EdgeInsets.all(8),
             child: Column(children: [
-              Row(mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                Expanded(
-                    child: TextField(
+              // Row(mainAxisSize: MainAxisSize.max,
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                // Expanded(child:
+                TextField(
                   controller: _controllerLatitude,
                   autofocus: false,
                   decoration: const InputDecoration(labelText: 'latitude'),
-                )),
-                const SizedBox(width: 10, child: Spacer()),
-                Expanded(
-                    child: TextField(
+                ),
+                // ),
+                // const SizedBox(width: 10, child: Spacer()),
+                // Expanded(child: 
+                    TextField(
                   controller: _controllerLongitude,
                   autofocus: false,
                   decoration: const InputDecoration(labelText: 'longitude'),
-                )),
-              ]),
+                ),
+                // ),
+              // ]),
               TextField(
                 controller: _controllerName,
                 autofocus: false,
@@ -93,7 +95,7 @@ class AddPowerLinePoint extends StatelessWidget {
                   _saveButtonPushed();
                 },
               ),
-              // _pointTypeSelectorBox,
+              _pointTypeSelectorBox,
               Container(
                   margin: const EdgeInsets.all(8),
                   child: SizedBox(
