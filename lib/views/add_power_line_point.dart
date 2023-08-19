@@ -49,6 +49,10 @@ class AddPowerLinePoint extends StatelessWidget {
     //   duration: const Duration(seconds: 1),
     // ));
     _addPowerLinePoint(latlng, name);
+    _controllerLatitude.clear();
+    _controllerLongitude.clear();
+    _controllerName.clear();
+
   }
 
   void _addPowerLinePoint(LatLng latlng, String names) async {
