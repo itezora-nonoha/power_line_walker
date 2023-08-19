@@ -92,7 +92,7 @@ class AddPowerLinePoint extends StatelessWidget {
                   _saveButtonPushed();
                 },
               ),
-              _pointTypeSelectorBox,
+              // _pointTypeSelectorBox,
               Container(
                   margin: const EdgeInsets.all(8),
                   child: SizedBox(
