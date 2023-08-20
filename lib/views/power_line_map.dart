@@ -14,7 +14,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:power_line_walker/db/PowerLineHelper.dart';
 import 'package:power_line_walker/firebase_options.dart';
 
-import 'package:power_line_walker/PowerLineData.dart';
 import 'package:power_line_walker/db/PowerLinePointHelper.dart';
 import 'package:power_line_walker/models/PowerLinePoint.dart';
 import 'package:power_line_walker/models/PowerLine.dart';
@@ -53,8 +52,6 @@ class PowerLineMapState extends State<PowerLineMap> {
   // 現在位置の監視状況
   StreamSubscription? _locationChangedListen;
 
-
-  late PowerLineData powerLineData = PowerLineData();
   String _appBarTitle = "Power Line Walker";
   String displayType = 'Marker';
   Set<Marker> markerSet = {};
@@ -73,7 +70,6 @@ class PowerLineMapState extends State<PowerLineMap> {
   void initState() {
     super.initState();
     setMarkerImage();
-    // powerLineData.loadFromJsonFile();
     getPowerLinePointList();
     getPowerLineList();
     // 現在位置の取得
@@ -86,7 +82,6 @@ class PowerLineMapState extends State<PowerLineMap> {
             _yourLocation = result;
           });
         });
-
   }
 
   @override
@@ -138,7 +133,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
     });
 
-    print(_powerLineVoltageMap);
+    // print(_powerLineVoltageMap);
     // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
     // for (var element in _powerLineList) {
     //   print(element.toString());
@@ -175,30 +170,18 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
-  Future<String> loadJsonFile() async {
-    // map = powerLineData.getPoints();
-    // _createMarkerAndPowerLine(map);
-    _createMarkerAndPowerLine();
-    
-    return "complete";
-  }
-
   void reloadMap(){
     getPowerLinePointList();
     getPowerLineList();
-    // _createMarkerAndPowerLine(map);
   }
 
   Future<String> _createMarkerAndPowerLine() async {
-  // void _createMarkerAndPowerLine(Map<String, dynamic> map) {
 
     String pointLabel;
     LatLng latlng;
     String powerLineName;
     Map<String, List<LatLng>> powerLineLatLngList = {};
-    // print(_powerLinePointList);
     _powerLinePointList.forEach((powerLinePoint) {
-      // print('${powerLinePoint.names}, ${powerLinePoint.latlng}');
       
       pointLabel = powerLinePoint.names[0];
       latlng = powerLinePoint.latlng;
@@ -278,7 +261,6 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   void _onTapMarker(Marker marker) {
     setState(() {
-      // _appBarTitle = marker.position.toString();
       _appBarTitle = marker.markerId.toString();
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -318,7 +300,6 @@ class PowerLineMapState extends State<PowerLineMap> {
         target: LatLng(35.9522505, 139.6372461),
       ),
       onTap: (LatLng latLng) {
-        // _changeAppBarTitle(latLng.toString());
         _addPowerLinePoint(latLng);
       },
       fortyFiveDegreeImageryEnabled: true,
@@ -364,30 +345,6 @@ class PowerLineMapState extends State<PowerLineMap> {
                 );
   }
 
-  // Future<void> _setCurrentLocation(ValueNotifier<Position> position,
-  //     ValueNotifier<Map<String, Marker>> markers) async {
-  //   final currentPosition = await Geolocator.getCurrentPosition(
-  //     // desiredAccuracy: LocationAccuracy.High,
-  //   );
-
-  //   const decimalPoint = 3;
-  //   // 過去の座標と最新の座標の小数点第三位で切り捨てた値を判定
-  //   if ((position.value.latitude).toStringAsFixed(decimalPoint) !=
-  //           (currentPosition.latitude).toStringAsFixed(decimalPoint) &&
-  //       (position.value.longitude).toStringAsFixed(decimalPoint) !=
-  //           (currentPosition.longitude).toStringAsFixed(decimalPoint)) {
-  //     // 現在地座標にMarkerを立てる
-  //     final marker = Marker(
-  //       markerId: MarkerId(currentPosition.timestamp.toString()),
-  //       position: LatLng(currentPosition.latitude, currentPosition.longitude),
-  //     );
-  //     markers.value.clear();
-  //     markers.value[currentPosition.timestamp.toString()] = marker;
-  //     // 現在地座標のstateを更新する
-  //     position.value = currentPosition;
-  //   }
-  // }
-
   void _getLocation() async {
     _yourLocation = await _locationService.getLocation();
   }
@@ -396,7 +353,6 @@ class PowerLineMapState extends State<PowerLineMap> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       
-      // future: loadJsonFile(),
       future: _createMarkerAndPowerLine(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -414,15 +370,6 @@ class PowerLineMapState extends State<PowerLineMap> {
           );
         } else {
           return const Scaffold(
-              // appBar: AppBar(
-              //   backgroundColor: Colors.purple,
-              //   title: Text(_appBarTitle),
-              // ),
-              // drawer: const Drawer(
-              //   child: Center(
-              //     child: Text("Drawer")
-              //   )
-              // ),
               body: Center(
                   // child: Text('処理中...')
                   child: CircularProgressIndicator()
@@ -432,6 +379,4 @@ class PowerLineMapState extends State<PowerLineMap> {
       }
     );
   }
-  
-
 }
