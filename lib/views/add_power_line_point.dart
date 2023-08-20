@@ -43,19 +43,19 @@ class AddPowerLinePoint extends StatelessWidget {
     var latitude = double.parse(_controllerLatitude.text);
     var longitude = double.parse(_controllerLongitude.text);
     var latlng = LatLng(latitude, longitude);
-    var name = _controllerName.text;
+    var names = _controllerName.text.split(',');
     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     //   content: Text('OnTapped: ${name}, ${latLng.toString()}'),
     //   duration: const Duration(seconds: 1),
     // ));
-    _addPowerLinePoint(latlng, name);
+    _addPowerLinePoint(latlng, names);
     _controllerLatitude.clear();
     _controllerLongitude.clear();
     _controllerName.clear();
 
   }
 
-  void _addPowerLinePoint(LatLng latlng, String names) async {
+  void _addPowerLinePoint(LatLng latlng, List<String> names) async {
     final PowerLinePoint powerLinePoint =
         PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now());
     await PowerLinePointHelper.instance.insert(powerLinePoint);
@@ -94,7 +94,7 @@ class AddPowerLinePoint extends StatelessWidget {
               TextField(
                 controller: _controllerName,
                 autofocus: false,
-                decoration: const InputDecoration(labelText: 'name'),
+                decoration: const InputDecoration(labelText: 'name(併架はカンマ区切りで入力)'),
                 onSubmitted: (String value) {
                   _saveButtonPushed();
                 },

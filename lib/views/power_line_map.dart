@@ -97,7 +97,7 @@ class PowerLineMapState extends State<PowerLineMap> {
     return powerLinePointSnapshot
         .map((doc) => PowerLinePoint(
             latlng: LatLng(doc['latitude'], doc['longitude']),
-            names: doc['names'],
+            names: List.from(doc['names']),
             createdAt: doc['createdAt'].toDate()))
         .toList();
   }

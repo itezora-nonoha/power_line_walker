@@ -35,7 +35,7 @@ class PowerLinePointHelper {
   Future<void> insert(PowerLinePoint powerLinePoint) async {
     final docRef = _db
         .collection(_collectionPoints)
-        .doc(powerLinePoint.names)
+        .doc(powerLinePoint.names[0])
         .withConverter(
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
