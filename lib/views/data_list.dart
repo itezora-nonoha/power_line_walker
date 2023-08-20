@@ -53,7 +53,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
     setState(() {});
   }
 
-  void _addPowerLinePoint(LatLng latlng, String names) async {
+  void _addPowerLinePoint(LatLng latlng, List<String> names) async {
     final PowerLinePoint powerLinePoint = PowerLinePoint(
         latlng: latlng, names:names, createdAt: DateTime.now());
     await PowerLinePointHelper.instance.insert(powerLinePoint);
@@ -105,7 +105,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                   children: <Widget>[
                                     Expanded(
                                       child: Text(
-                                        powerLinePoint.names,
+                                        powerLinePoint.names[0],
                                         style: const TextStyle(fontSize: 16),
                                       ),
                                     ),
@@ -126,7 +126,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                       height: 25,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            _getPowerLinePoint(powerLinePoint.names);
+                                            _getPowerLinePoint(powerLinePoint.names[0]);
                                           },
                                           child: const Icon(
                                             Icons.book,
@@ -142,7 +142,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                       height: 25,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            _deletePowerLinePoint(powerLinePoint.names, index);
+                                            _deletePowerLinePoint(powerLinePoint.names[0], index);
                                           },
                                           child: const Icon(
                                             Icons.delete,
@@ -181,7 +181,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
                     double longitude = double.parse(_controllerLongitude.text);
                     LatLng latlng = LatLng(latitude, longitude);
                     print(latlng);  
-                    _addPowerLinePoint(latlng, _controllerName.text);_controllerLatitude.clear();
+                    _addPowerLinePoint(latlng, _controllerName.text.split(','));_controllerLatitude.clear();
                     _controllerLongitude.clear();
                     _controllerName.clear();
                   },
@@ -192,7 +192,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
                     double longitude = double.parse(_controllerLongitude.text);
                     LatLng latlng = LatLng(latitude, longitude);
                     print(latlng);  
-                    _addPowerLinePoint(latlng, _controllerName.text);
+                    _addPowerLinePoint(latlng, _controllerName.text.split(','));
                     _controllerLatitude.clear();
                     _controllerLongitude.clear();
                     _controllerName.clear();

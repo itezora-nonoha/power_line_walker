@@ -5,7 +5,8 @@ class PowerLinePoint {
   // double _latitude;
   // double _longitude;
   final LatLng latlng;
-  final String names;
+  // final String names;
+  final List<String> names;
   // String note;
   final DateTime createdAt;
 
@@ -16,7 +17,7 @@ class PowerLinePoint {
     final data = snapshot.data();
     return PowerLinePoint(
         latlng: LatLng(data?['latitude'], data?['longitude']),
-        names: data?['names'],
+        names: List.from(data?['names']),
         createdAt: data?['createdAt'].toDate()
       );
   }
@@ -32,4 +33,8 @@ class PowerLinePoint {
   // String getFirstNames(){
   //   return this.names[0];
   // }
+  @override
+  String toString(){
+    return '$latlng ... $names';
+  }
 }

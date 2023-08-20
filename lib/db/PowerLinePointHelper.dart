@@ -7,12 +7,13 @@ class PowerLinePointHelper {
   // static List<PowerLinePoint> points = [];
   final _db = FirebaseFirestore.instance;
 
-  static const _collectionPoints = 'points';
+  static const _collectionName = 'points';
+  // static const _collectionName = 'points_preview';
   // static const _subCollectionBookings = 'bookings';
 
   Future<List<DocumentSnapshot>> selectAllPowerLinePoints() async {
     final collectionRef = _db
-        .collection(_collectionPoints)
+        .collection(_collectionName)
         .withConverter(
           fromFirestore: PowerLinePoint.fromFirestore,
           toFirestore: (PowerLinePoint points, _) => points.toFirestore(),
@@ -23,7 +24,7 @@ class PowerLinePointHelper {
 
   Future<PowerLinePoint?> selectPowerLinePoint(String pointName) async {
     final docRef = _db
-        .collection(_collectionPoints)
+        .collection(_collectionName)
         .doc(pointName)
         .withConverter(
             fromFirestore: PowerLinePoint.fromFirestore,
@@ -34,8 +35,8 @@ class PowerLinePointHelper {
 
   Future<void> insert(PowerLinePoint powerLinePoint) async {
     final docRef = _db
-        .collection(_collectionPoints)
-        .doc(powerLinePoint.names)
+        .collection(_collectionName)
+        .doc(powerLinePoint.names[0])
         .withConverter(
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
@@ -44,7 +45,7 @@ class PowerLinePointHelper {
 
   Future<void> delete(String pointName) async {
     return await _db
-        .collection(_collectionPoints)
+        .collection(_collectionName)
         .doc(pointName)
         .delete();
   }
