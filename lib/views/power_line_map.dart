@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -180,7 +181,7 @@ class PowerLineMapState extends State<PowerLineMap> {
     String pointLabel;
     LatLng latlng;
     String powerLineName;
-    Map<String, List<LatLng>> powerLineLatLngList = {};
+    Map<String, dynamic> powerLineLatLngMap = {};
     _powerLinePointList.forEach((powerLinePoint) {
       
       pointLabel = powerLinePoint.names[0];
@@ -193,10 +194,12 @@ class PowerLineMapState extends State<PowerLineMap> {
         if (_powerLineVoltageMap[powerLineName] != null){
         voltageSet.add(_powerLineVoltageMap[powerLineName]!);
         }
-        if (powerLineLatLngList[powerLineName] == null) {
-          powerLineLatLngList[powerLineName] = [];
+        if (powerLineLatLngMap[powerLineName] == null) {
+          Map<double, LatLng> map = {};
+          powerLineLatLngMap[powerLineName] = map;
         }
-        powerLineLatLngList[powerLineName]?.add(latlng);
+        var num = double.parse(powerLineNames.split('-')[1]);
+        powerLineLatLngMap[powerLineName][num] = latlng;
       });
 
       // 送電電圧に応じたMarkerアイコンを取得
@@ -221,7 +224,15 @@ class PowerLineMapState extends State<PowerLineMap> {
       int transmissionVoltage;
 
       // 送電系統ごとにPolylineを作成
-      for (var name in powerLineLatLngList.keys) {
+      for (var name in powerLineLatLngMap.keys) {
+        List<LatLng> latLngList = [];
+        // 鉄塔番号でソート
+        Map<double, dynamic> map = SplayTreeMap.from(powerLineLatLngMap[name], (a, b) => a.compareTo(b)); 
+        map.forEach((k, v) => latLngList.add(v));
+
+        // リストの作成
+        // powerLineLatLngMap[name].forEach((k, v) => latLngList.add(v));
+
         // 送電電圧の取得
         // var entry = map['powerLines'].where((e) => e['name'] == name);
         // transmissionVoltage = entry.first['transmissionVoltage'];
@@ -239,7 +250,7 @@ class PowerLineMapState extends State<PowerLineMap> {
         
         Polyline p = Polyline(
           polylineId: PolylineId(name),
-          points: powerLineLatLngList[name]!,
+          points: latLngList,
           color: powerLineColor,
           width: 5,
         );
@@ -247,7 +258,7 @@ class PowerLineMapState extends State<PowerLineMap> {
 
         Polyline pDashed = Polyline(
           polylineId: PolylineId(name),
-          points: powerLineLatLngList[name]!,
+          points: latLngList,
           color: powerLineColor,
           width: 2,
           // patterns: [PatternItem.dash(3)]
