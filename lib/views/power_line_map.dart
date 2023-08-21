@@ -184,6 +184,7 @@ class PowerLineMapState extends State<PowerLineMap> {
     LatLng latlng;
     String powerLineName;
     Map<String, dynamic> powerLineLatLngMap = {};
+    print('${_powerLinePointList.length} PowerLinePoint is Loaded.');
     _powerLinePointList.forEach((powerLinePoint) {
       
       pointLabel = powerLinePoint.names[0];
@@ -266,7 +267,6 @@ class PowerLineMapState extends State<PowerLineMap> {
           // patterns: [PatternItem.dash(3)]
         );
         powerLineListDashed.add(pDashed);
-        print('test');
       }
     });
     return "complete";
