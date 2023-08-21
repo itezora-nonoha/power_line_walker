@@ -66,6 +66,8 @@ class PowerLineMapState extends State<PowerLineMap> {
   List<Polyline> powerLineListDashed = [];
   List<PowerLinePoint> _powerLinePointList = [];
   late Map<String, double> _powerLineVoltageMap = {};
+  late GoogleMap googleMapWithMarker;
+  late GoogleMap googleMapWithPolyLine;
 
   @override
   void initState() {
@@ -264,11 +266,20 @@ class PowerLineMapState extends State<PowerLineMap> {
           // patterns: [PatternItem.dash(3)]
         );
         powerLineListDashed.add(pDashed);
+        print('test');
       }
     });
     return "complete";
   }
 
+  Future<String> generateGoogleMap() async {
+    if (powerLineList.isEmpty){
+      _createMarkerAndPowerLine();
+    }
+    googleMapWithMarker = generateGoogleMapWithMarker();
+    googleMapWithPolyLine = generateGoogleMapWithPolyLine();
+    return "complete";
+  }
 
   void _onTapMarker(Marker marker) {
     setState(() {
@@ -364,15 +375,15 @@ class PowerLineMapState extends State<PowerLineMap> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       
-      future: _createMarkerAndPowerLine(),
+      future: generateGoogleMap(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
 
           return Scaffold(
 
             body: (displayType == 'Marker')
-            ? generateGoogleMapWithMarker()
-            : generateGoogleMapWithPolyLine(),
+            ? googleMapWithMarker
+            : googleMapWithPolyLine,
             // floatingActionButton: FloatingActionButton(
             //   onPressed: _addPowerLinePoint,
             //   tooltip: 'Increment',
