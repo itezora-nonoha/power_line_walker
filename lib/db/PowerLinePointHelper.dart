@@ -34,9 +34,16 @@ class PowerLinePointHelper {
   }
 
   Future<void> insert(PowerLinePoint powerLinePoint) async {
+    double number = double.parse(powerLinePoint.names[0].split('-')[1]);
+    String pointKey = powerLinePoint.names[0].split('-')[0] + '-' + number.toString().padLeft(4, "0");
+
+    if (powerLinePoint.names[0].split('-').length > 2){
+      pointKey = pointKey + '-' + powerLinePoint.names[0].split('-')[2];
+    }
+
     final docRef = _db
         .collection(_collectionName)
-        .doc(powerLinePoint.names[0])
+        .doc(pointKey)
         .withConverter(
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
