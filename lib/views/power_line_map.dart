@@ -9,12 +9,8 @@ import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:power_line_walker/db/PowerLineHelper.dart';
 import 'package:power_line_walker/firebase_options.dart';
 
-import 'package:power_line_walker/db/PowerLinePointHelper.dart';
-import 'package:power_line_walker/models/power_line_point.dart';
-import 'package:power_line_walker/models/power_line.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/power_line_repository.dart';
 
@@ -95,55 +91,6 @@ class PowerLineMapState extends State<PowerLineMap> {
     _locationChangedListen?.cancel();
   }
 
-  // List<PowerLinePoint> _powerLinePointListFromDocToList(
-  //     List<DocumentSnapshot> powerLineLatLngListnapshot) {
-
-  //   return powerLineLatLngListnapshot
-  //       .map((doc) => PowerLinePoint(
-  //           latlng: LatLng(doc['latitude'], doc['longitude']),
-  //           names: List.from(doc['names']),
-  //           createdAt: doc['createdAt'].toDate()))
-  //       .toList();
-  // }
-
-  // Future<String> getPowerLinePointList() async {
-  //   List<DocumentSnapshot> powerLineLatLngListnapshot =
-  //       await PowerLinePointHelper.instance.selectAllPowerLinePoints();
-  //   _powerLinePointList = _powerLinePointListFromDocToList(powerLineLatLngListnapshot);
-  //   // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
-  //   // for (var element in _powerLinePointList) {
-  //   //   print(element.toString());
-  //   // }
-  //   return "complete";
-  // }
-
-  List<PowerLine> _powerLineListFromDocToList(
-      List<DocumentSnapshot> powerLineSnapshot) {
-
-    return powerLineSnapshot
-        .map((doc) => PowerLine(
-            name: doc['name'],
-            transmissionVoltage: doc['transmissionVoltage']))
-        .toList();
-  }
-
-  // Future<String> getPowerLineList() async {
-  //   List<DocumentSnapshot> powerLineSnapshot =
-  //       await PowerLineHelper.instance.selectAllPowerLines();
-  //   var list = _powerLineListFromDocToList(powerLineSnapshot);
-
-  //   list.forEach((powerLine) {
-  //     _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
-  //   });
-
-  //   // print(_powerLineVoltageMap);
-  //   // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
-  //   // for (var element in _powerLineList) {
-  //   //   print(element.toString());
-  //   // }
-  //   return "complete";
-  // }
-
   Future<void> setMarkerImage() async {
     tower500kV = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_500kV.png');
@@ -173,20 +120,13 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
-  // void reloadMap(){
-  //   getPowerLinePointList();
-  //   getPowerLineList();
-  // }
-
   Future<String> _createMarkerAndPowerLine() async {
 
     String pointLabel;
     LatLng latlng;
     String powerLineName;
     Map<String, dynamic> powerLineLatLngMap = {};
-    // List<PowerLinePoint> pointList = PowerLineRepository.instance.getPowerLinePointList();
-    // print('${_powerLinePointList.length} PowerLinePoint is Loaded.');
-    // print('${pointList.length} PowerLinePoint is Loaded.(PowerLineRepository)');
+
     
     // 電圧マップの構築
     PowerLineRepository.instance.getPowerLineList().forEach((powerLine) {
@@ -194,7 +134,6 @@ class PowerLineMapState extends State<PowerLineMap> {
     });
 
     PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
-    // _powerLinePointList.forEach((powerLinePoint) {
       
       pointLabel = powerLinePoint.names[0];
       latlng = powerLinePoint.latlng;
