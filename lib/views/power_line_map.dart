@@ -97,6 +97,9 @@ class PowerLineMapState extends State<PowerLineMap> {
 
     PowerLineRepository.instance.fullReload().then((value) {
       _createMarkerAndPowerLine();
+      googleMapWithMarker = generateGoogleMapWithMarker();
+      googleMapWithPolyLine = generateGoogleMapWithPolyLine();
+  
       generateGoogleMap().then((value) {
         build(context);
         setState(() {});
@@ -333,7 +336,7 @@ class PowerLineMapState extends State<PowerLineMap> {
   void _addPowerLinePoint(LatLng position){
     Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context) => AddPowerLinePoint(title: 'test', latlng:position),
+                    builder: (BuildContext context) => AddPowerLinePoint(context:context, latlng:position),
                   ),
                 );
   }
