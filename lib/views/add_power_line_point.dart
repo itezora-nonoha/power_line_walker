@@ -110,6 +110,7 @@ class AddPowerLinePoint extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () {
                           _saveButtonPushed();
+                          Navigator.of(context).pop();
                         },
                         child: const Text("地点登録")
                         // const Icon(Icons.book,size: 15),
