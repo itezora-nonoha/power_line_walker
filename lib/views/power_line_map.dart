@@ -1,23 +1,20 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-// import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:power_line_walker/db/PowerLineHelper.dart';
 import 'package:power_line_walker/firebase_options.dart';
 
 import 'package:power_line_walker/db/PowerLinePointHelper.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
-import 'package:power_line_walker/models/PowerLine.dart';
+import 'package:power_line_walker/models/power_line.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
 
 // void main() => runApp(MyApp());
