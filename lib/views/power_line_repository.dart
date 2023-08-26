@@ -64,10 +64,10 @@ class PowerLineRepository {
   }
 
   // 任意1件の地点情報を読み込む
-  Future<PowerLinePoint?> selectPowerLinePoint(String pointName) async {
+  Future<PowerLinePoint?> selectPowerLinePoint(String pointKey) async {
     final docRef = _database
         .collection('points')
-        .doc(pointName)
+        .doc(pointKey)
         .withConverter(
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint points, _) => points.toFirestore());
@@ -84,6 +84,13 @@ class PowerLineRepository {
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
     return await docRef.set(powerLinePoint);
+  }
+
+  Future<void> delete(String pointKey) async {
+    return await _database
+        .collection('points')
+        .doc(pointKey)
+        .delete();
   }
 
   // ------------------------------ PowerLine ------------------------------
