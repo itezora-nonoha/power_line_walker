@@ -95,13 +95,13 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   void refleshMap(){
 
-      PowerLineRepository.instance.fullReload().then((value) {
-        _createMarkerAndPowerLine();
-        generateGoogleMap().then((value) {
-          build(context);
-          setState(() {});
-        });
+    PowerLineRepository.instance.fullReload().then((value) {
+      _createMarkerAndPowerLine();
+      generateGoogleMap().then((value) {
+        build(context);
+        setState(() {});
       });
+    });
   }
 
   Future<void> setMarkerImage() async {
@@ -286,7 +286,7 @@ class PowerLineMapState extends State<PowerLineMap> {
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
       ),
-      onTap: (LatLng latLng) {
+      onLongPress: (LatLng latLng) {
         _addPowerLinePoint(latLng);
       },
       fortyFiveDegreeImageryEnabled: true,
@@ -311,7 +311,7 @@ class PowerLineMapState extends State<PowerLineMap> {
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
       ),
-      onTap: (LatLng latLng) {
+      onLongPress: (LatLng latLng) {
         _addPowerLinePoint(latLng);
       },
       onCameraMove: (position) => {_changedCamera(position)},
