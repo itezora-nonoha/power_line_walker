@@ -16,7 +16,7 @@ import 'package:power_line_walker/db/PowerLineHelper.dart';
 import 'package:power_line_walker/firebase_options.dart';
 
 import 'package:power_line_walker/db/PowerLinePointHelper.dart';
-import 'package:power_line_walker/models/PowerLinePoint.dart';
+import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/models/PowerLine.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
 

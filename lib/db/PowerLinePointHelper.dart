@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:power_line_walker/models/PowerLinePoint.dart';
+import 'package:power_line_walker/models/power_line_point.dart';
 
 class PowerLinePointHelper {
   PowerLinePointHelper._getInstance();

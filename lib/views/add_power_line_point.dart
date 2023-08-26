@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:power_line_walker/db/PowerLinePointHelper.dart';
-import 'package:power_line_walker/models/PowerLinePoint.dart';
+import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/widgets/point_type_selector_box.dart';
 
 class AddPowerLinePoint extends StatelessWidget {
@@ -39,6 +39,7 @@ class AddPowerLinePoint extends StatelessWidget {
   //   super.dispose();
   // }
 
+  // 「地点登録」ボタン押下時の操作
   void _saveButtonPushed() {
     var latitude = double.parse(_controllerLatitude.text);
     var longitude = double.parse(_controllerLongitude.text);
