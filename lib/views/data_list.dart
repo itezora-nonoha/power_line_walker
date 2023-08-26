@@ -59,8 +59,8 @@ class _MyDataListPageState extends State<MyDataListPage> {
     setState(() {});
   }
 
-  void _deletePowerLinePoint(String pointName, int index) async {
-    await PowerLineRepository.instance.delete(pointName);
+  void _deletePowerLinePoint(String pointKey, int index) async {
+    await PowerLineRepository.instance.delete(pointKey);
     _powerLinePointList.removeAt(index);
     setState(() {});
   }
@@ -140,7 +140,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                       height: 25,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            _deletePowerLinePoint(powerLinePoint.names[0], index);
+                                            _deletePowerLinePoint(powerLinePoint.generateUniqueKey(), index);
                                           },
                                           child: const Icon(
                                             Icons.delete,
