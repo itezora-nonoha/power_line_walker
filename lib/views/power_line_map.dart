@@ -16,6 +16,7 @@ import 'package:power_line_walker/db/PowerLinePointHelper.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/models/power_line.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
+import 'package:power_line_walker/views/power_line_repository.dart';
 
 // void main() => runApp(MyApp());
 void main() async {
@@ -61,7 +62,7 @@ class PowerLineMapState extends State<PowerLineMap> {
   late BitmapDescriptor tower275kV154kV = BitmapDescriptor.defaultMarker;
   List<Polyline> powerLineList = [];
   List<Polyline> powerLineListDashed = [];
-  List<PowerLinePoint> _powerLinePointList = [];
+  // List<PowerLinePoint> _powerLinePointList = [];
   late Map<String, double> _powerLineVoltageMap = {};
   late GoogleMap googleMapWithMarker;
   late GoogleMap googleMapWithPolyLine;
@@ -70,11 +71,12 @@ class PowerLineMapState extends State<PowerLineMap> {
   void initState() {
     super.initState();
     setMarkerImage();
-    getPowerLinePointList();
+    // getPowerLinePointList();
     getPowerLineList();
     // 現在位置の取得
     _getLocation();
-
+    PowerLineRepository.instance.fullReload();
+  
     // 現在位置の変化を監視
     _locationChangedListen =
         _locationService.onLocationChanged.listen((LocationData result) async {
@@ -103,16 +105,16 @@ class PowerLineMapState extends State<PowerLineMap> {
         .toList();
   }
 
-  Future<String> getPowerLinePointList() async {
-    List<DocumentSnapshot> powerLineLatLngListnapshot =
-        await PowerLinePointHelper.instance.selectAllPowerLinePoints();
-    _powerLinePointList = _powerLinePointListFromDocToList(powerLineLatLngListnapshot);
-    // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
-    // for (var element in _powerLinePointList) {
-    //   print(element.toString());
-    // }
-    return "complete";
-  }
+  // Future<String> getPowerLinePointList() async {
+  //   List<DocumentSnapshot> powerLineLatLngListnapshot =
+  //       await PowerLinePointHelper.instance.selectAllPowerLinePoints();
+  //   _powerLinePointList = _powerLinePointListFromDocToList(powerLineLatLngListnapshot);
+  //   // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
+  //   // for (var element in _powerLinePointList) {
+  //   //   print(element.toString());
+  //   // }
+  //   return "complete";
+  // }
 
   List<PowerLine> _powerLineListFromDocToList(
       List<DocumentSnapshot> powerLineSnapshot) {
@@ -170,10 +172,10 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
-  void reloadMap(){
-    getPowerLinePointList();
-    getPowerLineList();
-  }
+  // void reloadMap(){
+  //   getPowerLinePointList();
+  //   getPowerLineList();
+  // }
 
   Future<String> _createMarkerAndPowerLine() async {
 
@@ -181,8 +183,12 @@ class PowerLineMapState extends State<PowerLineMap> {
     LatLng latlng;
     String powerLineName;
     Map<String, dynamic> powerLineLatLngMap = {};
-    print('${_powerLinePointList.length} PowerLinePoint is Loaded.');
-    _powerLinePointList.forEach((powerLinePoint) {
+    List<PowerLinePoint> pointList = PowerLineRepository.instance.getPowerLinePointList();
+    // print('${_powerLinePointList.length} PowerLinePoint is Loaded.');
+    print('${pointList.length} PowerLinePoint is Loaded.(PowerLineRepository)');
+    
+    PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
+    // _powerLinePointList.forEach((powerLinePoint) {
       
       pointLabel = powerLinePoint.names[0];
       latlng = powerLinePoint.latlng;
@@ -300,7 +306,7 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   void _changedCamera(CameraPosition position) {
     setState(() {
-      if (position.zoom > 14) {
+      if (position.zoom > 13) {
         displayType = 'Marker';
       } else {
         displayType = 'Line';
