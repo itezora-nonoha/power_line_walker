@@ -46,8 +46,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
 
   void _getPowerLinePointList() async {
     _powerLinePointList = PowerLineRepository.instance.getPowerLinePointList();
-    
-    _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
+    // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
     setState(() {});
   }
 
@@ -81,7 +80,8 @@ class _MyDataListPageState extends State<MyDataListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.purple,
+        title: const Text('地点情報一覧'),
       ),
       body: SafeArea(
         child: Column(

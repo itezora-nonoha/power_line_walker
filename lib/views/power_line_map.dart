@@ -100,6 +100,12 @@ class PowerLineMapState extends State<PowerLineMap> {
       generateGoogleMap().then((value) {
         build(context);
         setState(() {});
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('データの再読み込みおよび再描画が完了しました。'),
+            duration: Duration(seconds: 1)
+          )
+        );
       });
     });
   }

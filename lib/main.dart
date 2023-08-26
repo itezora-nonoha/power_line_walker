@@ -40,58 +40,36 @@ class MapSample extends StatelessWidget {
 
   final String _appBarTitle = "Power Line Walker";
 
-  // void _addPowerLinePoint(){
-  //   Navigator.of(context).push(
-  //                 MaterialPageRoute(
-  //                   builder: (BuildContext context) => AddPowerLinePoint(title: 'test'),
-  //                 ),
-  //               );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: Text(_appBarTitle),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            // const DrawerHeader(
-            //   child: Text('Drawer Header'),
-            //      decoration: BoxDecoration(
-            //      color: Colors.blue,
-            //   ),
-            // ),
-            ListTile(
-              title: Text('データ一覧'),
-              onTap: () => {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => dataListPage,
-                  ),
-                ),
-              },
-            ),
-            ListTile(
-              title: Text('データの再読み込み'),
-              onTap: () {
-                mapViewKey.currentState?.refleshMap();
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        )
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.menu),
+            tooltip: '地点情報一覧',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => dataListPage,
+                ));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'データの再読み込みと再描画',
+            onPressed: () {
+              mapViewKey.currentState?.refleshMap();
+              // ScaffoldMessenger.of(context).showSnackBar(
+                  // const SnackBar(content: Text('This is a snackbar')));
+            },
+          )
+        ]
       ),
       body: PowerLineMap(key: mapViewKey),
-      // body: PowerLineMap(),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _addPowerLinePoint,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // )
-    );
+    ));
   }
 }
 
