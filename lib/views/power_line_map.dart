@@ -9,13 +9,10 @@ import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:power_line_walker/db/PowerLineHelper.dart';
 import 'package:power_line_walker/firebase_options.dart';
 
-import 'package:power_line_walker/db/PowerLinePointHelper.dart';
-import 'package:power_line_walker/models/power_line_point.dart';
-import 'package:power_line_walker/models/power_line.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
+import 'package:power_line_walker/views/power_line_repository.dart';
 
 // void main() => runApp(MyApp());
 void main() async {
@@ -60,8 +57,8 @@ class PowerLineMapState extends State<PowerLineMap> {
   late BitmapDescriptor tower66kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV154kV = BitmapDescriptor.defaultMarker;
   List<Polyline> powerLineList = [];
-  List<Polyline> powerLineListDashed = [];
-  List<PowerLinePoint> _powerLinePointList = [];
+  List<Polyline> powerLineListSub = []; // Markerと同時に表示するようの補助用Polyline
+  // List<PowerLinePoint> _powerLinePointList = [];
   late Map<String, double> _powerLineVoltageMap = {};
   late GoogleMap googleMapWithMarker;
   late GoogleMap googleMapWithPolyLine;
@@ -70,11 +67,12 @@ class PowerLineMapState extends State<PowerLineMap> {
   void initState() {
     super.initState();
     setMarkerImage();
-    getPowerLinePointList();
-    getPowerLineList();
+    // getPowerLinePointList();
+    // getPowerLineList();
     // 現在位置の取得
     _getLocation();
-
+    PowerLineRepository.instance.fullReload();
+  
     // 現在位置の変化を監視
     _locationChangedListen =
         _locationService.onLocationChanged.listen((LocationData result) async {
@@ -82,6 +80,7 @@ class PowerLineMapState extends State<PowerLineMap> {
             _yourLocation = result;
           });
         });
+    print('---------- initState is Completed ----------');
   }
 
   @override
@@ -90,55 +89,6 @@ class PowerLineMapState extends State<PowerLineMap> {
 
     // 監視を終了
     _locationChangedListen?.cancel();
-  }
-
-  List<PowerLinePoint> _powerLinePointListFromDocToList(
-      List<DocumentSnapshot> powerLineLatLngListnapshot) {
-
-    return powerLineLatLngListnapshot
-        .map((doc) => PowerLinePoint(
-            latlng: LatLng(doc['latitude'], doc['longitude']),
-            names: List.from(doc['names']),
-            createdAt: doc['createdAt'].toDate()))
-        .toList();
-  }
-
-  Future<String> getPowerLinePointList() async {
-    List<DocumentSnapshot> powerLineLatLngListnapshot =
-        await PowerLinePointHelper.instance.selectAllPowerLinePoints();
-    _powerLinePointList = _powerLinePointListFromDocToList(powerLineLatLngListnapshot);
-    // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
-    // for (var element in _powerLinePointList) {
-    //   print(element.toString());
-    // }
-    return "complete";
-  }
-
-  List<PowerLine> _powerLineListFromDocToList(
-      List<DocumentSnapshot> powerLineSnapshot) {
-
-    return powerLineSnapshot
-        .map((doc) => PowerLine(
-            name: doc['name'],
-            transmissionVoltage: doc['transmissionVoltage']))
-        .toList();
-  }
-
-  Future<String> getPowerLineList() async {
-    List<DocumentSnapshot> powerLineSnapshot =
-        await PowerLineHelper.instance.selectAllPowerLines();
-    var list = _powerLineListFromDocToList(powerLineSnapshot);
-
-    list.forEach((powerLine) {
-      _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
-    });
-
-    // print(_powerLineVoltageMap);
-    // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
-    // for (var element in _powerLineList) {
-    //   print(element.toString());
-    // }
-    return "complete";
   }
 
   Future<void> setMarkerImage() async {
@@ -170,19 +120,20 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
-  void reloadMap(){
-    getPowerLinePointList();
-    getPowerLineList();
-  }
-
   Future<String> _createMarkerAndPowerLine() async {
 
     String pointLabel;
     LatLng latlng;
     String powerLineName;
     Map<String, dynamic> powerLineLatLngMap = {};
-    print('${_powerLinePointList.length} PowerLinePoint is Loaded.');
-    _powerLinePointList.forEach((powerLinePoint) {
+
+    
+    // 電圧マップの構築
+    PowerLineRepository.instance.getPowerLineList().forEach((powerLine) {
+      _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
+    });
+
+    PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
       
       pointLabel = powerLinePoint.names[0];
       latlng = powerLinePoint.latlng;
@@ -248,22 +199,22 @@ class PowerLineMapState extends State<PowerLineMap> {
           powerLineColor = Colors.blue;
         }
         
-        Polyline p = Polyline(
+        Polyline polyline = Polyline(
           polylineId: PolylineId(name),
           points: latLngList,
           color: powerLineColor,
           width: 5,
         );
-        powerLineList.add(p);
+        powerLineList.add(polyline);
 
-        Polyline pDashed = Polyline(
+        Polyline polylineSub = Polyline(
           polylineId: PolylineId(name),
           points: latLngList,
           color: powerLineColor,
           width: 2,
           // patterns: [PatternItem.dash(3)]
         );
-        powerLineListDashed.add(pDashed);
+        powerLineListSub.add(polylineSub);
       }
     });
     return "complete";
@@ -300,7 +251,7 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   void _changedCamera(CameraPosition position) {
     setState(() {
-      if (position.zoom > 14) {
+      if (position.zoom > 13) {
         displayType = 'Marker';
       } else {
         displayType = 'Line';
@@ -325,7 +276,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       onCameraMove: (position) => {_changedCamera(position)},
       myLocationEnabled: true,
       markers: Set.from(markerSet),
-      polylines: Set.from(powerLineListDashed),
+      polylines: Set.from(powerLineListSub),
       onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
