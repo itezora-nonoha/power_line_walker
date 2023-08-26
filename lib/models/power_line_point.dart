@@ -38,17 +38,19 @@ class PowerLinePoint {
     List<String> labelNameSplit = powerPointLabel.split('-');
   
     String labelName = labelNameSplit[0];
-    double labelNumber = double.parse(labelNameSplit[1]);
+    int labelNumber = int.parse(labelNameSplit[1]);
     String labelNumberPadding = labelNumber.toString().padLeft(4, "0");
   
     String pointKey = '$labelName-$labelNumberPadding';
-
+    print('spilt item count = ${labelNameSplit.length}');
     // 「送電路線名-鉄塔番号」の後ろに更に文字列がついている場合に、そのテキストを付記する
     if (labelNameSplit.length > 2){
       String str = '${labelNameSplit[0]}-${labelNameSplit[1]}';
-      String extraText = str.substring(pointKey.length);
+      String extraText = powerPointLabel.substring(str.length);
       pointKey ='$pointKey$extraText';
     }
+
+    print(labelNumberPadding);
     return pointKey;
   }
 }
