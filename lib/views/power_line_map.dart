@@ -286,7 +286,7 @@ class PowerLineMapState extends State<PowerLineMap> {
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
       ),
-      onLongPress: (LatLng latLng) {
+      onTap: (LatLng latLng) {
         _addPowerLinePoint(latLng);
       },
       fortyFiveDegreeImageryEnabled: true,
@@ -311,7 +311,7 @@ class PowerLineMapState extends State<PowerLineMap> {
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
       ),
-      onLongPress: (LatLng latLng) {
+      onTap: (LatLng latLng) {
         _addPowerLinePoint(latLng);
       },
       onCameraMove: (position) => {_changedCamera(position)},
