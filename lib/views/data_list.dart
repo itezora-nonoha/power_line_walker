@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:power_line_walker/db/PowerLinePointHelper.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
+import 'package:power_line_walker/views/power_line_repository.dart';
 
 class MyDataListPage extends StatefulWidget {
   const MyDataListPage({super.key, required this.title});
@@ -45,9 +45,7 @@ class _MyDataListPageState extends State<MyDataListPage> {
   }
 
   void _getPowerLinePointList() async {
-    List<DocumentSnapshot> powerLinePointSnapshot =
-        await PowerLinePointHelper.instance.selectAllPowerLinePoints();
-    _powerLinePointList = _powerLinePointListFromDocToList(powerLinePointSnapshot);
+    _powerLinePointList = PowerLineRepository.instance.getPowerLinePointList();
     
     _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
     setState(() {});
@@ -56,20 +54,20 @@ class _MyDataListPageState extends State<MyDataListPage> {
   void _addPowerLinePoint(LatLng latlng, List<String> names) async {
     final PowerLinePoint powerLinePoint = PowerLinePoint(
         latlng: latlng, names:names, createdAt: DateTime.now());
-    await PowerLinePointHelper.instance.insert(powerLinePoint);
+    await PowerLineRepository.instance.insert(powerLinePoint);
     _powerLinePointList.add(powerLinePoint);
     setState(() {});
   }
 
   void _deletePowerLinePoint(String pointName, int index) async {
-    await PowerLinePointHelper.instance.delete(pointName);
+    await PowerLineRepository.instance.delete(pointName);
     _powerLinePointList.removeAt(index);
     setState(() {});
   }
 
   void _getPowerLinePoint(String names) async {
     PowerLinePoint? powerLinePoint =
-        await PowerLinePointHelper.instance.selectPowerLinePoint(names);
+        await PowerLineRepository.instance.selectPowerLinePoint(names);
     if (powerLinePoint != null) {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
