@@ -44,6 +44,7 @@
   <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+  // import { getFirestore } from "firebase/firestore";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -51,6 +52,7 @@
   const firebaseConfig = {
     apiKey: "{$firebaseAppConfigKey}",
     authDomain: "powerlinewalker.firebaseapp.com",
+    databaseURL: "https://powerlinewalker-default-rtdb.firebaseio.com",
     projectId: "powerlinewalker",
     storageBucket: "powerlinewalker.appspot.com",
     messagingSenderId: "126907591682",
