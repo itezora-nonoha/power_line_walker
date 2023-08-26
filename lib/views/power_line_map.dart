@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
 }
 
 class PowerLineMap extends StatefulWidget {
-  @override
+  const PowerLineMap({Key? key}) : super(key: key);
+  // PowerLineMap(key);
+  // @override
   State<PowerLineMap> createState() => PowerLineMapState();
 }
 
@@ -91,6 +93,17 @@ class PowerLineMapState extends State<PowerLineMap> {
     _locationChangedListen?.cancel();
   }
 
+  void refleshMap(){
+
+      PowerLineRepository.instance.fullReload().then((value) {
+        _createMarkerAndPowerLine();
+        generateGoogleMap().then((value) {
+          build(context);
+          setState(() {});
+        });
+      });
+  }
+
   Future<void> setMarkerImage() async {
     tower500kV = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_500kV.png');
@@ -120,7 +133,11 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
+
   Future<String> _createMarkerAndPowerLine() async {
+    markerSet = {};
+    powerLineList = [];
+    powerLineListSub = [];
 
     String pointLabel;
     LatLng latlng;

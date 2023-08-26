@@ -5,6 +5,7 @@ import 'package:power_line_walker/firebase_options.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/data_list.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
+import 'package:power_line_walker/views/power_line_repository.dart';
 
 // void main() => runApp(MyApp());
 void main() async {
@@ -16,6 +17,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,23 +27,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MapSample extends StatefulWidget {
-  @override
-  State<MapSample> createState() => MapSampleState();
-}
+// class MapSample extends StatelessWidget {
+//   @override
+//   State<MapSample> createState() => MapSampleState();
+// }
 
-class MapSampleState extends State<MapSample> {
+// class MapSampleState extends State<MapSample> {
+class MapSample extends StatelessWidget {
+  final mapViewKey = GlobalKey<PowerLineMapState>();
+  late PowerLineMap powerLineMapView;
   MyDataListPage dataListPage = const MyDataListPage(title:'test');
 
   final String _appBarTitle = "Power Line Walker";
 
-  void _addPowerLinePoint(){
-    Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => AddPowerLinePoint(title: 'test'),
-                  ),
-                );
-  }
+  // void _addPowerLinePoint(){
+  //   Navigator.of(context).push(
+  //                 MaterialPageRoute(
+  //                   builder: (BuildContext context) => AddPowerLinePoint(title: 'test'),
+  //                 ),
+  //               );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -70,21 +75,22 @@ class MapSampleState extends State<MapSample> {
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              title: Text('データの再読み込み'),
               onTap: () {
-                // Do something
+                mapViewKey.currentState?.refleshMap();
                 Navigator.pop(context);
               },
             ),
           ],
         )
       ),
-      body: PowerLineMap(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addPowerLinePoint,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      )
+      body: PowerLineMap(key: mapViewKey),
+      // body: PowerLineMap(),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _addPowerLinePoint,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // )
     );
   }
 }
