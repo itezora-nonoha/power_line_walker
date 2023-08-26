@@ -246,9 +246,9 @@ class PowerLineMapState extends State<PowerLineMap> {
   Future<String> generateGoogleMap() async {
     if (powerLineList.isEmpty){
       _createMarkerAndPowerLine();
+      googleMapWithMarker = generateGoogleMapWithMarker();
+      googleMapWithPolyLine = generateGoogleMapWithPolyLine();
     }
-    googleMapWithMarker = generateGoogleMapWithMarker();
-    googleMapWithPolyLine = generateGoogleMapWithPolyLine();
     return "complete";
   }
 
