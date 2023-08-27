@@ -71,14 +71,13 @@ class MyDataListPageState extends State<MyDataListPage> {
                                         textAlign: TextAlign.left,
                                       ),
                                     ),
-                                    // Expanded(
-                                    //   child: Text(
-                                    //     // powerLinePoint.latlng.latitude.toString(),
-                                    //     powerLinePoint.names.toString(),
-                                    //     style: const TextStyle(fontSize: 12),
-                                    //     textAlign: TextAlign.left,
-                                    //   ),
-                                    // ),
+                                    Expanded(
+                                      child: Text(
+                                        powerLinePoint.names.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
                                     // Expanded(
                                     //   child: Text(
                                     //     powerLinePoint.latlng.longitude.toString(),
