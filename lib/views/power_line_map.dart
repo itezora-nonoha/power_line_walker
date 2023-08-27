@@ -41,7 +41,7 @@ class PowerLineMap extends StatefulWidget {
 }
 
 class PowerLineMapState extends State<PowerLineMap> {
-  Completer<GoogleMapController> _controller = Completer();
+  // Completer<GoogleMapController> _controller = Completer();
   Location _locationService = Location();
   // 現在位置
   LocationData? _yourLocation;
@@ -64,6 +64,10 @@ class PowerLineMapState extends State<PowerLineMap> {
   late Map<String, double> _powerLineVoltageMap = {};
   late GoogleMap googleMapWithMarker;
   late GoogleMap googleMapWithPolyLine;
+
+  late GoogleMapController mapController;
+  late Location locationService = Location();
+  LocationData? currentLocation;
 
   @override
   void initState() {
@@ -91,6 +95,10 @@ class PowerLineMapState extends State<PowerLineMap> {
 
     // 監視を終了
     _locationChangedListen?.cancel();
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   void refleshMap(){
@@ -284,6 +292,16 @@ class PowerLineMapState extends State<PowerLineMap> {
       }
     });
   }
+  void gotoCurrentLocation() async {
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 0,
+        target: LatLng(_yourLocation?.latitude ?? 0.0,            _yourLocation?.longitude ?? 0.0),
+        // target: LatLng(35, 135),
+        zoom: 17.0,
+      ),
+    ));
+  }
 
   GoogleMap generateGoogleMapWithMarker() {
     return GoogleMap(
@@ -303,10 +321,9 @@ class PowerLineMapState extends State<PowerLineMap> {
       myLocationEnabled: true,
       markers: Set.from(markerSet),
       polylines: Set.from(powerLineListSub),
-      onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+      onMapCreated: _onMapCreated,
       myLocationButtonEnabled: true,
+      compassEnabled: true,
     );
   }
 
@@ -326,10 +343,9 @@ class PowerLineMapState extends State<PowerLineMap> {
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
       myLocationEnabled: true,
-      onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+      onMapCreated: _onMapCreated,
       myLocationButtonEnabled: true,
+      compassEnabled: true,
     );
   }
 

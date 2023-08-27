@@ -48,6 +48,15 @@ class MapSample extends StatelessWidget {
         title: Text(_appBarTitle),
         actions: <Widget>[
           IconButton(
+            icon: const Icon(Icons.my_location),
+            tooltip: '現在地周辺へ移動',
+            onPressed: () {
+              mapViewKey.currentState?.gotoCurrentLocation();
+              // ScaffoldMessenger.of(context).showSnackBar(
+                  // const SnackBar(content: Text('This is a snackbar')));
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.menu),
             tooltip: '地点情報一覧',
             onPressed: () {
@@ -58,7 +67,7 @@ class MapSample extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.location_on),
             tooltip: 'データの再読み込みと再描画',
             onPressed: () {
               mapViewKey.currentState?.refleshMap();
