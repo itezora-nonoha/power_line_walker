@@ -35,8 +35,10 @@ class MyApp extends StatelessWidget {
 // class MapSampleState extends State<MapSample> {
 class MapSample extends StatelessWidget {
   final mapViewKey = GlobalKey<PowerLineMapState>();
-  late PowerLineMap powerLineMapView;
-  MyDataListPage dataListPage = const MyDataListPage(title:'test');
+  final dataListViewKey = GlobalKey<MyDataListPageState>();
+
+  late PowerLineMap powerLineMapView = PowerLineMap(key: mapViewKey);
+  late MyDataListPage dataListPage = MyDataListPage(key: dataListViewKey);
 
   final String _appBarTitle = "Power Line Walker";
 
@@ -77,7 +79,7 @@ class MapSample extends StatelessWidget {
           )
         ]
       ),
-      body: PowerLineMap(key: mapViewKey),
+      body: powerLineMapView,
     ));
   }
 }

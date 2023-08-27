@@ -5,15 +5,14 @@ import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/views/power_line_repository.dart';
 
 class MyDataListPage extends StatefulWidget {
-  const MyDataListPage({super.key, required this.title});
-
-  final String title;
+  const MyDataListPage({Key? key}) : super(key: key,);
 
   @override
-  State<MyDataListPage> createState() => _MyDataListPageState();
+  State<MyDataListPage> createState() => MyDataListPageState();
 }
 
-class _MyDataListPageState extends State<MyDataListPage> {
+class MyDataListPageState extends State<MyDataListPage> {
+
   final String _userId = 'test';
   final String _pointName = 'test';
   final TextEditingController _controllerLatitude = TextEditingController();
@@ -42,18 +41,6 @@ class _MyDataListPageState extends State<MyDataListPage> {
     _pointList.removeAt(index);
     setState(() {});
   }
-
-  // void _getPowerLinePoint(String names) async {
-  //   PowerLinePoint? powerLinePoint =
-  //       await PowerLineRepository.instance.selectPowerLinePoint(names);
-  //   if (powerLinePoint != null) {
-  //     // ignore: use_build_context_synchronously
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text('${powerLinePoint.names} ${powerLinePoint.latlng.latitude} : ${powerLinePoint.latlng.longitude}'),
-  //       duration: const Duration(seconds: 3),
-  //     ));
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
