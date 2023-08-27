@@ -19,12 +19,15 @@ class _MyDataListPageState extends State<MyDataListPage> {
   final TextEditingController _controllerLatitude = TextEditingController();
   final TextEditingController _controllerLongitude = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
-  List<PowerLinePoint> _powerLinePointList = [];
+  List<PowerLinePoint> _pointList = [];
+  List<PowerLinePoint> _pointListFiltered = [];
+  List<PowerLinePoint> _pointListDisplaying = [];
 
   @override
   void initState() {
     super.initState();
-    _getPowerLinePointList();
+    _pointList = PowerLineRepository.instance.getPowerLinePointList();
+    _pointListFiltered = _pointList;
   }
 
   @override
@@ -34,50 +37,27 @@ class _MyDataListPageState extends State<MyDataListPage> {
     super.dispose();
   }
 
-  List<PowerLinePoint> _powerLinePointListFromDocToList(
-      List<DocumentSnapshot> powerLinePointSnapshot) {
-    return powerLinePointSnapshot
-        .map((doc) => PowerLinePoint(
-            latlng: LatLng(doc['latitude'], doc['longitude']),
-            names: List.from(doc['names']),
-            createdAt: doc['createdAt'].toDate()))
-        .toList();
-  }
-
-  void _getPowerLinePointList() async {
-    _powerLinePointList = PowerLineRepository.instance.getPowerLinePointList();
-    // _powerLinePointList.forEach((element) {print('${element.names}, ${element.latlng}');});
-    setState(() {});
-  }
-
-  void _addPowerLinePoint(LatLng latlng, List<String> names) async {
-    final PowerLinePoint powerLinePoint = PowerLinePoint(
-        latlng: latlng, names:names, createdAt: DateTime.now());
-    await PowerLineRepository.instance.insert(powerLinePoint);
-    _powerLinePointList.add(powerLinePoint);
-    setState(() {});
-  }
-
   void _deletePowerLinePoint(String pointKey, int index) async {
     await PowerLineRepository.instance.delete(pointKey);
-    _powerLinePointList.removeAt(index);
+    _pointList.removeAt(index);
     setState(() {});
   }
 
-  void _getPowerLinePoint(String names) async {
-    PowerLinePoint? powerLinePoint =
-        await PowerLineRepository.instance.selectPowerLinePoint(names);
-    if (powerLinePoint != null) {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('${powerLinePoint.names} ${powerLinePoint.latlng.latitude} : ${powerLinePoint.latlng.longitude}'),
-        duration: const Duration(seconds: 3),
-      ));
-    }
-  }
+  // void _getPowerLinePoint(String names) async {
+  //   PowerLinePoint? powerLinePoint =
+  //       await PowerLineRepository.instance.selectPowerLinePoint(names);
+  //   if (powerLinePoint != null) {
+  //     // ignore: use_build_context_synchronously
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text('${powerLinePoint.names} ${powerLinePoint.latlng.latitude} : ${powerLinePoint.latlng.longitude}'),
+  //       duration: const Duration(seconds: 3),
+  //     ));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    _pointListDisplaying = _pointListFiltered;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
@@ -89,12 +69,12 @@ class _MyDataListPageState extends State<MyDataListPage> {
           children: [
             Expanded(
               child: SizedBox(
-                child: _powerLinePointList.isEmpty
+                child: _pointListDisplaying.isEmpty
                     ? const Center(child: Text('NO DATA'))
                     : ListView.builder(
-                        itemCount: _powerLinePointList.length,
+                        itemCount: _pointListDisplaying.length,
                         itemBuilder: (BuildContext context, int index) {
-                          final powerLinePoint = _powerLinePointList[index];
+                          final powerLinePoint = _pointListDisplaying[index];
                           return Card(
                             child: InkWell(
                               child: Padding(
@@ -105,14 +85,17 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                       child: Text(
                                         powerLinePoint.names[0],
                                         style: const TextStyle(fontSize: 16),
+                                        textAlign: TextAlign.left,
                                       ),
                                     ),
-                                    // Expanded(
-                                    //   child: Text(
-                                    //     powerLinePoint.latlng.latitude.toString(),
-                                    //     style: const TextStyle(fontSize: 16),
-                                    //   ),
-                                    // ),
+                                    Expanded(
+                                      child: Text(
+                                        // powerLinePoint.latlng.latitude.toString(),
+                                        powerLinePoint.names.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
                                     // Expanded(
                                     //   child: Text(
                                     //     powerLinePoint.latlng.longitude.toString(),
@@ -124,7 +107,12 @@ class _MyDataListPageState extends State<MyDataListPage> {
                                       height: 25,
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            _getPowerLinePoint(powerLinePoint.names[0]);
+                                            var pointKey = powerLinePoint.generateUniqueKey();
+                                            PowerLineRepository.instance.selectPowerLinePoint(pointKey);
+                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                content: Text(powerLinePoint.toString()),
+                                                duration: const Duration(seconds: 1),
+                                              ));
                                           },
                                           child: const Icon(
                                             Icons.book,
@@ -159,48 +147,35 @@ class _MyDataListPageState extends State<MyDataListPage> {
               children: [
                 Expanded(
                     child: TextField(
-                  controller: _controllerLatitude,
-                  autofocus: false,
-                  decoration: const InputDecoration(labelText: 'latitude'),
-                )),
-                Expanded(
-                    child: TextField(
-                  controller: _controllerLongitude,
-                  autofocus: false,
-                  decoration: const InputDecoration(labelText: 'longitude'),
-                )),
-                Expanded(
-                    child: TextField(
                   controller: _controllerName,
                   autofocus: false,
-                  decoration: const InputDecoration(labelText: 'name'),
+                  decoration: const InputDecoration(labelText: '検索テキスト'),
                   onSubmitted: (String value) {
-                    double latitude = double.parse(_controllerLatitude.text);
-                    double longitude = double.parse(_controllerLongitude.text);
-                    LatLng latlng = LatLng(latitude, longitude);
-                    print(latlng);  
-                    _addPowerLinePoint(latlng, _controllerName.text.split(','));_controllerLatitude.clear();
-                    _controllerLongitude.clear();
-                    _controllerName.clear();
+                    _onPressedSearchButton();
                   },
                 )),
                 ElevatedButton(
-                    onPressed: () {
-                    double latitude = double.parse(_controllerLatitude.text);
-                    double longitude = double.parse(_controllerLongitude.text);
-                    LatLng latlng = LatLng(latitude, longitude);
-                    print(latlng);  
-                    _addPowerLinePoint(latlng, _controllerName.text.split(','));
-                    _controllerLatitude.clear();
-                    _controllerLongitude.clear();
-                    _controllerName.clear();
-                  },
-                    child: const Icon(Icons.add)),
+                    onPressed: _onPressedSearchButton,
+                    child: const Icon(Icons.search)),
               ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onPressedSearchButton() {
+    _filteringPointList(_controllerName.value.text);
+    setState(() {});
+    // _controllerName.clear();
+  }
+
+  void _filteringPointList(String searchWord) {
+    print('filtering $searchWord');
+    _pointListFiltered = _pointList.where((point) {
+      var nameList = point.names;
+      return nameList.any((name) => name.contains(searchWord));
+    }).toList();
   }
 }
