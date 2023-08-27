@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/views/power_line_repository.dart';
 
@@ -13,10 +11,8 @@ class MyDataListPage extends StatefulWidget {
 
 class MyDataListPageState extends State<MyDataListPage> {
 
-  final String _userId = 'test';
-  final String _pointName = 'test';
-  final TextEditingController _controllerLatitude = TextEditingController();
-  final TextEditingController _controllerLongitude = TextEditingController();
+  // final TextEditingController _controllerLatitude = TextEditingController();
+  // final TextEditingController _controllerLongitude = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
   List<PowerLinePoint> _pointList = [];
   List<PowerLinePoint> _pointListFiltered = [];
@@ -31,8 +27,8 @@ class MyDataListPageState extends State<MyDataListPage> {
 
   @override
   void dispose() {
-    _controllerLatitude.dispose();
-    _controllerLongitude.dispose();
+    // _controllerLatitude.dispose();
+    // _controllerLongitude.dispose();
     super.dispose();
   }
 
@@ -75,14 +71,14 @@ class MyDataListPageState extends State<MyDataListPage> {
                                         textAlign: TextAlign.left,
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        // powerLinePoint.latlng.latitude.toString(),
-                                        powerLinePoint.names.toString(),
-                                        style: const TextStyle(fontSize: 12),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
+                                    // Expanded(
+                                    //   child: Text(
+                                    //     // powerLinePoint.latlng.latitude.toString(),
+                                    //     powerLinePoint.names.toString(),
+                                    //     style: const TextStyle(fontSize: 12),
+                                    //     textAlign: TextAlign.left,
+                                    //   ),
+                                    // ),
                                     // Expanded(
                                     //   child: Text(
                                     //     powerLinePoint.latlng.longitude.toString(),
@@ -92,35 +88,46 @@ class MyDataListPageState extends State<MyDataListPage> {
                                     SizedBox(
                                       width: 50,
                                       height: 25,
-                                      child: ElevatedButton(
+                                      child: Tooltip(
+                                        message:'地点の詳細',
+                                        child: ElevatedButton(
                                           onPressed: () {
-                                            var pointKey = powerLinePoint.generateUniqueKey();
-                                            PowerLineRepository.instance.selectPowerLinePoint(pointKey);
-                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                content: Text(powerLinePoint.toString()),
-                                                duration: const Duration(seconds: 1),
-                                              ));
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                              content: Text(powerLinePoint.toString()),
+                                              duration: const Duration(seconds: 1),
+                                            ));
                                           },
-                                          child: const Icon(
-                                            Icons.book,
-                                            size: 15,
-                                          )),
+                                          child: const Icon(Icons.book, size: 15)
+                                        )
+                                      ),
                                     ),
-                                    const SizedBox(
-                                      width: 5,
-                                      height: 25,
-                                    ),
+                                    const SizedBox(width: 5, height: 25),
                                     SizedBox(
                                       width: 50,
                                       height: 25,
-                                      child: ElevatedButton(
+                                      child: Tooltip(
+                                        message:'地点へ移動',
+                                        child: ElevatedButton(
                                           onPressed: () {
-                                            _deletePowerLinePoint(powerLinePoint.generateUniqueKey(), index);
+                                            Navigator.of(context).pop(powerLinePoint);
                                           },
-                                          child: const Icon(
-                                            Icons.delete,
-                                            size: 15,
-                                          )),
+                                          child: const Icon(Icons.location_on, size: 15)
+                                        )
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5, height: 25),
+                                    SizedBox(
+                                      width: 50,
+                                      height: 25,
+                                      child: Tooltip(
+                                        message:'地点情報の削除',
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              _deletePowerLinePoint(powerLinePoint.generateUniqueKey(), index);
+                                            },
+                                            child: const Icon(Icons.delete, size: 15)
+                                          )
+                                      ),
                                     ),
                                   ],
                                 ),

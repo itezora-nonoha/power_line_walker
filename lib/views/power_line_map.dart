@@ -274,24 +274,24 @@ class PowerLineMapState extends State<PowerLineMap> {
   }
 
   void _onTapMarker(Marker marker) {
-    setState(() {
-      _appBarTitle = marker.markerId.toString();
-    });
+    // setState(() {
+    //   _appBarTitle = marker.markerId.toString();
+    // });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text('OnTapped: ${marker.markerId.value} ${marker.position}'),
       duration: const Duration(seconds: 1),
     ));
   }
 
-  void _changeAppBarTitle(String title) {
-    setState(() {
-      _appBarTitle = title;
-    });      // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('OnTapped: ${title}'),
-      duration: const Duration(seconds: 1),
-    ));
-  }
+  // void _changeAppBarTitle(String title) {
+  //   setState(() {
+  //     _appBarTitle = title;
+  //   });      // ignore: use_build_context_synchronously
+  //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //     content: Text('OnTapped: ${title}'),
+  //     duration: const Duration(seconds: 1),
+  //   ));
+  // }
 
   void _changedCamera(CameraPosition position) {
     setState(() {
@@ -302,15 +302,21 @@ class PowerLineMapState extends State<PowerLineMap> {
       }
     });
   }
-  void gotoCurrentLocation() async {
+
+  void gotoLocation(double? latitude, double? longitude) {
     mapController.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: 0,
-        target: LatLng(_yourLocation?.latitude ?? 0.0,            _yourLocation?.longitude ?? 0.0),
+        target: LatLng(latitude ?? 0.0, longitude ?? 0.0),
         // target: LatLng(35, 135),
-        zoom: 17.0,
+        zoom: 16.0,
       ),
     ));
+    setState(() {});
+  }
+
+  void gotoCurrentLocation() {
+    gotoLocation(_yourLocation?.latitude, _yourLocation?.longitude);
   }
 
   GoogleMap generateGoogleMapWithMarker() {

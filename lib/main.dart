@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:power_line_walker/firebase_options.dart';
+import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/data_list.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
@@ -35,11 +37,11 @@ class MyApp extends StatelessWidget {
 // class MapSampleState extends State<MapSample> {
 class MapSample extends StatelessWidget {
   final mapViewKey = GlobalKey<PowerLineMapState>();
-  final dataListViewKey = GlobalKey<MyDataListPageState>();
+  // final dataListViewKey = GlobalKey<MyDataListPageState>();
 
   late PowerLineMap powerLineMapView = PowerLineMap(key: mapViewKey);
-  late MyDataListPage dataListPage = MyDataListPage(key: dataListViewKey);
-
+  // late MyDataListPage dataListPage = MyDataListPage(key: dataListViewKey);
+  late PowerLinePoint point;
   final String _appBarTitle = "Power Line Walker";
 
   @override
@@ -61,12 +63,28 @@ class MapSample extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.menu),
             tooltip: '地点情報一覧',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => dataListPage,
-                ));
-            },
+            onPressed: () { 
+              Navigator.of(context).push(MaterialPageRoute<PowerLinePoint>(
+                builder: (context) => MyDataListPage())).then((powerLinePoint) {
+                  print(powerLinePoint);
+                  if (powerLinePoint != null){
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(content: Text(powerLinePoint.toString()))
+                    // );
+                    mapViewKey.currentState?.gotoLocation(powerLinePoint.latlng.latitude, powerLinePoint.latlng.longitude);
+                  }
+                });
+              // _dataListPage(context).then((value) {
+              //   print(value);
+              //   if (value != null){
+              //     point = value;
+              //     ScaffoldMessenger.of(context).showSnackBar(
+              //       SnackBar(content: Text(point.toString())));
+
+              //     }
+              //   });
+              }
+            // onPressed: () {point = _dataListPage(context),
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -82,5 +100,15 @@ class MapSample extends StatelessWidget {
       body: powerLineMapView,
     ));
   }
+
+  Future<PowerLinePoint?> _dataListPage(BuildContext context) async {
+    return await Navigator.push(
+      context,
+      MaterialPageRoute<PowerLinePoint>(
+          builder: (context) => MyDataListPage()
+      )
+    ) as PowerLinePoint;
+  }
+  
 }
 
