@@ -67,7 +67,7 @@ class MapSample extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.location_on),
+            icon: const Icon(Icons.refresh),
             tooltip: 'データの再読み込みと再描画',
             onPressed: () {
               mapViewKey.currentState?.refleshMap();
