@@ -318,15 +318,15 @@ class PowerLineMapState extends State<PowerLineMap> {
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
       ),
-      onLongPress: (LatLng latLng) {
+      onTap: (LatLng latLng) {
         _addPowerLinePoint(latLng);
       },
       fortyFiveDegreeImageryEnabled: true,
       onCameraMove: (position) => {_changedCamera(position)},
+      myLocationEnabled: true,
       markers: Set.from(markerSet),
       polylines: Set.from(powerLineListSub),
       onMapCreated: _onMapCreated,
-      myLocationEnabled: true,
       myLocationButtonEnabled: true,
       compassEnabled: true,
     );
@@ -342,13 +342,13 @@ class PowerLineMapState extends State<PowerLineMap> {
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
       ),
-      onLongPress: (LatLng latLng) {
+      onTap: (LatLng latLng) {
         _addPowerLinePoint(latLng);
       },
       onCameraMove: (position) => {_changedCamera(position)},
       polylines: Set.from(powerLineList),
-      onMapCreated: _onMapCreated,
       myLocationEnabled: true,
+      onMapCreated: _onMapCreated,
       myLocationButtonEnabled: true,
       compassEnabled: true,
     );
