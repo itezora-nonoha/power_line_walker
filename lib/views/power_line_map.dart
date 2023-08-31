@@ -203,7 +203,7 @@ class PowerLineMapState extends State<PowerLineMap> {
 
       // Markerを作成し、MarkerSetに追加
       markerSet.add(Marker(
-        markerId: MarkerId(pointLabel),
+        markerId: MarkerId(powerLinePoint.names.join(', ')),
         position: latlng,
         icon: towerIcon,
         visible: true,
@@ -248,6 +248,7 @@ class PowerLineMapState extends State<PowerLineMap> {
           points: latLngList,
           color: powerLineColor,
           width: 5,
+          onTap: () => showSnackBar('onTapped: $name'),
         );
         powerLineList.add(polyline);
 
@@ -279,6 +280,16 @@ class PowerLineMapState extends State<PowerLineMap> {
     // });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text('OnTapped: ${marker.markerId.value} ${marker.position}'),
+      duration: const Duration(seconds: 1),
+    ));
+  }
+
+  void showSnackBar(String message) {
+    // setState(() {
+    //   _appBarTitle = marker.markerId.toString();
+    // });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
       duration: const Duration(seconds: 1),
     ));
   }
