@@ -216,7 +216,7 @@ class PowerLineMapState extends State<PowerLineMap> {
           .toSet();
 
       Color powerLineColor = Colors.blue;
-      int transmissionVoltage;
+      int transmissionVoltage = 0;
 
       // 送電系統ごとにPolylineを作成
       for (var name in powerLineLatLngMap.keys) {
@@ -231,7 +231,10 @@ class PowerLineMapState extends State<PowerLineMap> {
         // 送電電圧の取得
         // var entry = map['powerLines'].where((e) => e['name'] == name);
         // transmissionVoltage = entry.first['transmissionVoltage'];
-        transmissionVoltage = _powerLineVoltageMap[name] as int;
+        if (_powerLineVoltageMap.keys.contains(name)){
+          transmissionVoltage = _powerLineVoltageMap[name] as int;
+        }
+
         // 電圧ごとの色分け
         if (transmissionVoltage == 500) {
           powerLineColor = Colors.red;
@@ -241,6 +244,8 @@ class PowerLineMapState extends State<PowerLineMap> {
           powerLineColor = Colors.green;
         } else if (transmissionVoltage == 66) {
           powerLineColor = Colors.blue;
+        } else {
+          powerLineColor = Colors.grey;
         }
         
         Polyline polyline = Polyline(
