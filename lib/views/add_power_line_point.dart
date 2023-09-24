@@ -115,7 +115,7 @@ class AddPowerLinePoint extends StatelessWidget {
       _controllerName.clear();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('地点登録が完了しました。($latlng ... $names)'),
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 1),
       ));
       return 0;
     } else {
