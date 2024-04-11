@@ -57,6 +57,7 @@ class PowerLineMapState extends State<PowerLineMap> {
   late BitmapDescriptor tower154kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower66kV = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor tower500kV275kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV154kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV66kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower154kV66kV = BitmapDescriptor.defaultMarker;
@@ -132,6 +133,8 @@ class PowerLineMapState extends State<PowerLineMap> {
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_154kV.png');
     tower66kV = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_66kV.png');
+    tower500kV275kV = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(32, 32)), 'assets/tower_500kV275kV.png');
     tower275kV154kV = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_275kV154kV.png');
     tower275kV66kV = await BitmapDescriptor.fromAssetImage(
@@ -143,6 +146,8 @@ class PowerLineMapState extends State<PowerLineMap> {
   BitmapDescriptor getTowerIconFromVoltageSet(Set<int> voltageSet) {
     if (setEquals(voltageSet, {275, 154})) {
       return tower275kV154kV;
+    } else if (setEquals(voltageSet, {500, 275})) {
+      return tower500kV275kV;
     } else if (setEquals(voltageSet, {275, 66})) {
       return tower275kV66kV;
     } else if (setEquals(voltageSet, {154, 66})) {
