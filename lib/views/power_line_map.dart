@@ -188,6 +188,8 @@ class PowerLineMapState extends State<PowerLineMap> {
       latlng = powerLinePoint.latlng;
 
       List<double> voltageSet = [];
+
+      // 地点ごとにループ
       powerLinePoint.names.forEach((powerLineNames) {
         powerLineName = powerLineNames.split('-')[0];
         
@@ -195,11 +197,20 @@ class PowerLineMapState extends State<PowerLineMap> {
         voltageSet.add(_powerLineVoltageMap[powerLineName]!);
         }
         if (powerLineLatLngMap[powerLineName] == null) {
-          Map<double, LatLng> map = {};
+          Map<String, LatLng> map = {};
           powerLineLatLngMap[powerLineName] = map;
         }
-        var num = double.parse(powerLineNames.split('-')[1]);
-        powerLineLatLngMap[powerLineName][num] = latlng;
+        int hyphenCount = powerLineNames.length - powerLineNames.replaceAll('-', '').length;
+        double powerLineNumberPrimary = double.parse(powerLineNames.split('-')[1]);
+        String powerLineNumber = powerLineNumberPrimary.toString().padLeft(4, '0');
+
+        // 枝番がある場合（ハイフンが2つある場合）は、枝番を系統番号に含める
+        if (hyphenCount == 2) {
+          double powerLineNumberSecondary = double.parse(powerLineNames.split('-')[2]);
+          powerLineNumber = '$powerLineNumber-$powerLineNumberSecondary';
+        }
+  
+        powerLineLatLngMap[powerLineName][powerLineNumber] = latlng;
       });
 
       // 送電電圧に応じたMarkerアイコンを取得
@@ -227,7 +238,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       for (var name in powerLineLatLngMap.keys) {
         List<LatLng> latLngList = [];
         // 鉄塔番号でソート
-        Map<double, dynamic> map = SplayTreeMap.from(powerLineLatLngMap[name], (a, b) => a.compareTo(b)); 
+        Map<String, dynamic> map = SplayTreeMap.from(powerLineLatLngMap[name], (a, b) => a.compareTo(b)); 
         map.forEach((k, v) => latLngList.add(v));
 
         // リストの作成
