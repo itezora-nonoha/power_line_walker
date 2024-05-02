@@ -43,7 +43,8 @@ class MyDataListPageState extends State<MyDataListPage> {
     _pointListDisplaying = _pointListFiltered;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.lightBlue,
         title: const Text('地点情報一覧'),
       ),
       body: SafeArea(

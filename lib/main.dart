@@ -48,7 +48,8 @@ class MapSample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.lightBlue,
         title: Text(_appBarTitle),
         actions: <Widget>[
           IconButton(
