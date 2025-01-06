@@ -289,9 +289,9 @@ class PowerLineMapState extends State<PowerLineMap> {
   Future<String> generateGoogleMap() async {
     if (powerLineList.isEmpty){
       _createMarkerAndPowerLine();
+      googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
+      googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
     }
-    googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
-    googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
     return "complete";
   }
 
@@ -329,6 +329,8 @@ class PowerLineMapState extends State<PowerLineMap> {
 
     setState(() {
       currentMapType == MapType.hybrid ? currentMapType = MapType.normal : currentMapType = MapType.hybrid;
+      googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
+      googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
     });
     // showSnackBar(currentMapType.toString());
     // generateGoogleMap().then((value) {
