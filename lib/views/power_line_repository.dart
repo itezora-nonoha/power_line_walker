@@ -10,6 +10,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // PowerLineRepository.instance.insertPowerLine(PowerLine(name:'群馬幹線', transmissionVoltage:154));
 }
 
 class PowerLineRepository {
@@ -126,4 +127,16 @@ class PowerLineRepository {
     final collectionSnap = await collectionRef.get();
     return collectionSnap.docs;
   }
+
+  // 地点情報を登録する
+  Future<void> insertPowerLine(PowerLine powerLine) async {
+    final docRef = _database
+        .collection('powerLines')
+        .doc(powerLine.name)
+        .withConverter(
+            fromFirestore: PowerLine.fromFirestore,
+            toFirestore: (PowerLine powerLinePoint, _) => powerLine.toFirestore());
+    return await docRef.set(powerLine);
+  }
 }
+

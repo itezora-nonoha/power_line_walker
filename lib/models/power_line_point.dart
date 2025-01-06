@@ -6,7 +6,7 @@ class PowerLinePoint {
   final List<String> names;
   final DateTime createdAt;
 
-  PowerLinePoint({required this.latlng, required this.names, required this.createdAt});
+  PowerLinePoint({ required this.latlng, required this.names, required this.createdAt});
 
   factory PowerLinePoint.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options) {

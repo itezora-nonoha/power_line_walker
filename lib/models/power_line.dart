@@ -19,7 +19,6 @@ class PowerLine {
     return {
       "name": name,
       "transmissionVoltage": transmissionVoltage,
-
     };
   }
 

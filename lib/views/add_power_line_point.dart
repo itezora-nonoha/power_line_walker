@@ -22,7 +22,6 @@ class AddPowerLinePoint extends StatelessWidget {
   final TextEditingController _controllerName = TextEditingController();
   final PointTypeSelectorBox _pointTypeSelectorBox = PointTypeSelectorBox();
   List<PowerLinePoint> _powerLinePointList = [];
-
   // @override
   // void initState() {
   //   super.initState();
