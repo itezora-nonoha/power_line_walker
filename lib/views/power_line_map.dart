@@ -15,28 +15,26 @@ import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/power_line_repository.dart';
 
 // void main() => runApp(MyApp());
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(MyApp());
-}
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Google Maps Demo',
-      home: PowerLineMap(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Google Maps Demo',
+//       home: PowerLineMap(),
+//     );
+//   }
+// }
 
 class PowerLineMap extends StatefulWidget {
   const PowerLineMap({Key? key}) : super(key: key);
-  // PowerLineMap(key);
-  // @override
   State<PowerLineMap> createState() => PowerLineMapState();
 }
 
@@ -68,9 +66,11 @@ class PowerLineMapState extends State<PowerLineMap> {
   late GoogleMap googleMapWithMarker;
   late GoogleMap googleMapWithPolyLine;
 
+
   late GoogleMapController mapController;
   late Location locationService = Location();
   LocationData? currentLocation;
+  MapType currentMapType = MapType.normal;
 
   @override
   void initState() {
@@ -108,8 +108,8 @@ class PowerLineMapState extends State<PowerLineMap> {
 
     PowerLineRepository.instance.fullReload().then((value) {
       _createMarkerAndPowerLine();
-      googleMapWithMarker = generateGoogleMapWithMarker();
-      googleMapWithPolyLine = generateGoogleMapWithPolyLine();
+      googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
+      googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
   
       generateGoogleMap().then((value) {
         build(context);
@@ -289,9 +289,9 @@ class PowerLineMapState extends State<PowerLineMap> {
   Future<String> generateGoogleMap() async {
     if (powerLineList.isEmpty){
       _createMarkerAndPowerLine();
-      googleMapWithMarker = generateGoogleMapWithMarker();
-      googleMapWithPolyLine = generateGoogleMapWithPolyLine();
     }
+    googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
+    googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
     return "complete";
   }
 
@@ -325,6 +325,24 @@ class PowerLineMapState extends State<PowerLineMap> {
   //   ));
   // }
 
+  void changeMapView(){
+
+    setState(() {
+      currentMapType == MapType.hybrid ? currentMapType = MapType.normal : currentMapType = MapType.hybrid;
+    });
+    // showSnackBar(currentMapType.toString());
+    // generateGoogleMap().then((value) {
+    //   build(context);
+    //   setState(() {});
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('データの再読み込みおよび再描画が完了しました。'),
+    //       duration: Duration(seconds: 1)
+    //     )
+    //   );
+    // });
+  }
+  
   void _changedCamera(CameraPosition position) {
     setState(() {
       if (position.zoom > 13) {
@@ -351,12 +369,12 @@ class PowerLineMapState extends State<PowerLineMap> {
     gotoLocation(_yourLocation?.latitude, _yourLocation?.longitude);
   }
 
-  GoogleMap generateGoogleMapWithMarker() {
+  GoogleMap generateGoogleMapWithMarker(MapType mapType) {
     return GoogleMap(
       webGestureHandling: WebGestureHandling.greedy,
       // zoomControlsEnabled: false,
       zoomGesturesEnabled: true,
-      mapType: MapType.hybrid,
+      mapType: mapType,
       initialCameraPosition: const CameraPosition(
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),
@@ -375,12 +393,12 @@ class PowerLineMapState extends State<PowerLineMap> {
     );
   }
 
-  GoogleMap generateGoogleMapWithPolyLine() {
+  GoogleMap generateGoogleMapWithPolyLine(MapType mapType) {
     return GoogleMap(
       webGestureHandling: WebGestureHandling.greedy,
       // zoomControlsEnabled: false,
       zoomGesturesEnabled: true,
-      mapType: MapType.hybrid,
+      mapType: mapType,
       initialCameraPosition: const CameraPosition(
         zoom: 15,
         target: LatLng(35.9522505, 139.6372461),

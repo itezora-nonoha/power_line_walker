@@ -124,6 +124,11 @@ class MapSample extends ConsumerWidget {
             },
           ),
           IconButton(
+            icon: const Icon(Icons.layers),
+            tooltip: '表示レイヤー切り替え',
+            onPressed: () {mapViewKey.currentState?.changeMapView();}
+          ),
+          IconButton(
             icon: const Icon(Icons.add_chart),
             tooltip: '遷移テスト',
             onPressed: () => ref.read(idProvider.notifier).state = 'fuga',
