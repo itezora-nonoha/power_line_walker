@@ -4,12 +4,14 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:location/location.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:power_line_walker/firebase_options.dart';
+import 'package:power_line_walker/models/power_line_point.dart';
 
 import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/power_line_repository.dart';
@@ -71,6 +73,8 @@ class PowerLineMapState extends State<PowerLineMap> {
   late Location locationService = Location();
   LocationData? currentLocation;
   MapType currentMapType = MapType.normal;
+  late LatLng southwest;
+  late LatLng northeast ;
 
   @override
   void initState() {
@@ -100,8 +104,11 @@ class PowerLineMapState extends State<PowerLineMap> {
     _locationChangedListen?.cancel();
   }
 
-  void _onMapCreated(GoogleMapController controller) {
+  void _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+    final region = await mapController.getVisibleRegion();
+    southwest = region.southwest; // 南西の緯度と経度
+    northeast = region.northeast; // 北東の緯度と経度
   }
 
   void refleshMap(){
@@ -165,6 +172,56 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
+  // 地点マーカー情報を生成
+  void _createMarkerSet(List<PowerLinePoint> powerLinePointList){
+    markerSet = {};
+    PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
+      LatLng latlng;
+      String powerLineName;
+      List<double> voltageSet = [];
+      
+      // 電圧マップの構築
+      PowerLineRepository.instance.getPowerLineList().forEach((powerLine) {
+        _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
+      });
+
+      latlng = powerLinePoint.latlng;
+      
+      // 電圧情報の集約
+      powerLinePoint.names.forEach((powerLineNames) {
+        powerLineName = powerLineNames.split('-')[0];
+        
+        if (_powerLineVoltageMap[powerLineName] != null){
+        voltageSet.add(_powerLineVoltageMap[powerLineName]!);
+        }
+      });
+
+      // 送電電圧に応じたMarkerアイコンを取得
+      var towerIcon = BitmapDescriptor.defaultMarker;
+      towerIcon = getTowerIconFromVoltageSet(Set.from(voltageSet));
+
+      if (powerLinePoint.latlng.latitude < northeast.latitude &&
+        powerLinePoint.latlng.longitude < northeast.longitude &&
+        powerLinePoint.latlng.latitude > southwest.latitude &&
+        powerLinePoint.latlng.longitude > southwest.longitude) { 
+
+        // Markerを作成し、MarkerSetに追加
+        markerSet.add(Marker(
+          markerId: MarkerId(powerLinePoint.names.join(', ')),
+          position: latlng,
+          icon: towerIcon,
+          visible: true,
+          // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
+        ));
+
+        // マーカークリック時のイベントを設定
+        markerSet = markerSet
+            .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
+            .toSet();
+      }
+    });
+  }
+
 
   Future<String> _createMarkerAndPowerLine() async {
     markerSet = {};
@@ -188,7 +245,6 @@ class PowerLineMapState extends State<PowerLineMap> {
       latlng = powerLinePoint.latlng;
 
       List<double> voltageSet = [];
-
       // 地点ごとにループ
       powerLinePoint.names.forEach((powerLineNames) {
         powerLineName = powerLineNames.split('-')[0];
@@ -214,23 +270,28 @@ class PowerLineMapState extends State<PowerLineMap> {
       });
 
       // 送電電圧に応じたMarkerアイコンを取得
-      var towerIcon = BitmapDescriptor.defaultMarker;
-      towerIcon = getTowerIconFromVoltageSet(Set.from(voltageSet));
+      // var towerIcon = BitmapDescriptor.defaultMarker;
+      // towerIcon = getTowerIconFromVoltageSet(Set.from(voltageSet));
 
-      // Markerを作成し、MarkerSetに追加
-      markerSet.add(Marker(
-        markerId: MarkerId(powerLinePoint.names.join(', ')),
-        position: latlng,
-        icon: towerIcon,
-        visible: true,
-        // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
-      ));
+      // if (powerLinePoint.latlng.latitude < northeast.latitude &&
+      //   powerLinePoint.latlng.longitude < northeast.longitude &&
+      //   powerLinePoint.latlng.latitude > southwest.latitude &&
+      //   powerLinePoint.latlng.longitude > southwest.longitude) { 
 
-      // マーカークリック時のイベントを設定
-      markerSet = markerSet
-          .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
-          .toSet();
+      //   // Markerを作成し、MarkerSetに追加
+      //   markerSet.add(Marker(
+      //     markerId: MarkerId(powerLinePoint.names.join(', ')),
+      //     position: latlng,
+      //     icon: towerIcon,
+      //     visible: true,
+      //     // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
+      //   ));
 
+      //   // マーカークリック時のイベントを設定
+      //   markerSet = markerSet
+      //       .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
+      //       .toSet();
+      // }
       Color powerLineColor = Colors.blue;
       int transmissionVoltage = 0;
 
@@ -283,6 +344,8 @@ class PowerLineMapState extends State<PowerLineMap> {
         powerLineListSub.add(polylineSub);
       }
     });
+    List<PowerLinePoint> powerLinePointList = PowerLineRepository.instance.getPowerLinePointList();
+    _createMarkerSet(powerLinePointList);
     return "complete";
   }
 
@@ -370,6 +433,22 @@ class PowerLineMapState extends State<PowerLineMap> {
   void gotoCurrentLocation() {
     gotoLocation(_yourLocation?.latitude, _yourLocation?.longitude);
   }
+  void _onMapMoveFinished() {
+    mapController.getVisibleRegion().then((region) {
+      southwest = region.southwest; // 南西の緯度と経度
+      northeast = region.northeast; // 北東の緯度と経度
+    
+      setState(() {
+        _createMarkerSet(PowerLineRepository.instance.getPowerLinePointList());
+      });
+      googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
+      googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('マーカーを再描画しました。'),
+        duration: const Duration(seconds: 1),
+      ));
+    });
+  }
 
   GoogleMap generateGoogleMapWithMarker(MapType mapType) {
     return GoogleMap(
@@ -392,6 +471,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       onMapCreated: _onMapCreated,
       myLocationButtonEnabled: true,
       compassEnabled: true,
+      onCameraIdle: () => _onMapMoveFinished(),
     );
   }
 
