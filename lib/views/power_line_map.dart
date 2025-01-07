@@ -204,20 +204,32 @@ class PowerLineMapState extends State<PowerLineMap> {
       //   powerLinePoint.latlng.longitude < northeast.longitude &&
       //   powerLinePoint.latlng.latitude > southwest.latitude &&
       //   powerLinePoint.latlng.longitude > southwest.longitude) { 
+        String latlngConcatComma = "${latlng.latitude},${latlng.longitude}";
+        String googleMapUrl = 'https://maps.google.com/maps?ll=${latlngConcatComma}&q=${latlngConcatComma}&basemap=satellite';
         // Markerを作成し、MarkerSetに追加
+        String powerLinePointNameHtml;
+        if (powerLinePoint.names.length > 1){
+          powerLinePointNameHtml ='<b>${powerLinePoint.names[0]}</b><br>${powerLinePoint.names.sublist(1).join(', ')}';
+        } else {
+          powerLinePointNameHtml ='<b>${powerLinePoint.names[0]}</b>';
+        }
         markerSet.add(Marker(
           markerId: MarkerId(powerLinePoint.names.join(', ')),
           position: latlng,
           icon: towerIcon,
           visible: true,
+          infoWindow: InfoWindow(
+            // title: 'powerLinePoint.names[0]',
+            snippet: '${powerLinePointNameHtml}<br><a target="_blank" jstcache="6" href="${googleMapUrl}" tabindex="0"> <span>Googleマップで見る</span> </a>',
+          ),
           // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
         ));
 
         // マーカークリック時のイベントを設定
-        markerSet = markerSet
-            .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
-            .toSet();
-      }
+        // markerSet = markerSet
+        //     .map((e) => e.copyWith(onTapParam: () => _onTapMarker(e)))
+        //     .toSet();
+      // }
     });
   }
 
@@ -361,10 +373,10 @@ class PowerLineMapState extends State<PowerLineMap> {
     // setState(() {
     //   _appBarTitle = marker.markerId.toString();
     // });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('OnTapped: ${marker.markerId.value} ${marker.position}'),
-      duration: const Duration(seconds: 1),
-    ));
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: Text('OnTapped: ${marker.markerId.value} ${marker.position}'),
+    //   duration: const Duration(seconds: 1),
+    // ));
   }
 
   void showSnackBar(String message) {
