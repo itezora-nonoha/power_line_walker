@@ -106,9 +106,9 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   void _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    final region = await mapController.getVisibleRegion();
-    southwest = region.southwest; // 南西の緯度と経度
-    northeast = region.northeast; // 北東の緯度と経度
+    // final region = await mapController.getVisibleRegion();
+    // southwest = region.southwest; // 南西の緯度と経度
+    // northeast = region.northeast; // 北東の緯度と経度
   }
 
   void refleshMap(){
@@ -200,11 +200,10 @@ class PowerLineMapState extends State<PowerLineMap> {
       var towerIcon = BitmapDescriptor.defaultMarker;
       towerIcon = getTowerIconFromVoltageSet(Set.from(voltageSet));
 
-      if (powerLinePoint.latlng.latitude < northeast.latitude &&
-        powerLinePoint.latlng.longitude < northeast.longitude &&
-        powerLinePoint.latlng.latitude > southwest.latitude &&
-        powerLinePoint.latlng.longitude > southwest.longitude) { 
-
+      // if (powerLinePoint.latlng.latitude < northeast.latitude &&
+      //   powerLinePoint.latlng.longitude < northeast.longitude &&
+      //   powerLinePoint.latlng.latitude > southwest.latitude &&
+      //   powerLinePoint.latlng.longitude > southwest.longitude) { 
         // Markerを作成し、MarkerSetに追加
         markerSet.add(Marker(
           markerId: MarkerId(powerLinePoint.names.join(', ')),
@@ -433,6 +432,7 @@ class PowerLineMapState extends State<PowerLineMap> {
   void gotoCurrentLocation() {
     gotoLocation(_yourLocation?.latitude, _yourLocation?.longitude);
   }
+  
   void _onMapMoveFinished() {
     mapController.getVisibleRegion().then((region) {
       southwest = region.southwest; // 南西の緯度と経度
@@ -471,7 +471,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       onMapCreated: _onMapCreated,
       myLocationButtonEnabled: true,
       compassEnabled: true,
-      onCameraIdle: () => _onMapMoveFinished(),
+      // onCameraIdle: () => _onMapMoveFinished(),
     );
   }
 
