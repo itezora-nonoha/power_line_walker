@@ -78,6 +78,7 @@ class PowerLineRepository {
 
   // 地点情報を登録する
   Future<void> insert(PowerLinePoint powerLinePoint) async {
+    _powerLinePointList.add(powerLinePoint);
     final docRef = _database
         .collection('points')
         .doc(powerLinePoint.generateUniqueKey())
@@ -88,6 +89,8 @@ class PowerLineRepository {
   }
 
   Future<void> delete(String pointKey) async {
+    PowerLinePoint? point = await selectPowerLinePoint(pointKey);
+    _powerLinePointList.remove(point);
     return await _database
         .collection('points')
         .doc(pointKey)
