@@ -116,9 +116,18 @@ class MapSample extends ConsumerWidget {
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'データの再読み込みと再描画',
+            tooltip: 'マーカーの再描画',
             onPressed: () {
               mapViewKey.currentState?.refleshMap();
+              // ScaffoldMessenger.of(context).showSnackBar(
+                  // const SnackBar(content: Text('This is a snackbar')));
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.cloud_download),
+            tooltip: 'データの再読み込みとマーカーの再描画',
+            onPressed: () {
+              mapViewKey.currentState?.reloadAndRefleshMap();
               // ScaffoldMessenger.of(context).showSnackBar(
                   // const SnackBar(content: Text('This is a snackbar')));
             },

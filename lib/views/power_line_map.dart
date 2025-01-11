@@ -90,22 +90,25 @@ class PowerLineMapState extends State<PowerLineMap> {
   }
 
   void refleshMap(){
+    _createMarkerAndPowerLine();
+    googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
+    googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
 
+    generateGoogleMap().then((value) {
+      build(context);
+      setState(() {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('データの再読み込みおよび再描画が完了しました。'),
+          duration: Duration(seconds: 1)
+        )
+      );
+    });
+  }
+
+  void reloadAndRefleshMap(){
     PowerLineRepository.instance.fullReload().then((value) {
-      _createMarkerAndPowerLine();
-      googleMapWithMarker = generateGoogleMapWithMarker(currentMapType);
-      googleMapWithPolyLine = generateGoogleMapWithPolyLine(currentMapType);
-  
-      generateGoogleMap().then((value) {
-        build(context);
-        setState(() {});
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('データの再読み込みおよび再描画が完了しました。'),
-            duration: Duration(seconds: 1)
-          )
-        );
-      });
+      refleshMap();
     });
   }
 
