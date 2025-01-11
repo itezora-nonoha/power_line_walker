@@ -34,6 +34,7 @@ class PowerLineMapState extends State<PowerLineMap> {
   String displayType = 'Marker';
   Set<Marker> markerSet = {};
   late Map<String, dynamic> map = json.decode('{"points":[{"latitude":35,"longitude:135,"names":["模擬線-1"]}]}');
+  late BitmapDescriptor tower1000kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower500kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower154kV = BitmapDescriptor.defaultMarker;
   late BitmapDescriptor tower275kV = BitmapDescriptor.defaultMarker;
