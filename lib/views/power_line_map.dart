@@ -114,6 +114,8 @@ class PowerLineMapState extends State<PowerLineMap> {
   }
 
   Future<void> setMarkerImage() async {
+    tower1000kV = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(32, 32)), 'assets/tower_1000kV.png');
     tower500kV = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(32, 32)), 'assets/tower_500kV.png');
     tower275kV = await BitmapDescriptor.fromAssetImage(
@@ -141,6 +143,8 @@ class PowerLineMapState extends State<PowerLineMap> {
       return tower275kV66kV;
     } else if (setEquals(voltageSet, {154, 66})) {
       return tower154kV66kV;
+    } else if (setEquals(voltageSet, {1000})) {
+      return tower1000kV;
     } else if (setEquals(voltageSet, {500})) {
       return tower500kV;
     } else if (setEquals(voltageSet, {275})) {
@@ -272,7 +276,9 @@ class PowerLineMapState extends State<PowerLineMap> {
         }
 
         // 電圧ごとの色分け
-        if (transmissionVoltage == 500) {
+        if (transmissionVoltage == 1000) {
+          powerLineColor = Colors.purple;
+        } else if (transmissionVoltage == 500) {
           powerLineColor = Colors.red;
         } else if (transmissionVoltage == 275) {
           powerLineColor = Colors.orange;
