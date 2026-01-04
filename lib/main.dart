@@ -72,6 +72,13 @@ class MapSample extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedPoint = ref.watch(selectedPointProvider);
+    if (selectedPoint != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        mapViewKey.currentState?.gotoLocation(selectedPoint.latlng.latitude, selectedPoint.latlng.longitude);
+        ref.read(selectedPointProvider.notifier).state = null; // 処理後にリセット
+      });
+    }
     return SafeArea(child: Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
