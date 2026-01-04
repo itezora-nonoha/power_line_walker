@@ -10,7 +10,7 @@ import 'package:power_line_walker/router_delegate.dart';
 import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/data_list.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
-import 'package:power_line_walker/views/power_line_repository.dart';
+import 'package:power_line_walker/repository/power_line_repository.dart';
 
 // void main() => runApp(MyApp());
 void main() async {
@@ -136,11 +136,6 @@ class MapSample extends ConsumerWidget {
             icon: const Icon(Icons.layers),
             tooltip: '表示レイヤー切り替え',
             onPressed: () {mapViewKey.currentState?.changeMapView();}
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_chart),
-            tooltip: '遷移テスト',
-            onPressed: () => ref.read(idProvider.notifier).state = 'fuga',
           )
         ]
       ),

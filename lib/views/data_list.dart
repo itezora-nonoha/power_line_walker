@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
-import 'package:power_line_walker/views/power_line_repository.dart';
+import 'package:power_line_walker/repository/power_line_repository.dart';
 
 class MyDataListPage extends StatefulWidget {
   const MyDataListPage({Key? key}) : super(key: key,);

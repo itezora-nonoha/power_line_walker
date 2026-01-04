@@ -14,7 +14,8 @@ import 'package:power_line_walker/firebase_options.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
 
 import 'package:power_line_walker/views/add_power_line_point.dart';
-import 'package:power_line_walker/views/power_line_repository.dart';
+import 'package:power_line_walker/repository/power_line_repository.dart';
+import 'package:power_line_walker/views/detail_power_line_point.dart';
 
 class PowerLineMap extends StatefulWidget {
   const PowerLineMap({Key? key}) : super(key: key);
@@ -158,57 +159,70 @@ class PowerLineMapState extends State<PowerLineMap> {
     }
   }
 
-  // 地点マーカー情報を生成
-  void _createMarkerSet(List<PowerLinePoint> powerLinePointList){
-    markerSet = {};
-    PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
-      LatLng latlng;
-      String powerLineName;
-      List<double> voltageSet = [];
+  Marker _composeMarkerFromPowerLinePoint(PowerLinePoint powerLinePoint){
+    LatLng latlng;
+    String powerLineName;
+    List<double> voltageSet = [];
+  
+    latlng = powerLinePoint.latlng;
+
+    // 電圧情報の集約
+    powerLinePoint.names.forEach((powerLineNames) {
+      powerLineName = powerLineNames.split('-')[0];
       
-      // 電圧マップの構築
-      PowerLineRepository.instance.getPowerLineList().forEach((powerLine) {
-        _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
-      });
-
-      latlng = powerLinePoint.latlng;
-      
-      // 電圧情報の集約
-      powerLinePoint.names.forEach((powerLineNames) {
-        powerLineName = powerLineNames.split('-')[0];
-        
-        if (_powerLineVoltageMap[powerLineName] != null){
-        voltageSet.add(_powerLineVoltageMap[powerLineName]!);
-        }
-      });
-
-      // 送電電圧に応じたMarkerアイコンを取得
-      var towerIcon = BitmapDescriptor.defaultMarker;
-      towerIcon = getTowerIconFromVoltageSet(Set.from(voltageSet));
-
-      String latlngConcatComma = "${latlng.latitude},${latlng.longitude}";
-      String googleMapUrl = 'https://maps.google.com/maps?ll=${latlngConcatComma}&q=${latlngConcatComma}&basemap=satellite';
-      String powerLinePointNameHtml;
-      if (powerLinePoint.names.length > 1){
-        powerLinePointNameHtml ='<b>${powerLinePoint.names[0]}</b><br>${powerLinePoint.names.sublist(1).join(', ')}';
-      } else {
-        powerLinePointNameHtml ='<b>${powerLinePoint.names[0]}</b>';
+      if (_powerLineVoltageMap[powerLineName] != null){
+      voltageSet.add(_powerLineVoltageMap[powerLineName]!);
       }
+    });
 
-      // Markerを作成し、MarkerSetに追加
-      markerSet.add(Marker(
+    // 送電電圧に応じたMarkerアイコンを取得
+    var towerIcon = BitmapDescriptor.defaultMarker;
+    towerIcon = getTowerIconFromVoltageSet(Set.from(voltageSet));
+
+    // マーカークリック時に表示するInfoWindowの内容を構築
+    String latlngConcatComma = "${latlng.latitude},${latlng.longitude}";
+    String googleMapUrl = 'https://maps.google.com/maps?ll=${latlngConcatComma}&q=${latlngConcatComma}&basemap=satellite';
+    String powerLinePointNameHtml;
+    if (powerLinePoint.names.length > 1){
+      powerLinePointNameHtml ='<b>${powerLinePoint.names[0]}</b><br>${powerLinePoint.names.sublist(1).join(', ')}';
+    } else {
+      powerLinePointNameHtml ='<b>${powerLinePoint.names[0]}</b>';
+    }
+
+    Marker marker = Marker(
         markerId: MarkerId(powerLinePoint.names.join(', ')),
         position: latlng,
         icon: towerIcon,
         visible: true,
         infoWindow: InfoWindow(
+          onTap: () {
+            // showSnackBar('onTapped')
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => DetailPowerLinePoint(context:context, powerLinePoint:powerLinePoint),
+              ),
+            );
+          },
           snippet: '${powerLinePointNameHtml}<br><a target="_blank" jstcache="6" href="${googleMapUrl}" tabindex="0"> <span>Googleマップで見る</span> </a>',
         ),
         // anchor: const Offset(0.5, 0.5), // バグで機能していないらしい...？ https://github.com/flutter/flutter/issues/80578
-      ));
-    });
+    );
+    return marker;
   }
 
+  // 地点マーカー情報を生成
+  void _createMarkerSet(List<PowerLinePoint> powerLinePointList){
+    markerSet = {};
+
+    // 電圧マップの構築
+    PowerLineRepository.instance.getPowerLineList().forEach((powerLine) {
+      _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
+    });
+
+    PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
+      markerSet.add(_composeMarkerFromPowerLinePoint(powerLinePoint));
+    });
+  }
 
   Future<String> _createMarkerAndPowerLine() async {
     markerSet = {};

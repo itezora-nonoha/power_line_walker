@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
-import 'package:power_line_walker/views/power_line_repository.dart';
+import 'package:power_line_walker/repository/power_line_repository.dart';
 import 'package:power_line_walker/widgets/point_type_selector_box.dart';
 
 class AddPowerLinePoint extends StatelessWidget {
