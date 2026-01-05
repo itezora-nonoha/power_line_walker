@@ -6,6 +6,7 @@ import 'package:power_line_walker/repository/power_line_repository.dart';
 import 'package:power_line_walker/widgets/point_type_selector_box.dart';
 import 'package:power_line_walker/id_provider.dart';
 
+// ignore: must_be_immutable
 class AddPowerLinePoint extends ConsumerWidget {
   // AddPowerLinePoint({super.key, required this.title, this.latlng});
   AddPowerLinePoint({required this.context, this.latlng});

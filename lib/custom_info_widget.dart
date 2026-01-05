@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:meta/meta.dart';
 
 class _InfoWidgetRouteLayout<T> extends SingleChildLayoutDelegate {
   final Rect mapsWidgetSize;

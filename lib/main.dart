@@ -1,16 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:power_line_walker/firebase_options.dart';
 import 'package:power_line_walker/id_provider.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/router_delegate.dart';
-import 'package:power_line_walker/views/add_power_line_point.dart';
 import 'package:power_line_walker/views/data_list.dart';
 import 'package:power_line_walker/views/power_line_map.dart';
-import 'package:power_line_walker/repository/power_line_repository.dart';
 
 // void main() => runApp(MyApp());
 void main() async {
@@ -60,6 +57,7 @@ class MapScreen extends StatelessWidget {
 }
 
 // class MapSampleState extends State<MapSample> {
+// ignore: must_be_immutable
 class MapSample extends ConsumerWidget {
 
   final mapViewKey = GlobalKey<PowerLineMapState>();
@@ -157,6 +155,7 @@ class MapSample extends ConsumerWidget {
     ));
   }
 
+  // ignore: unused_element
   Future<PowerLinePoint?> _dataListPage(BuildContext context) async {
     return await Navigator.push(
       context,

@@ -1,16 +1,12 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:location/location.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:power_line_walker/firebase_options.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
 
 import 'package:power_line_walker/views/add_power_line_point.dart';
@@ -31,7 +27,7 @@ class PowerLineMapState extends State<PowerLineMap> {
   // 現在位置の監視状況
   StreamSubscription? _locationChangedListen;
 
-  String _appBarTitle = "Power Line Walker";
+  // String _appBarTitle = "Power Line Walker";
   String displayType = 'Marker';
   Set<Marker> markerSet = {};
   late Map<String, dynamic> map = json.decode('{"points":[{"latitude":35,"longitude:135,"names":["模擬線-1"]}]}');
@@ -229,6 +225,7 @@ class PowerLineMapState extends State<PowerLineMap> {
     powerLineList = [];
     powerLineListSub = [];
 
+    // ignore: unused_local_variable
     String pointLabel;
     LatLng latlng;
     String powerLineName;

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
-import 'package:power_line_walker/repository/power_line_repository.dart';
-import 'package:power_line_walker/widgets/point_type_selector_box.dart';
+// import 'package:power_line_walker/repository/power_line_repository.dart';
+// import 'package:power_line_walker/widgets/point_type_selector_box.dart';
 
+// ignore: must_be_immutable
 class DetailPowerLinePoint extends ConsumerWidget {
   // AddPowerLinePoint({super.key, required this.title, this.latlng});
   DetailPowerLinePoint({required this.context, required this.powerLinePoint});
@@ -16,13 +17,13 @@ class DetailPowerLinePoint extends ConsumerWidget {
 // }
 
 // class _AddPowerLinePointState extends State<AddPowerLinePoint> {
-  final String _userId = 'test';
-  final String _pointName = 'test';
+  // final String _userId = 'test';
+  // final String _pointName = 'test';
   final TextEditingController _controllerLatitude = TextEditingController();
   final TextEditingController _controllerLongitude = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
-  final PointTypeSelectorBox _pointTypeSelectorBox = PointTypeSelectorBox();
-  List<PowerLinePoint> _powerLinePointList = [];
+  // final PointTypeSelectorBox _pointTypeSelectorBox = PointTypeSelectorBox();
+  // List<PowerLinePoint> _powerLinePointList = [];
   // @override
   // void initState() {
   //   super.initState();
