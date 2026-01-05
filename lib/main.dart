@@ -85,6 +85,13 @@ class MapSample extends ConsumerWidget {
         backgroundColor: Colors.lightBlue,
         title: Text(_appBarTitle),
         actions: <Widget>[
+          // IconButton(
+          //   icon: const Icon(Icons.add_chart),
+          //   tooltip: 'pointsにcategoryフィールドを一括追加',
+          //   onPressed: () {
+          //     PowerLineRepository.instance.addCategoryToAllPoints();
+          //   },
+          // ),
           IconButton(
             icon: const Icon(Icons.my_location),
             tooltip: '現在地周辺へ移動',

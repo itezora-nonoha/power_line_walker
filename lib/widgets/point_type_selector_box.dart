@@ -8,24 +8,27 @@ class PointTypeSelectorBox extends StatefulWidget {
 }
 
 class _PointTypeSelectorBoxState extends State<PointTypeSelectorBox> {
-  String isSelectedValue = 'Tower';
-
+  String isSelectedValue = 'tower';
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
       items: const[
         DropdownMenuItem(
-          value: 'Tower',
+          value: 'tower',
           child: Text('鉄塔'),
         ),
         DropdownMenuItem(
-            value: 'Substation',
+            value: 'substation',
             child: Text('変電所'),
         ),
         DropdownMenuItem(
-            value: 'Switchyard',
+            value: 'switchyard',
             child: Text('開閉所'),
+        ),
+        DropdownMenuItem(
+            value: 'memo',
+            child: Text('地点メモ'),
         ),
       ],
       value: isSelectedValue,

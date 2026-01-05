@@ -69,9 +69,25 @@ class DetailPowerLinePoint extends ConsumerWidget {
               width: 1000,
               child: Row(children: [
                 Container(
+                  child: Text("地点カテゴリ", style:TextStyle(fontSize: 24)),
+                  height: 50,
+                  width: 200,
+                ),
+                Container(
+                  child: Text(powerLinePoint.category, style:TextStyle(fontSize: 24)),
+                  height: 50,
+                  width: 200,
+                ),
+              ])
+            ),
+            Divider(color: Colors.blue, endIndent: 1),
+            Container(
+              width: 1000,
+              child: Row(children: [
+                Container(
                   child: Text("緯度", style:TextStyle(fontSize: 24)),
                   height: 50,
-                  width: 100,
+                  width: 200,
                 ),
                 Container(
                   child: Text(_latitude, style:TextStyle(fontSize: 24)),
@@ -87,7 +103,7 @@ class DetailPowerLinePoint extends ConsumerWidget {
                 Container(
                   child: Text("経度", style:TextStyle(fontSize: 24)),
                   height: 50,
-                  width: 100,
+                  width: 200,
                 ),
                 Container(
                   child: Text(_longitude, style:TextStyle(fontSize: 24)),
@@ -103,7 +119,7 @@ class DetailPowerLinePoint extends ConsumerWidget {
                 Container(
                   child: Text("鉄塔名", style:TextStyle(fontSize: 24)),
                   height: 50,
-                  width: 100,
+                  width: 200,
                 ),
                 Container(
                   child: Text(_names, style:TextStyle(fontSize: 24)),
@@ -124,7 +140,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Google Maps Demo',
-      home: DetailPowerLinePoint(context: context, powerLinePoint:PowerLinePoint(latlng:LatLng(35.1234567, 135.0987654), names:["東埼玉線-24"], createdAt: DateTime(2025, 01, 01, 12, 34, 56))),
+      // home: DetailPowerLinePoint(context: context, powerLinePoint:PowerLinePoint(latlng:LatLng(35.1234567, 135.0987654), names:["東埼玉線-24"], createdAt: DateTime(2025, 01, 01, 12, 34, 56))),
+      home: DetailPowerLinePoint(context: context, powerLinePoint:PowerLinePoint(latlng:LatLng(35.1234567, 135.0987654), names:["東埼玉線-24"], createdAt: DateTime(2025, 01, 01, 12, 34, 56), category:'tower')),
     );
   }
 }

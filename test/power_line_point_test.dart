@@ -6,9 +6,9 @@ void main() {
   List<PowerLinePoint> powerLinePointList = [];
   setUp(() {
     powerLinePointList.add(PowerLinePoint(
-        latlng: LatLng(35, 135), names: ['東日本線-1'], createdAt: DateTime.now()));
+        latlng: const LatLng(35, 135), names: ['東日本線-1'], createdAt: DateTime.now(), category: 'tower'));
     powerLinePointList.add(PowerLinePoint(
-        latlng: LatLng(35, 135), names: ['東日本線-1-乙'], createdAt: DateTime.now()));
+        latlng: const LatLng(35, 135), names: ['東日本線-1-乙'], createdAt: DateTime.now(), category: 'tower'));
   });
 
   group('Method Testing', () {

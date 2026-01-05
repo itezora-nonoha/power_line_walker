@@ -5,8 +5,10 @@ class PowerLinePoint {
   final LatLng latlng;
   final List<String> names;
   final DateTime createdAt;
+  final String category;
 
-  PowerLinePoint({ required this.latlng, required this.names, required this.createdAt});
+  // PowerLinePoint({ required this.latlng, required this.names, required this.createdAt});
+  PowerLinePoint({ required this.latlng, required this.names, required this.createdAt, required this.category});
 
   factory PowerLinePoint.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot,
       SnapshotOptions? options) {
@@ -14,7 +16,8 @@ class PowerLinePoint {
     return PowerLinePoint(
         latlng: LatLng(data?['latitude'], data?['longitude']),
         names: List.from(data?['names']),
-        createdAt: data?['createdAt'].toDate()
+        createdAt: data?['createdAt'].toDate(),
+        category: data?['category'].toString() ?? 'tower' // デフォルトで 'tower'
       );
   }
 
@@ -24,12 +27,14 @@ class PowerLinePoint {
       "longitude": latlng.longitude,
       "names": names,
       "createdAt": createdAt,
+      "category": category,
     };
   }
 
   @override
   String toString(){
-    return '$latlng ... $names';
+    // return '$latlng ... $names';
+    return '$latlng ... $names ... $category';
   }
 
   String generateUniqueKey(){

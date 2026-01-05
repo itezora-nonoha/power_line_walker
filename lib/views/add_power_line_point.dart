@@ -15,8 +15,8 @@ class AddPowerLinePoint extends StatelessWidget {
 // }
 
 // class _AddPowerLinePointState extends State<AddPowerLinePoint> {
-  final String _userId = 'test';
-  final String _pointName = 'test';
+  // final String _userId = 'test';
+  // final String _pointName = 'test';
   final TextEditingController _controllerLatitude = TextEditingController();
   final TextEditingController _controllerLongitude = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
@@ -124,7 +124,8 @@ class AddPowerLinePoint extends StatelessWidget {
 
   void _addPowerLinePoint(LatLng latlng, List<String> names) async {
     final PowerLinePoint powerLinePoint =
-        PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now());
+        // PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now());
+        PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now(), category: _pointTypeSelectorBox.toString());
     await PowerLineRepository.instance.insert(powerLinePoint);
     _powerLinePointList.add(powerLinePoint);
     

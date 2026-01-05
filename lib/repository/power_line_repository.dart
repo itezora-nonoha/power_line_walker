@@ -42,11 +42,15 @@ class PowerLineRepository {
     // FirestoreからPowerLinePointの一覧を取得する
     List<DocumentSnapshot> powerLineLatLngListSnapshot = await _selectAllPowerLinePoints();
 
+    // powerLineLatLngListSnapshot.forEach((doc) {
+    //   print('DocumentSnapshot: ${doc.data()}');
+    // });
     // Firestoreから取得したSnapShot情報を、PowerLinePointのリストに変換する
     _powerLinePointList = powerLineLatLngListSnapshot.map((doc) => PowerLinePoint(
         latlng: LatLng(doc['latitude'], doc['longitude']),
         names: List.from(doc['names']),
-        createdAt: doc['createdAt'].toDate()
+        createdAt: doc['createdAt'].toDate(),
+        category: doc['category'].toString()
       )).toList();
 
     return Future<String>.value('complete');
@@ -56,6 +60,7 @@ class PowerLineRepository {
   Future<List<DocumentSnapshot>> _selectAllPowerLinePoints() async {
     final collectionRef = _database
         .collection('points')
+        // .where('category', isEqualTo: 'tower')
         .withConverter(
           fromFirestore: PowerLinePoint.fromFirestore,
           toFirestore: (PowerLinePoint points, _) => points.toFirestore(),
@@ -86,6 +91,16 @@ class PowerLineRepository {
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
     return await docRef.set(powerLinePoint);
+  }
+
+  // デバッグ用: pointsコレクションの全てのドキュメントにcategoryフィールドを追加
+  Future<void> addCategoryToAllPoints() async {
+    final collectionRef = _database.collection('points');
+    final querySnapshot = await collectionRef.get();
+    print(querySnapshot.docs.length);
+    for (var doc in querySnapshot.docs) {
+      await doc.reference.update({'category': 'tower'});
+    }
   }
 
   Future<void> delete(String pointKey) async {
