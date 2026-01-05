@@ -37,6 +37,11 @@ class PowerLineRepository {
     return _powerLinePointList;
   }
 
+  // 現時点でローカル上に保持しているデータを返却する
+  List<PowerLinePoint> getPowerLinePointListOnlyTower(){
+    return _powerLinePointList.where((point) => point.category == 'tower').toList();
+  }
+
   Future<String> _loadPowerLinePointList() async {
     
     // FirestoreからPowerLinePointの一覧を取得する

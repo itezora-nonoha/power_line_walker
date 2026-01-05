@@ -8,3 +8,7 @@ final idProvider = StateProvider<String>((ref) {
 final selectedPointProvider = StateProvider<PowerLinePoint?>((ref) {
   return null;
 });
+
+final selectedCategoryProvider = StateProvider<String>((ref) {
+  return 'tower';
+});

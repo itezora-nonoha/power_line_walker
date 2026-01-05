@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:power_line_walker/id_provider.dart';
 
-class PointTypeSelectorBox extends StatefulWidget {
+class PointTypeSelectorBox extends ConsumerWidget {
   const PointTypeSelectorBox({Key? key}) : super(key: key);
 
   @override
-  State<PointTypeSelectorBox> createState() => _PointTypeSelectorBoxState();
-}
-
-class _PointTypeSelectorBoxState extends State<PointTypeSelectorBox> {
-  String isSelectedValue = 'tower';
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedCategory = ref.watch(selectedCategoryProvider);
+    return DropdownButton<String>(
       items: const[
         DropdownMenuItem(
           value: 'tower',
@@ -31,11 +27,9 @@ class _PointTypeSelectorBoxState extends State<PointTypeSelectorBox> {
             child: Text('地点メモ'),
         ),
       ],
-      value: isSelectedValue,
+      value: selectedCategory,
       onChanged: (String? value) {
-        setState(() {
-          isSelectedValue = value!;
-        });
+        ref.read(selectedCategoryProvider.notifier).state = value!;
       },
     );
   }

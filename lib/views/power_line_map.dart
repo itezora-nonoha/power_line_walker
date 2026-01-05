@@ -239,7 +239,7 @@ class PowerLineMapState extends State<PowerLineMap> {
       _powerLineVoltageMap[powerLine.name] = powerLine.transmissionVoltage;
     });
 
-    PowerLineRepository.instance.getPowerLinePointList().forEach((powerLinePoint) {
+    PowerLineRepository.instance.getPowerLinePointListOnlyTower().forEach((powerLinePoint) {
       
       pointLabel = powerLinePoint.names[0];
       latlng = powerLinePoint.latlng;

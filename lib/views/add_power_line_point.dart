@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:power_line_walker/models/power_line_point.dart';
 import 'package:power_line_walker/repository/power_line_repository.dart';
 import 'package:power_line_walker/widgets/point_type_selector_box.dart';
+import 'package:power_line_walker/id_provider.dart';
 
-class AddPowerLinePoint extends StatelessWidget {
+class AddPowerLinePoint extends ConsumerWidget {
   // AddPowerLinePoint({super.key, required this.title, this.latlng});
   AddPowerLinePoint({required this.context, this.latlng});
   final BuildContext context;
@@ -20,7 +22,7 @@ class AddPowerLinePoint extends StatelessWidget {
   final TextEditingController _controllerLatitude = TextEditingController();
   final TextEditingController _controllerLongitude = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
-  final PointTypeSelectorBox _pointTypeSelectorBox = PointTypeSelectorBox();
+  // final PointTypeSelectorBox _pointTypeSelectorBox = PointTypeSelectorBox();
   List<PowerLinePoint> _powerLinePointList = [];
   // @override
   // void initState() {
@@ -49,16 +51,19 @@ class AddPowerLinePoint extends StatelessWidget {
   // }
 
   // 「地点登録」ボタン押下時の操作
-  int _saveButtonPushed() {
+  int _saveButtonPushed(WidgetRef ref) {
     bool isValidInputData = true;
     bool isValidInputName = true;
 
     double latitude;
     double longitude;
-    
+    final category = ref.watch(selectedCategoryProvider);
+
     try {
       latitude = double.parse(_controllerLatitude.text);
       longitude = double.parse(_controllerLongitude.text);
+      // print(_pointTypeSelectorBox.key);
+
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('[入力エラー] 緯度(latitude) または 経度(longitude) を数値に変換することができません。'),
@@ -99,8 +104,8 @@ class AddPowerLinePoint extends StatelessWidget {
         }
       }
     }
-  
-    if (isValidInputName == false){
+
+    if (isValidInputName == false && category == 'tower'){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('[入力エラー] 地点名リスト(names)が適切に入力されていません。'),
         duration: const Duration(seconds: 2),
@@ -108,7 +113,7 @@ class AddPowerLinePoint extends StatelessWidget {
     }
 
     if (isValidInputData && isValidInputName){
-      _addPowerLinePoint(latlng, names);
+      _addPowerLinePoint(latlng, names, ref);
       _controllerLatitude.clear();
       _controllerLongitude.clear();
       _controllerName.clear();
@@ -122,17 +127,17 @@ class AddPowerLinePoint extends StatelessWidget {
     }
   }
 
-  void _addPowerLinePoint(LatLng latlng, List<String> names) async {
+  void _addPowerLinePoint(LatLng latlng, List<String> names, WidgetRef ref) async {
+    final category = ref.watch(selectedCategoryProvider);
     final PowerLinePoint powerLinePoint =
-        // PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now());
-        PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now(), category: _pointTypeSelectorBox.toString());
+        PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now(), category: category);
     await PowerLineRepository.instance.insert(powerLinePoint);
     _powerLinePointList.add(powerLinePoint);
     
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     _controllerLatitude.text = latlng!.latitude.toStringAsFixed(7);
     _controllerLongitude.text = latlng!.longitude.toStringAsFixed(7);
     return Scaffold(
@@ -165,10 +170,10 @@ class AddPowerLinePoint extends StatelessWidget {
                 autofocus: false,
                 decoration: const InputDecoration(labelText: 'name(併架はカンマ区切りで入力)'),
                 onSubmitted: (String value) {
-                  _saveButtonPushed();
+                  _saveButtonPushed(ref);
                 },
               ),
-              _pointTypeSelectorBox,
+              const PointTypeSelectorBox(),
               Container(
                   margin: const EdgeInsets.all(8),
                   child: SizedBox(
@@ -177,7 +182,7 @@ class AddPowerLinePoint extends StatelessWidget {
                     height: 30,
                     child: ElevatedButton(
                         onPressed: () {
-                          var returnCode = _saveButtonPushed();
+                          var returnCode = _saveButtonPushed(ref);
                           if (returnCode == 0) {
                             Navigator.of(context).pop();
                           }
