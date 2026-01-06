@@ -131,7 +131,7 @@ class AddPowerLinePoint extends ConsumerWidget {
   void _addPowerLinePoint(LatLng latlng, List<String> names, WidgetRef ref) async {
     final category = ref.watch(selectedCategoryProvider);
     final PowerLinePoint powerLinePoint =
-        PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now(), category: category);
+        PowerLinePoint(latlng: latlng, names: names, createdAt: DateTime.now(), category: category ?? 'tower');
     await PowerLineRepository.instance.insert(powerLinePoint);
     _powerLinePointList.add(powerLinePoint);
     

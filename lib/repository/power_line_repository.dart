@@ -97,6 +97,17 @@ class PowerLineRepository {
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
     return await docRef.set(powerLinePoint);
   }
+  Future<void> update(PowerLinePoint updatedPoint) async {
+    _powerLinePointList.removeWhere((point) => point.generateUniqueKey() == updatedPoint.generateUniqueKey());
+    _powerLinePointList.add(updatedPoint);
+    final docRef = _database
+        .collection('points')
+        .doc(updatedPoint.generateUniqueKey())
+        .withConverter(
+            fromFirestore: PowerLinePoint.fromFirestore,
+            toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
+    return await docRef.set(updatedPoint);
+  }
 
   // デバッグ用: pointsコレクションの全てのドキュメントにcategoryフィールドを追加
   Future<void> addCategoryToAllPoints() async {
@@ -161,5 +172,6 @@ class PowerLineRepository {
             toFirestore: (PowerLine powerLinePoint, _) => powerLine.toFirestore());
     return await docRef.set(powerLine);
   }
+
 }
 
