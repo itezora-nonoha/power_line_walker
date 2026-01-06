@@ -63,7 +63,6 @@ class PowerLineMapState extends State<PowerLineMap> {
     // getPowerLineList();
     // 現在位置の取得
     _getLocation();
-    PowerLineRepository.instance.fullReload();
 
     // 現在位置の変化を監視
     _locationChangedListen =
