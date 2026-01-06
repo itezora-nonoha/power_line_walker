@@ -13,7 +13,6 @@ class EditPowerLinePoint extends StatefulWidget {
 }
 
 class _EditPowerLinePointState extends State<EditPowerLinePoint> {
-  late PowerLinePoint _powerLinePoint = widget.powerLinePoint;
   late TextEditingController _latitudeController;
   late TextEditingController _longitudeController;
   late List<TextEditingController> _nameControllers;

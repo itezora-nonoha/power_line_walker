@@ -106,7 +106,7 @@ class PowerLineRepository {
         .withConverter(
             fromFirestore: PowerLinePoint.fromFirestore,
             toFirestore: (PowerLinePoint powerLinePoint, _) => powerLinePoint.toFirestore());
-    return await docRef.set(updatedPoint);
+    return await docRef.update(updatedPoint.toFirestore());
   }
 
   // デバッグ用: pointsコレクションの全てのドキュメントにcategoryフィールドを追加

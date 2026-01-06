@@ -85,6 +85,7 @@ class PowerLineMapState extends State<PowerLineMap> {
 
   void _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+    refleshMap();
   }
 
   void refleshMap(){
